@@ -1,0 +1,22 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.navigacija {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    background-color: bisque;
+    padding: 15px;
+}
+
+.content {
+    width: 70%;
+    background-color: aquamarine;
+}
