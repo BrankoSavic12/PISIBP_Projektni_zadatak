@@ -1,22 +1,28 @@
 <?php
 include "klase.php";
-if(isset($_SESSION["id_korisnika"])){
+if (isset($_SESSION["id_korisnika"])) {
 
 ?>
     <!DOCTYPE html>
     <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Naslovna administracije</title>
+        <link rel="stylesheet" href="style.css">
     </head>
+
     <body>
-        <?php include "menu.php" ?>
+        <div class="navigacija">
+            <?php include "menu.php" ?>
+        </div>
+
+
     </body>
+
     </html>
-    <!DOCTYPE html>
 <?php
-} else{
-    header("Location: naslovna.php");
+} else {
+    header("location:index.php");
 }
-?>
