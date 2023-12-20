@@ -6,15 +6,17 @@ if (isset($_SESSION["id_korisnika"])) {
         $lozinka = md5($_POST["lozinka"]);
         $ime_prezime = $_POST["ime_prezime"];
         $id_rubrike = $_POST["rubrika"];
+        $email = $_POST["email"];
         $uloga = "novinar";
 
         if ($konekcija->proveriPostojanjeKorisnickogImena($korisnicko_ime) == false) {
-            $konekcija->ubaciKorisnika($korisnicko_ime, $lozinka, $ime_prezime, $uloga);
+            $konekcija->ubaciKorisnika($korisnicko_ime, $lozinka, $ime_prezime, $uloga, $email);
             $novi_korisnik = $konekcija->proveriPostojanjeKorisnickogImena($korisnicko_ime);
             $id_novog_novinara = $novi_korisnik["id_korisnika"];
             $konekcija->ubaciRubrikuZaNovinara($id_novog_novinara, $id_rubrike);
+            $potvrda = "Uspešno ste uneli novinara " . $ime_prezime;
         } else {
-            $greska = "Korisnik sa istim imenom već postoji";
+            $greska = "Korisnik sa istim imenov već postoji";
         }
     }
 
@@ -39,6 +41,7 @@ if (isset($_SESSION["id_korisnika"])) {
                         <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required>
                         <input type="password" name="lozinka" placeholder="Lozinka" required>
                         <input type="text" name="ime_prezime" placeholder="Ime i prezime" required>
+                        <input type="email" name="email" placeholder="Email" required>
                         <select name="rubrika">
                             <?php
                             $rubrike = $konekcija->getSveRubrike();
@@ -53,6 +56,9 @@ if (isset($_SESSION["id_korisnika"])) {
                         } ?>
                         <input type="submit" value="Registruj novinara" name="submit">
                     </form>
+                    <h3> <?php if (isset($potvrda)) {
+                                echo $potvrda;
+                            } ?></h3>
                 </div>
             </div>
         </div>
