@@ -44,7 +44,8 @@ class Konekcija
             return false;
         }
     }
-   // dodat deo koda zbog vracanja errora
+
+    // dodat deo koda zbog vracanja errora
    function obrisiNovinara($id_novinara) {
     // Obrisi povezane redove u novinar_rubrika
     $this->obrisiPovezaneRedoveNovinara($id_novinara);
@@ -53,13 +54,13 @@ class Konekcija
     $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
     $stm->bind_param("i", $id_novinara);
     $stm->execute();
-}
+    }
 
-function obrisiPovezaneRedoveNovinara($id_novinara) {
-    $stm = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_novinara = ?");
-    $stm->bind_param("i", $id_novinara);
-    $stm->execute();
-}
+    function obrisiPovezaneRedoveNovinara($id_novinara) {
+        $stm = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_novinara = ?");
+        $stm->bind_param("i", $id_novinara);
+        $stm->execute();
+    }
 
     function getSveRubrike()
     {
@@ -156,6 +157,47 @@ function obrisiPovezaneRedoveNovinara($id_novinara) {
             $stmt = $this->conn->prepare("insert into urednik_rubrika (id_urednika, id_rubrike) values(?,?)");
             $stmt->bind_param("ii", $id_urednika, $id_rubrike);
             $stmt->execute();
+        }
+    }
+    function getRubrikeByUrednikId($id_urednika)
+    {
+        $stmt = $this->conn->prepare("select * from urednik_rubrika where id_urednika=?");
+        $stmt->bind_param("i", $id_urednika);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function obrisiUrednika($id_urednika) {
+        // Obrisi povezane redove u urednik_rubrika
+        $this->obrisiPovezaneRedoveUrednika($id_urednika);
+    
+        // Sada obrisi urednika
+        $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
+        $stm->bind_param("i", $id_urednika);
+        $stm->execute();
+    }
+    
+    function obrisiPovezaneRedoveUrednika($id_urednika) {
+        $stm = $this->conn->prepare("DELETE FROM urednik_rubrika WHERE id_urednika = ?");
+        $stm->bind_param("i", $id_urednika);
+        $stm->execute();
+    }
+    
+
+      function getSviUrednici()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM korisnici WHERE uloga = 'urednik'");
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
         }
     }
 }

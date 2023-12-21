@@ -9,7 +9,7 @@ if (isset($_SESSION["id_korisnika"])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pregled novinara</title>
+        <title>Informacije o uredniku</title>
         <link rel="stylesheet" href="style.css">
     </head>
 
@@ -20,26 +20,22 @@ if (isset($_SESSION["id_korisnika"])) {
             <div class="content">
                 <div>
                     <?php
-                    $id_novinara = $_GET["id_novinara"];
-                    $novinar = $konekcija->getKorisnikByID($id_novinara);
-                    echo "<h3>Ime i prezime novinara:</h3>
-                    <h4>$novinar[ime_prezime]</h4>";
-                    echo "<h3>Email adresa novinara:</h3>
-                    <h4>$novinar[email]</h4>";
-                    $rubrike = $konekcija->getRubrikeByNovinarId($id_novinara);
+                    $id_urednika = $_GET["id_urednika"];
+                    $urednik = $konekcija->getKorisnikByID($id_urednika);
+                    echo "<h3>Ime i prezime urednika:</h3>
+                    <h4>$urednik[ime_prezime]</h4>";
+                    echo "<h3>Email adresa urednika:</h3>
+                    <h4>$urednik[email]</h4>";
+                    $rubrike = $konekcija->getRubrikeByUrednikId($id_urednika);
                     if ($rubrike != false) {
+                        echo "<h3>Dodeljene rubrike:</h3>";
                         while ($rubrika = $rubrike->fetch_assoc()) {
                             $rubrika_info = $konekcija->getRubrikaByID($rubrika["id_rubrike"]);
-                            echo "<h3>Dodeljena rubrika:</h3>
-                            <h4>$rubrika_info[naziv]</h4>";
+                            echo "<h4>$rubrika_info[naziv]</h4>";
                         }
                     } else {
-                        echo "<h3>Ovaj novinar nema nijednu rubriku</h3>";
+                        echo "<h3>Ovaj urednik nije dodeljen nijednoj rubrici</h3>";
                     }
-
-
-
-
                     ?>
                 </div>
             </div>
@@ -53,3 +49,4 @@ if (isset($_SESSION["id_korisnika"])) {
 } else {
     header("location:index.php");
 }
+?>
