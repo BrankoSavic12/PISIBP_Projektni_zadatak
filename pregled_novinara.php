@@ -19,19 +19,20 @@ if (isset($_SESSION["id_korisnika"])) {
             <?php include "menu.php" ?>
             <div class="content">
                 <div>
-                    <h2>Lista novinara</h2>
-                    <a href="registruj_novinara.php"><button>Registruj novinara</button></a>
-                    <a href="#"><button>Izađi</button></a>
+                    <h2>Lista svih novinara rubrika</h2>
+                    <a href="registruj_novinara.php"><button>Registracija novinara</button></a>
+                    <a href="menu.php"><button>Napusti stranicu</button></a>
                     <?php
                     $novinari = $konekcija->getSviNovinari();
                     if ($novinari != false) {
                         while ($novinar = $novinari->fetch_assoc()) {
-                            echo "<div> $novinar[ime_prezime] 
-                            <a href=novinar_info.php?id_novinara=$novinar[id_korisnika]><button>Info</button></a>  
-                            <a href=novinar_azuriranje.php?id_novinara=$novinar[id_korisnika]><button>Ažuriraj novinara</button></a>
-                            <a href=novinar_brisanje.php?id_novinara=$novinar[id_korisnika]><button>Obriši novinara</button></a>
+                            echo "<div><h3> Novinar: $novinar[ime_prezime]</h3>
+                            <a href=novinar_info.php?id_novinara=$novinar[id_korisnika]><button>Informacije</button></a>  
+                            <a href=novinar_azuriranje.php?id_novinara=$novinar[id_korisnika]><button>Ažuriranje</button></a>
+                            <a href=novinar_brisanje.php?id_novinara=$novinar[id_korisnika]><button>Brisanje</button></a>
                             </div>";
                         }
+                        
                     } else {
                         echo "<p>Nema novinara u bazi</p>";
                     }
@@ -39,6 +40,7 @@ if (isset($_SESSION["id_korisnika"])) {
                 </div>
             </div>
         </div>
+        
 
 
     </body>

@@ -50,11 +50,16 @@ if (isset($_SESSION["id_korisnika"])) {
                     $novinar = $konekcija->getKorisnikByID($id_novinara);
                     ?>
                     <form action="<?php echo $_SERVER['PHP_SELF'] . "?id_novinara=" . $id_novinara; ?>" method="post">
+                        <h2>Azuriranje ili unapredjenje novinara</h2>
+                        <h4>Korisnicko ime:</h4>
                         <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required value="<?php echo $novinar["korisnicko_ime"]; ?>">
+                        <h4>Lozinka:</h4>
                         <input type="password" name="lozinka" placeholder="Lozinka" required value="<?php echo $novinar["lozinka"]; ?>">
+                        <h4>Ime i prezime:</h4>
                         <input type="text" name="ime_prezime" placeholder="Ime i prezime" required value="<?php echo $novinar["ime_prezime"]; ?>">
+                        <h4>Email adresa::</h4>
                         <input type="email" name="email" placeholder="Email" required value="<?php echo $novinar["email"]; ?>">
-                        <label>Unapredi u urednika rubrike</label>
+                        <h4>Unapredi novinara u urednika rubrike:</h4>
                         <select name="rubrika">
                             <option value="0" selected>Nema unapređenje</option>
                             <?php

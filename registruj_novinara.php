@@ -38,10 +38,17 @@ if (isset($_SESSION["id_korisnika"])) {
             <div class="content">
                 <div>
                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <h2>Registracija novog novinara:</h2>
+                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                        <h4>Korisnicko ime:</h4>
                         <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required>
+                        <h4>Lozinka:</h4>
                         <input type="password" name="lozinka" placeholder="Lozinka" required>
+                        <h4>Ime i prezime:</h4>
                         <input type="text" name="ime_prezime" placeholder="Ime i prezime" required>
+                        <h4>Email adresa:</h4>
                         <input type="email" name="email" placeholder="Email" required>
+                        <h4>Naziv rubrike:</h4>
                         <select name="rubrika">
                             <?php
                             $rubrike = $konekcija->getSveRubrike();

@@ -173,20 +173,23 @@ class Konekcija
     }
 
     function obrisiUrednika($id_urednika) {
-        // Obrisi povezane redove u urednik_rubrika
-        $this->obrisiPovezaneRedoveUrednika($id_urednika);
-    
-        // Sada obrisi urednika
+        $this->obrisiVezuUrednikRubrika($id_urednika);
+        $this->obrisiVezuNovinarRubrika($id_urednika);
         $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
         $stm->bind_param("i", $id_urednika);
         $stm->execute();
     }
-    
-    function obrisiPovezaneRedoveUrednika($id_urednika) {
+    function obrisiVezuUrednikRubrika($id_urednika) {
         $stm = $this->conn->prepare("DELETE FROM urednik_rubrika WHERE id_urednika = ?");
         $stm->bind_param("i", $id_urednika);
         $stm->execute();
     }
+    function obrisiVezuNovinarRubrika($id_urednika) {
+        $stm = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_novinara = ?");
+        $stm->bind_param("i", $id_urednika);
+        $stm->execute();
+    }
+    
     
 
       function getSviUrednici()
@@ -200,6 +203,54 @@ class Konekcija
             return false;
         }
     }
+
+    function getUredniciByRubrikaId($id_rubrike)
+    {
+        $stmt = $this->conn->prepare("SELECT korisnici.* FROM korisnici
+            WHERE korisnici.id_korisnika IN (SELECT id_urednika FROM urednik_rubrika WHERE id_rubrike = ?)");
+        $stmt->bind_param("i", $id_rubrike);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    function obrisiRubriku($id_rubrike)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM rubrika WHERE id_rubrike = ?");
+        $stmt->bind_param("i", $id_rubrike);
+        $stmt->execute();
+    }
+
+    function ubaciRubriku($naziv)
+    {
+        $stmt = $this->conn->prepare("INSERT INTO rubrika (naziv) VALUES (?)");
+        $stmt->bind_param("s", $naziv);
+        $stmt->execute();
+    }
+
+    function getRubrikaInfo($id_rubrike)
+    {
+        $rubrika = $this->getRubrikaByID($id_rubrike);
+
+        if ($rubrika) {
+            $urednici = $this->getUredniciByRubrikaId($id_rubrike);
+
+            return [
+                'ime_rubrike' => $rubrika['naziv'],
+                'urednici' => $urednici
+            ];
+        }
+
+        return false;
+    }
+
+
 }
 
 $konekcija = new Konekcija("localhost", "root", "", "branko_novine");

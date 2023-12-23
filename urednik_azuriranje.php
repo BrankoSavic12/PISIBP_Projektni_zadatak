@@ -13,7 +13,7 @@ if (isset($_SESSION["id_korisnika"])) {
 
         if ($konekcija->proveriPostojanjeKorisnickogImena($korisnicko_ime) == false || $staro_ime == $korisnicko_ime) {
             $konekcija->azurirajKorisnika($id_urednika, $korisnicko_ime, $lozinka, $ime_prezime, "urednik", $email);
-            $konekcija->obrisiPovezaneRedoveUrednika($id_urednika);
+        
             if ($id_rubrike != 0) {
                 $konekcija->ubaciUrednikRubrika($id_urednika, $id_rubrike);
             }
@@ -45,11 +45,16 @@ if (isset($_SESSION["id_korisnika"])) {
                     $urednik = $konekcija->getKorisnikByID($id_urednika);
                     ?>
                     <form action="<?php echo $_SERVER['PHP_SELF'] . "?id_urednika=" . $id_urednika; ?>" method="post">
+                      <h2>Azuriranje urednika</h2>
+                        <h4>Korisnicko ime:</h4>
                         <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required value="<?php echo $urednik["korisnicko_ime"]; ?>">
+                        <h4>Lozinka:</h4>
                         <input type="password" name="lozinka" placeholder="Lozinka" required value="<?php echo $urednik["lozinka"]; ?>">
+                        <h4>Ime i prezime:</h4>
                         <input type="text" name="ime_prezime" placeholder="Ime i prezime" required value="<?php echo $urednik["ime_prezime"]; ?>">
+                        <h4>Email adresa:</h4>
                         <input type="email" name="email" placeholder="Email" required value="<?php echo $urednik["email"]; ?>">
-                        <label>Dodeli rubriku uredniku</label>
+                        <h4>Izaberi rubriku urednika:</h4>
                         <select name="rubrika">
                             <option value="0" selected>Nema dodeljenu rubriku</option>
                             <?php

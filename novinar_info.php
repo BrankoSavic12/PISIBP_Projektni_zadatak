@@ -14,36 +14,42 @@ if (isset($_SESSION["id_korisnika"])) {
     </head>
 
     <body>
+    <div class="navigacija">
+    <?php include "menu.php" ?>
+    <div class="content">
+        <div class="info-container">
+            <?php
+            $id_novinara = $_GET["id_novinara"];
+            echo "<h2>Osnovne informacije o novinaru</h2>";
+            $novinar = $konekcija->getKorisnikByID($id_novinara);
+            echo "<div class='info-item'>
+                    <h3>Ime i prezime novinara:</h3>
+                    <h4>$novinar[ime_prezime]</h4>
+                </div>";
+            echo "<div class='info-item'>
+                    <h3>Email adresa novinara:</h3>
+                    <h4>$novinar[email]</h4>
+                </div>";
 
-        <div class="navigacija">
-            <?php include "menu.php" ?>
-            <div class="content">
-                <div>
-                    <?php
-                    $id_novinara = $_GET["id_novinara"];
-                    $novinar = $konekcija->getKorisnikByID($id_novinara);
-                    echo "<h3>Ime i prezime novinara:</h3>
-                    <h4>$novinar[ime_prezime]</h4>";
-                    echo "<h3>Email adresa novinara:</h3>
-                    <h4>$novinar[email]</h4>";
-                    $rubrike = $konekcija->getRubrikeByNovinarId($id_novinara);
-                    if ($rubrike != false) {
-                        while ($rubrika = $rubrike->fetch_assoc()) {
-                            $rubrika_info = $konekcija->getRubrikaByID($rubrika["id_rubrike"]);
-                            echo "<h3>Dodeljena rubrika:</h3>
-                            <h4>$rubrika_info[naziv]</h4>";
-                        }
-                    } else {
-                        echo "<h3>Ovaj novinar nema nijednu rubriku</h3>";
-                    }
-
-
-
-
-                    ?>
-                </div>
-            </div>
+            $rubrike = $konekcija->getRubrikeByNovinarId($id_novinara);
+            if ($rubrike != false) {
+                while ($rubrika = $rubrike->fetch_assoc()) {
+                    $rubrika_info = $konekcija->getRubrikaByID($rubrika["id_rubrike"]);
+                    echo "<div class='info-item'>
+                            <h3>Dodeljena rubrika:</h3>
+                            <h4>$rubrika_info[naziv]</h4>
+                        </div>";
+                }
+            } else {
+                echo "<div class='info-item'>
+                        <h3>Ovaj novinar nema nijednu rubriku</h3>
+                    </div>";
+            }
+            ?>
         </div>
+    </div>
+</div>
+
 
 
     </body>

@@ -1,6 +1,7 @@
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .navigacija {
@@ -11,12 +12,272 @@
 .menu {
     display: flex;
     flex-direction: column;
-    width: 30%;
-    background-color: bisque;
-    padding: 15px;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(189, 179, 179, 0.942);
+    padding: 10px;
 }
 
 .content {
-    width: 70%;
-    background-color: aquamarine;
+    width: 50%;
+    background-color:  rgba(187, 169, 169, 0.942);
 }
+
+.menu-section {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.menu h1 {
+    color: white;
+    margin-bottom: 20px;
+    font-style: oblique;
+    font-size:250%;
+   
+}
+
+.menu p {
+    color: white;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-style:oblique;
+    font-size:130%;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-style: oblique;
+    font-size:70%;
+}
+
+.menu button {
+    padding: 8px 15px; 
+    margin-left: 10px;
+    background-color: rgb(242, 234, 219);
+    color: rgb(89, 68, 41);
+    border: 2px solid rgb(89, 68, 41); 
+    border-radius: 8px; 
+    cursor: pointer;
+    font-style: oblique;
+}
+
+.menu button:hover {
+    background-color: rgb(220, 200, 160); 
+   
+}
+
+
+.menu-icon {
+    width: 80px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.menu p.logout {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 100%;
+}
+
+.menu p.logout a {
+    background-color: rgb(242, 234, 219);
+    color: rgb(89, 68, 41);
+    padding: 8px 15px;
+    border: 2px solid rgb(89, 68, 41);
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.menu p.logout a:hover {
+    background-color: rgb(220, 200, 160);
+}
+
+
+.menu p.logout a {
+    margin-left: auto;  
+}
+
+.sidebar {
+    width: 250px;
+    padding: 10px;
+    text-align: center; 
+}
+
+.sidebar-image {
+    width: 100%; 
+    height: auto; 
+    margin-bottom: 10px; 
+}
+
+.sidebar h4 {
+    color: white;
+    margin: 0; 
+    font-size: 16px;
+    font-style: italic;
+    
+}
+
+.menu-section {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.menu-section p {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto; 
+}
+
+input,
+select {
+    margin-bottom: 10px; 
+}
+
+h3 {
+    color: rgb(4, 8, 4); 
+}
+
+
+.content h2 {
+    text-align: center; 
+}
+.info-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-item {
+    margin-bottom: 30px;
+   
+}
+
+h2, h3, h4 {
+    margin: 0;
+    color: #333; 
+}
+
+h3 {
+    color: #555; 
+}
+.info-container {
+    background-color:rgb(179, 199, 199);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.info-item {
+    margin-bottom: 20px;
+}
+
+.navigacija .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigacija .top-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.navigacija .top-buttons a {
+    text-decoration: none;
+}
+
+.navigacija .buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* Dozvoli omotavanje dugmadi na više redova */
+}
+
+.navigacija button {
+    background-color: rgb(242, 234, 219);
+    color: rgb(15, 14, 14);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100px; /* Fiksirajte širinu dugmeta */
+}
+
+.navigacija button:hover {
+    background-color: rgb(244, 224, 186);
+}
+
+.navigacija .content div {
+    margin-bottom: 20px;
+}
+
+.navigacija .content h2 {
+    color: #2c3939;
+    margin-bottom: 10px;
+}
+
+.navigacija .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigacija .top-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.navigacija .top-buttons a {
+    text-decoration: none;
+}
+
+.navigacija .buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.navigacija button {
+    background-color: rgb(242, 234, 219);
+    color: rgb(15, 14, 14);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100px;
+}
+
+.navigacija button:hover {
+    background-color: rgb(244, 224, 186);
+}
+
+.navigacija .content div {
+    margin-bottom: 20px;
+}
+
+.navigacija .content h2 {
+    color: #1c2121;
+    margin-bottom: 10px;
+}
+
+.content h2 {
+    text-align: center; 
+}
+
+
+
+
