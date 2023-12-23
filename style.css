@@ -105,7 +105,7 @@
 }
 
 .sidebar {
-    width: 250px;
+    width: 400px;
     padding: 10px;
     text-align: center; 
 }
@@ -116,10 +116,10 @@
     margin-bottom: 10px; 
 }
 
-.sidebar h4 {
+.sidebar h3 {
     color: rgb(9, 9, 9);
     margin: 0; 
-    font-size: 16px;
+    font-size: 18px;
     font-style: italic;
     
 }
