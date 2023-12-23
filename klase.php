@@ -219,13 +219,33 @@ class Konekcija
     }
 
 
-
     function obrisiRubriku($id_rubrike)
     {
+        // Prvo obrisi povezane redove u novinar_rubrika
+        $this->obrisiPovezaneRedoveRubrike($id_rubrike);
+    
+        // Zatim obrisi rubriku
         $stmt = $this->conn->prepare("DELETE FROM rubrika WHERE id_rubrike = ?");
         $stmt->bind_param("i", $id_rubrike);
         $stmt->execute();
+    
+        if ($stmt->affected_rows > 0) {
+            echo "Rubrika uspešno obrisana.";
+        } else {
+            echo "Nije pronađena rubrika sa datim ID-om.";
+        }
     }
+    
+    function obrisiPovezaneRedoveRubrike($id_rubrike) {
+        $stmt = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_rubrike = ?");
+        $stmt->bind_param("i", $id_rubrike);
+        $stmt->execute();
+    }
+   
+    
+    
+    
+    
 
     function ubaciRubriku($naziv)
     {
