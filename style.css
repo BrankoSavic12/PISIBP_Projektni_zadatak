@@ -31,7 +31,7 @@
 }
 
 .menu h1 {
-    color: white;
+    color: rgb(12, 12, 12);
     margin-bottom: 20px;
     font-style: oblique;
     font-size:250%;
@@ -39,7 +39,7 @@
 }
 
 .menu p {
-    color: white;
+    color: rgb(12, 12, 12);
     margin: 0;
     display: flex;
     align-items: center;
@@ -117,7 +117,7 @@
 }
 
 .sidebar h4 {
-    color: white;
+    color: rgb(9, 9, 9);
     margin: 0; 
     font-size: 16px;
     font-style: italic;
