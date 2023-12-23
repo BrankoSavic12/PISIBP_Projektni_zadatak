@@ -13,10 +13,10 @@
 
         <h1>Stranica glavnog urednika</h1>
         <div class="sidebar">
-            <img src="slike/urednik.jpg" alt="Zanimljiva slika" class="sidebar-image">
-            <h4>Glavni urednik:</h4>
-            <h4>Petar Petrović</h4>
-            <h4>petar.petrovic@novine.rs</h4>
+            <img src="slike/urednik1.jpg" alt="Zanimljiva slika" class="sidebar-image">
+            <h3>Glavni urednik:</h3>
+            <h3>Petar Petrović</h3>
+            <h3>petar.petrovic@novine.rs</h3>
         </div>
 
         <div class="menu-section">
