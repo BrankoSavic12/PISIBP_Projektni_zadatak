@@ -14,7 +14,6 @@ if (isset($_SESSION["id_korisnika"])) {
         } else {
             // Ako nema urednika, izvrši brisanje rubrike i postavi poruku o uspehu u sesiju
             $konekcija->obrisiRubriku($id_rubrike);
-            $_SESSION['obrisi_rubriku_poruka'] = "Rubrika uspešno obrisana.";
         }
         
         // Preusmeri korisnika nazad na pregled rubrika

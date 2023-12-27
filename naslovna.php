@@ -9,8 +9,18 @@ if (isset($_SESSION["id_korisnika"])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Naslovna administracije</title>
         <link rel="stylesheet" href="style.css">
+        <?php
+        if (($_SESSION["uloga"]) == 'glavni urednik') {
+            echo "<title>Stranica glavnog urednika</title>";
+        } elseif (($_SESSION["uloga"]) == 'urednik') {
+            echo "<title>Stranica urednika</title>";
+        } elseif (($_SESSION["uloga"]) == 'novinar') {
+            echo "<title>Stranica glavnog urednika</title>";
+        }
+
+        ?>
+
     </head>
 
     <body>

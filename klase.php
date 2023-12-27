@@ -46,17 +46,19 @@ class Konekcija
     }
 
     // dodat deo koda zbog vracanja errora
-   function obrisiNovinara($id_novinara) {
-    // Obrisi povezane redove u novinar_rubrika
-    $this->obrisiPovezaneRedoveNovinara($id_novinara);
+    function obrisiNovinara($id_novinara)
+    {
+        // Obrisi povezane redove u novinar_rubrika
+        $this->obrisiPovezaneRedoveNovinara($id_novinara);
 
-    // Sada obrisi novinara
-    $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
-    $stm->bind_param("i", $id_novinara);
-    $stm->execute();
+        // Sada obrisi novinara
+        $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
+        $stm->bind_param("i", $id_novinara);
+        $stm->execute();
     }
 
-    function obrisiPovezaneRedoveNovinara($id_novinara) {
+    function obrisiPovezaneRedoveNovinara($id_novinara)
+    {
         $stm = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_novinara = ?");
         $stm->bind_param("i", $id_novinara);
         $stm->execute();
@@ -116,6 +118,7 @@ class Konekcija
             return false;
         }
     }
+   
 
     function getRubrikeByNovinarId($id_novinara)
     {
@@ -153,11 +156,11 @@ class Konekcija
     }
 
     function ubaciUrednikRubrika($id_urednika, $id_rubrike)
-    { {
-            $stmt = $this->conn->prepare("insert into urednik_rubrika (id_urednika, id_rubrike) values(?,?)");
-            $stmt->bind_param("ii", $id_urednika, $id_rubrike);
-            $stmt->execute();
-        }
+    { 
+        $stmt = $this->conn->prepare("insert into urednik_rubrika (id_urednika, id_rubrike) values(?,?)");
+        $stmt->bind_param("ii", $id_urednika, $id_rubrike);
+        $stmt->execute();
+        
     }
     function getRubrikeByUrednikId($id_urednika)
     {
@@ -172,27 +175,30 @@ class Konekcija
         }
     }
 
-    function obrisiUrednika($id_urednika) {
+    function obrisiUrednika($id_urednika)
+    {
         $this->obrisiVezuUrednikRubrika($id_urednika);
         $this->obrisiVezuNovinarRubrika($id_urednika);
         $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
         $stm->bind_param("i", $id_urednika);
         $stm->execute();
     }
-    function obrisiVezuUrednikRubrika($id_urednika) {
+    function obrisiVezuUrednikRubrika($id_urednika)
+    {
         $stm = $this->conn->prepare("DELETE FROM urednik_rubrika WHERE id_urednika = ?");
         $stm->bind_param("i", $id_urednika);
         $stm->execute();
     }
-    function obrisiVezuNovinarRubrika($id_urednika) {
+    function obrisiVezuNovinarRubrika($id_urednika)
+    {
         $stm = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_novinara = ?");
         $stm->bind_param("i", $id_urednika);
         $stm->execute();
     }
-    
-    
 
-      function getSviUrednici()
+
+
+    function getSviUrednici()
     {
         $stmt = $this->conn->prepare("SELECT * FROM korisnici WHERE uloga = 'urednik'");
         $stmt->execute();
@@ -223,35 +229,40 @@ class Konekcija
     {
         // Prvo obrisi povezane redove u novinar_rubrika
         $this->obrisiPovezaneRedoveRubrike($id_rubrike);
-    
+
         // Zatim obrisi rubriku
         $stmt = $this->conn->prepare("DELETE FROM rubrika WHERE id_rubrike = ?");
         $stmt->bind_param("i", $id_rubrike);
         $stmt->execute();
-    
-        if ($stmt->affected_rows > 0) {
-            echo "Rubrika uspešno obrisana.";
-        } else {
-            echo "Nije pronađena rubrika sa datim ID-om.";
-        }
     }
-    
-    function obrisiPovezaneRedoveRubrike($id_rubrike) {
+
+
+    function obrisiPovezaneRedoveRubrike($id_rubrike)
+    {
         $stmt = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_rubrike = ?");
         $stmt->bind_param("i", $id_rubrike);
         $stmt->execute();
     }
-   
-    
-    
-    
-    
+
 
     function ubaciRubriku($naziv)
     {
         $stmt = $this->conn->prepare("INSERT INTO rubrika (naziv) VALUES (?)");
         $stmt->bind_param("s", $naziv);
         $stmt->execute();
+    }
+    function proveriPostojanjeRubrike($naziv)
+    {
+        $stmt = $this->conn->prepare("select * from rubrika where naziv = ?");
+        $stmt->bind_param("s", $naziv);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+
+            return $rezultat->fetch_assoc();
+        } else {
+            return false;
+        }
     }
 
     function getRubrikaInfo($id_rubrike)
@@ -269,8 +280,56 @@ class Konekcija
 
         return false;
     }
+    function proveriDodeluRubrikeUredniku($id_urednika, $id_rubrike) {
+        $upit = "SELECT * FROM urednik_rubrika WHERE id_urednika = ? AND id_rubrike = ?";
+        $stmt = $this->conn->prepare($upit);
+        $stmt->bind_param("ii", $id_urednika, $id_rubrike);
+        $stmt->execute();
+        
+        $rezultat = $stmt->get_result();
+    
+        if ($rezultat && $rezultat->num_rows > 0) {
+            return true; // Rubrika je već dodeljena uredniku
+        } else {
+            return false; // Rubrika nije dodeljena uredniku
+        }
+    }
 
+    function proveriDodeluRubrikeNovinaru($id_novinara, $id_rubrike) {
+        $upit = "SELECT * FROM novinar_rubrika WHERE id_novinara = ? AND id_rubrike = ?";
+        $stmt = $this->conn->prepare($upit);
+        $stmt->bind_param("ii", $id_novinara, $id_rubrike);
+        $stmt->execute();
+        
+        $rezultat = $stmt->get_result();
+    
+        if ($rezultat && $rezultat->num_rows > 0) {
+            return true; 
+        } else {
+            return false; 
+        }
+    }
 
+    function ukloniRubrikuUredniku($id_urednika, $id_rubrike)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM urednik_rubrika WHERE id_urednika = ? AND id_rubrike = ?");
+        $stmt->bind_param("ii", $id_urednika, $id_rubrike);
+        $stmt->execute();
+    }
+    function ukloniRubrikuNovinaru($id_novinara, $id_rubrike)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_novinara = ? AND id_rubrike = ?");
+        $stmt->bind_param("ii", $id_novinara, $id_rubrike);
+        $stmt->execute();
+    }
+    
+
+    function unesiClanak($id_novinara, $id_rubrike, $naslov, $sadrzaj)
+    {
+        $stmt = $this->conn->prepare("INSERT INTO vest (naslov, sadrzaj, id_rubrike, status, id_novinara) values (?,?,?,'na čekanju',?)");
+        $stmt->bind_param("ssii", $naslov, $sadrzaj, $id_rubrike, $id_novinara);
+        $stmt->execute();
+    }
 }
 
 $konekcija = new Konekcija("localhost", "root", "", "branko_novine");

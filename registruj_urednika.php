@@ -15,6 +15,7 @@ if (isset($_SESSION["id_korisnika"])) {
             $id_novog_urednika = $novi_korisnik["id_korisnika"];
             $konekcija->ubaciUrednikRubrika($id_novog_urednika, $id_rubrike);
             $potvrda = "Uspešno ste uneli urednika " . $ime_prezime;
+                echo '<script>setTimeout(function() { vratiNaPregledUrednika(); }, 1000);</script>';
         } else {
             $greska = "Korisnik sa istim imenom već postoji";
         }
@@ -29,6 +30,11 @@ if (isset($_SESSION["id_korisnika"])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pregled urednika</title>
         <link rel="stylesheet" href="style.css">
+        <script>
+            function vratiNaPregledUrednika() {
+                window.location.href = 'pregled_urednika.php';
+            }
+        </script>
     </head>
 
     <body>
@@ -37,17 +43,17 @@ if (isset($_SESSION["id_korisnika"])) {
             <?php include "menu.php" ?>
             <div class="content">
                 <div>
-                    <h2>Registracija novog urednika:</h2>
+                    <h1>Registracija novog urednika:</h1>
                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                        <h4>Korisnicko ime:</h4>
+                        <h3>Korisnicko ime:</h3>
                         <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required>
-                        <h4>Lozinka:</h4>
+                        <h3>Lozinka:</h3>
                         <input type="password" name="lozinka" placeholder="Lozinka" required>
-                        <h4>Ime i prezime:</h4>
+                        <h3>Ime i prezime:</h3>
                         <input type="text" name="ime_prezime" placeholder="Ime i prezime" required>
-                        <h4>Email adresa:</h4>
+                        <h3>Email adresa:</h3>
                         <input type="email" name="email" placeholder="Email" required>
-                        <h4>Naziv rubrike:</h4>
+                        <h3>Naziv rubrike:</h3>
                         <select name="rubrika">
                             <?php
                             $rubrike = $konekcija->getSveRubrike();
@@ -61,6 +67,10 @@ if (isset($_SESSION["id_korisnika"])) {
                             echo $greska;
                         } ?>
                         <input type="submit" value="Registruj urednika" name="submit">
+                    </form>
+
+                    <form action="pregled_urednika.php" method="get">
+                        <input type="submit" value="Odustani od registracije" name="odustani">
                     </form>
                     <h3> <?php if (isset($potvrda)) {
                                 echo $potvrda;

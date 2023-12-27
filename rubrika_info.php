@@ -34,7 +34,7 @@ if (isset($_SESSION["id_korisnika"])) {
             <div class="content">
             <div class="info-container">
                 <div>
-                    <h2>Osnovne informacije o rubrici</h2>
+                    <h1>Osnovne informacije o rubrici</h1>
                     <?php if (isset($ime_rubrike)) { ?>
                         <div class="rubrika-info-item">
                             <h3>Ime rubrike:</h3>
@@ -53,6 +53,9 @@ if (isset($_SESSION["id_korisnika"])) {
                         }
                         ?>
                     </div>
+                    <form action="pregled_rubrika.php" method="get">
+                        <input type="submit" value="Povratak na prethodnu stranu" name="odustani" ;">
+                    </form>
                 </div>
             </div>
         </div>

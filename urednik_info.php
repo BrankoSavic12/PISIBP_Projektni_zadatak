@@ -21,10 +21,14 @@ if (isset($_SESSION["id_korisnika"])) {
             <?php
             $id_urednika = $_GET["id_urednika"];
             $urednik = $konekcija->getKorisnikByID($id_urednika);
-            echo "<h2>Osnovne informacije o uredniku</h2>";
+            echo "<h1>Osnovne informacije o uredniku</h1>";
             echo "<div class='info-item'>
                     <h3>Ime i prezime urednika:</h3>
                     <h4>$urednik[ime_prezime]</h4>
+                </div>";
+            echo "<div class='info-item'>
+                    <h3>Korisnicko ime urednika:</h3>
+                    <h4>$urednik[korisnicko_ime]</h4>
                 </div>";
             echo "<div class='info-item'>
                     <h3>Email adresa urednika:</h3>
@@ -45,8 +49,13 @@ if (isset($_SESSION["id_korisnika"])) {
                         <h3>Ovaj urednik nije dodeljen nijednoj rubrici</h3>
                     </div>";
             }
+           
             ?>
+            <form action="pregled_urednika.php" method="get">
+                <input type="submit" value="Povratak na prethodnu stranu" name="odustani" ;">
+            </form>
         </div>
+            
     </div>
 </div>
 

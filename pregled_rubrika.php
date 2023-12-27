@@ -19,23 +19,23 @@ if (isset($_SESSION["id_korisnika"])) {
         <?php include "menu.php" ?>
         <div class="content">
             <div>
-                <h2>Lista svih rubrika</h2>
+                <h1>Lista svih rubrika:</h1>
                 <a href="dodaj_rubriku.php"><button>Dodavanje rubrike</button></a>
-                <a href="menu.php"><button>Napusti stranicu</button></a>
-                
+                <a href="naslovna.php"><button>Napusti stranicu</button></a>
+
                 <?php
                 $rubrike = $konekcija->getSveRubrike();
                 if ($rubrike != false) {
                     while ($rubrika = $rubrike->fetch_assoc()) {
                         echo "<div><h3>Naziv rubrike:$rubrika[naziv]</h3>
                         <a href=rubrika_info.php?id_rubrike=$rubrika[id_rubrike]><button>Informacije</button></a>
-                        <a href=rubrika_brisanje.php?id_rubrike=$rubrika[id_rubrike]><button>Brisanje</button></a></div>";
+                        <button onclick=\"brisanjeRubrike({$rubrika['id_rubrike']})\">Brisanje</button></div>";
                     }
                 } else {
                     echo "<p>Nema rubrika u bazi</p>";
                 }
                 ?>
-                
+
                 <!-- Prikazivanje poruke obrisane rubrike (ako postoji) -->
                 <?php
                 if (isset($_SESSION['obrisi_rubriku_poruka'])) {
@@ -43,10 +43,37 @@ if (isset($_SESSION["id_korisnika"])) {
                     unset($_SESSION['obrisi_rubriku_poruka']); // Obrisi poruku iz sesije
                 }
                 ?>
-                
+
             </div>
         </div>
     </div>
+    <script>
+        function brisanjeRubrike(id_rubrike) {
+            var customDialog = document.createElement('div');
+            customDialog.className = 'custom-dialog';
+            customDialog.innerHTML = `
+                <p>Da li ste sigurni da želite da obrišete rubriku?</p>
+                <button class="confirm-button" onclick="potvrdiBrisanje(${id_rubrike})">Potvrdi</button>
+                <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>`;
+            document.body.appendChild(customDialog);
+        }
+
+        function potvrdiBrisanje(id_rubrike) {
+            window.location.href = "rubrika_brisanje.php?id_rubrike=" + id_rubrike;
+            ukloniCustomDialog();
+        }
+
+        function ponistiBrisanje() {
+            ukloniCustomDialog();
+        }
+
+        function ukloniCustomDialog() {
+            var customDialog = document.querySelector('.custom-dialog');
+            if (customDialog) {
+                customDialog.remove();
+            }
+        }
+    </script>
 
 </body>
 

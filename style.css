@@ -21,21 +21,22 @@
 
 .content {
     width: 50%;
-    background-color:  rgba(187, 169, 169, 0.942);
+    background-color: rgba(187, 169, 169, 0.942);
 }
 
 .menu-section {
     margin-bottom: 10px;
     display: flex;
     align-items: center;
+
 }
 
 .menu h1 {
     color: rgb(12, 12, 12);
     margin-bottom: 20px;
     font-style: oblique;
-    font-size:250%;
    
+
 }
 
 .menu p {
@@ -43,31 +44,31 @@
     margin: 0;
     display: flex;
     align-items: center;
-    font-style:oblique;
-    font-size:130%;
+    font-style: oblique;
+    font-size: 130%;
 }
 
 .menu a {
     color: white;
     text-decoration: none;
     font-style: oblique;
-    font-size:70%;
+    font-size: 70%;
 }
 
 .menu button {
-    padding: 8px 15px; 
+    padding: 8px 15px;
     margin-left: 10px;
     background-color: rgb(242, 234, 219);
     color: rgb(89, 68, 41);
-    border: 2px solid rgb(89, 68, 41); 
-    border-radius: 8px; 
+    border: 3px solid rgb(89, 68, 41);
+    border-radius: 8px;
     cursor: pointer;
     font-style: oblique;
 }
 
 .menu button:hover {
-    background-color: rgb(220, 200, 160); 
-   
+    background-color: rgb(220, 200, 160);
+
 }
 
 
@@ -81,47 +82,54 @@
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     width: 100%;
+    
 }
 
 .menu p.logout a {
-    background-color: rgb(242, 234, 219);
     color: rgb(89, 68, 41);
     padding: 8px 15px;
-    border: 2px solid rgb(89, 68, 41);
-    border-radius: 8px;
-    text-decoration: none;
+    border: 3px solid rgb(89, 68, 41);
+    background-color: rgb(242, 234, 219);
+    color: rgb(15, 14, 14);
+    padding: 10px;
+    border-radius: 10px;
     cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s; 
+    width: 100px;
+    text-align: center;
 }
 
 .menu p.logout a:hover {
-    background-color: rgb(220, 200, 160);
+    background-color: rgb(173, 171, 166);
+    border-color: #121111; 
+    color: #fff; 
 }
 
 
 .menu p.logout a {
-    margin-left: auto;  
+    margin-left: auto;
 }
 
 .sidebar {
     width: 400px;
     padding: 10px;
-    text-align: center; 
+    text-align: center;
 }
 
 .sidebar-image {
-    width: 100%; 
-    height: auto; 
-    margin-bottom: 10px; 
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
 }
 
 .sidebar h3 {
     color: rgb(9, 9, 9);
-    margin: 0; 
+    margin: 0;
     font-size: 18px;
     font-style: italic;
-    
+
 }
 
 .menu-section {
@@ -136,45 +144,48 @@
 form {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
-    margin: 0 auto; 
+    /*max-width: 500px;*/
+    margin: 0 auto;
 }
 
 input,
 select {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
 h3 {
-    color: rgb(4, 8, 4); 
+    color: rgb(4, 8, 4);
 }
 
 
 .content h2 {
-    text-align: center; 
+    text-align: center;
 }
-.info-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+
+
 
 .info-item {
     margin-bottom: 30px;
-   
+
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
     margin: 0;
-    color: #333; 
+    color: #333;
+    
 }
 
 h3 {
-    color: #555; 
+    color: #555;
 }
+h1{
+    font-style: italic;
+}
+
 .info-container {
-    background-color:rgb(179, 199, 199);
+    background-color: rgb(223, 221, 221);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -198,13 +209,14 @@ h3 {
 }
 
 .navigacija .top-buttons a {
-    text-decoration: none;
+    text-decoration:none;
+    font-style: italic;
 }
 
 .navigacija .buttons {
     display: flex;
     gap: 10px;
-    flex-wrap: wrap; /* Dozvoli omotavanje dugmadi na više redova */
+    flex-wrap: wrap;
 }
 
 .navigacija button {
@@ -213,14 +225,16 @@ h3 {
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100px; /* Fiksirajte širinu dugmeta */
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s; 
+    width: 100px;
+    
 }
 
 .navigacija button:hover {
-    background-color: rgb(244, 224, 186);
+    background-color: rgb(196, 193, 185);
+    border-color: #121111; 
+    color: #fff; 
 }
-
 .navigacija .content div {
     margin-bottom: 20px;
 }
@@ -251,19 +265,6 @@ h3 {
     flex-wrap: wrap;
 }
 
-.navigacija button {
-    background-color: rgb(242, 234, 219);
-    color: rgb(15, 14, 14);
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100px;
-}
-
-.navigacija button:hover {
-    background-color: rgb(244, 224, 186);
-}
 
 .navigacija .content div {
     margin-bottom: 20px;
@@ -275,9 +276,60 @@ h3 {
 }
 
 .content h2 {
-    text-align: center; 
+    text-align: center;
 }
 
 
+.clanak {
+    width: 100%;
+    background-color: aquamarine;
+}
 
+/*stilizovanje alerta za brisanje*/
+.custom-dialog {
+    position: fixed;
+    top: 35%;
+    left: 58%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(203, 199, 199, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 350px;
+    width: 100%;
+    text-align: center;
+}
 
+.custom-dialog p {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.custom-dialog button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+
+}
+
+.confirm-button,
+.cancel-button {
+    background-color: rgb(242, 234, 219);
+    color: rgb(15, 14, 14);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s; 
+    width: 100px;
+}
+
+.confirm-button:hover,
+.cancel-button:hover {
+    background-color: rgb(196, 193, 185);
+    border-color: #121111; 
+    color: #fff; 
+}
