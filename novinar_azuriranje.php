@@ -57,6 +57,8 @@ if (isset($_SESSION["id_korisnika"])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pregled novinara</title>
         <link rel="stylesheet" href="style.css">
+  
+
         <script>
             function vratiNaPregledNovinara() {
                 window.location.href = 'pregled_novinara.php';
@@ -75,18 +77,18 @@ if (isset($_SESSION["id_korisnika"])) {
                     $novinar = $konekcija->getKorisnikByID($id_novinara);
                     ?>
                     <form action="<?php echo $_SERVER['PHP_SELF'] . "?id_novinara=" . $id_novinara; ?>" method="post">
-                        <h1>Azuriraj/unapredi novinara:</h1>
+                        <div><h1>Azuriraj/unapredi novinara:</h1></div>
                         <h3>Korisnicko ime:</h3>
-                        <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required value="<?php echo $novinar["korisnicko_ime"]; ?>">
+                        <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" class="search-input" required value="<?php echo $novinar["korisnicko_ime"]; ?>">
                         <h3>Lozinka:</h3>
-                        <input type="password" name="lozinka" placeholder="Lozinka" required value="<?php echo $novinar["lozinka"]; ?>">
+                        <input type="password" name="lozinka" placeholder="Lozinka" class="search-input" required value="<?php echo $novinar["lozinka"]; ?>">
                         <h3>Ime i prezime:</h3>
-                        <input type="text" name="ime_prezime" placeholder="Ime i prezime" required value="<?php echo $novinar["ime_prezime"]; ?>">
+                        <input type="text" name="ime_prezime" placeholder="Ime i prezime" class="search-input" required value="<?php echo $novinar["ime_prezime"]; ?>">
                         <h3>Email adresa:</h3>
-                        <input type="email" name="email" placeholder="Email" required value="<?php echo $novinar["email"]; ?>">
+                        <input type="email" name="email" placeholder="Email" class="search-input" required value="<?php echo $novinar["email"]; ?>">
                         
                         <h3>Unapredi novinara u urednika rubrike:</h3>
-                        <select name="rubrika">
+                        <select name="rubrika" class="search-input">
                             <option value="0" selected>Nema unapređenje</option>
                             <?php
                             $rubrike = $konekcija->getSveRubrike();
@@ -97,7 +99,7 @@ if (isset($_SESSION["id_korisnika"])) {
                             ?>
                         </select>
                         <h3>Dodaj rubriku novinaru:</h3>
-                        <select name="rubrika_dodaj">
+                        <select name="rubrika_dodaj" class="search-input">
                             <option value="0" selected>Nema dodeljivanja rubrike</option>
                             <?php
                             $rubrike_za_dodavanje = $konekcija->getSveRubrike();
@@ -110,7 +112,7 @@ if (isset($_SESSION["id_korisnika"])) {
 
                        
                         <h3>Ukloni rubriku novinaru:</h3>
-                            <select name="rubrika_ukloni">
+                            <select name="rubrika_ukloni" class="search-input">
                             <option value="0" selected>Nema uklanjanja rubrike</option>
                             <?php
                             $rubrike_za_uklanjanje = $konekcija->getRubrikeByNovinarId($id_novinara);
@@ -121,17 +123,20 @@ if (isset($_SESSION["id_korisnika"])) {
                             }
                             ?>
                         </select>
-                        <input type="submit" value="Ažuriraj urednika rubrike" name="submit">
-                        </form>
-
-                        <form action="pregled_novinara.php" method="get">
-                        <input type="submit" value="Odustani od ažuriranja" name="odustani">
-                        </form>
-                        
-
                         <?php if (isset($greska)) {
                             echo $greska;
                         } ?>
+                        
+                        <div class="button-container">
+                            <form action="" method="post">
+                                <input type="submit" value="Ažuriranje novinara rubrike" name="submit" class='btn' />
+                            </form>
+                            <form action="pregled_novinara.php" method="get">
+                                <input type="submit" value="Odustani od ažuriranja" name="odustani" class='btn' />
+                            </form>
+                        </div>
+
+                       
                     <h3> <?php if (isset($potvrda)) {
                                 echo $potvrda;
                             } ?></h3>

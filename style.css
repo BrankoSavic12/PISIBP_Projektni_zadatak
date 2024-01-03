@@ -13,29 +13,32 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(189, 179, 179, 0.942);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(72, 61, 61, 0.492);
     padding: 10px;
+    overflow: auto;
 }
 
 .content {
     width: 50%;
-    background-color: rgba(187, 169, 169, 0.942);
+    background-color: rgba(109, 93, 93, 0.492);
+    height: 100vh;
+    overflow: auto;
 }
 
 .menu-section {
     margin-bottom: 10px;
     display: flex;
     align-items: center;
-
 }
+
 
 .menu h1 {
     color: rgb(12, 12, 12);
     margin-bottom: 20px;
     font-style: oblique;
-   
+    font-size: 40px;
 
 }
 
@@ -67,15 +70,15 @@
 }
 
 .menu button:hover {
-    background-color: rgb(220, 200, 160);
+    background-color: rgba(214, 200, 172, 0.259);
 
 }
 
 
 .menu-icon {
-    width: 80px;
-    height: auto;
     margin-right: 10px;
+    width: 70px;
+    height: 70px;
 }
 
 .menu p.logout {
@@ -84,27 +87,27 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    
+
 }
 
 .menu p.logout a {
     color: rgb(89, 68, 41);
     padding: 8px 15px;
     border: 3px solid rgb(89, 68, 41);
-    background-color: rgb(242, 234, 219);
+    background-color: rgb(251, 249, 245);
     color: rgb(15, 14, 14);
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s; 
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
     width: 100px;
     text-align: center;
 }
 
 .menu p.logout a:hover {
     background-color: rgb(173, 171, 166);
-    border-color: #121111; 
-    color: #fff; 
+    border-color: #121111;
+    color: #fff;
 }
 
 
@@ -162,6 +165,10 @@ h3 {
     text-align: center;
 }
 
+.content button {
+    border: 3px solid rgb(89, 68, 41);
+}
+
 
 
 .info-item {
@@ -174,13 +181,14 @@ h3,
 h4 {
     margin: 0;
     color: #333;
-    
+
 }
 
 h3 {
     color: #555;
 }
-h1{
+
+h1 {
     font-style: italic;
 }
 
@@ -209,7 +217,7 @@ h1{
 }
 
 .navigacija .top-buttons a {
-    text-decoration:none;
+    text-decoration: none;
     font-style: italic;
 }
 
@@ -220,21 +228,22 @@ h1{
 }
 
 .navigacija button {
-    background-color: rgb(242, 234, 219);
+    background-color: rgb(243, 240, 235);
     color: rgb(15, 14, 14);
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s; 
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
     width: 100px;
-    
+
 }
 
 .navigacija button:hover {
     background-color: rgb(196, 193, 185);
-    border-color: #121111; 
-    color: #fff; 
+    border-color: #121111;
+    color: #fff;
 }
+
 .navigacija .content div {
     margin-bottom: 20px;
 }
@@ -303,7 +312,7 @@ h1{
 
 .custom-dialog p {
     margin-bottom: 20px;
-    color: #333;
+    color: #383737;
 }
 
 .custom-dialog button {
@@ -318,18 +327,67 @@ h1{
 
 .confirm-button,
 .cancel-button {
-    background-color: rgb(242, 234, 219);
+    background-color: rgb(244, 243, 240);
     color: rgb(15, 14, 14);
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s; 
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
     width: 100px;
 }
 
 .confirm-button:hover,
 .cancel-button:hover {
     background-color: rgb(196, 193, 185);
-    border-color: #121111; 
-    color: #fff; 
+    border-color: #121111;
+    color: #fff;
 }
+
+.btn {
+    border: 3px solid rgb(82, 78, 78);
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: rgb(244, 243, 240);
+    color: rgb(15, 14, 14);
+    height: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.btn:hover {
+    background-color: rgb(196, 193, 185);
+    border-color: #121111;
+    color: #fff;
+}
+
+.search-input {
+    border: 3px solid rgb(81, 77, 77);
+    padding: 2px 7px;
+    border-radius: 5px;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-container form {
+    width: 48%;
+}
+
+.button-container form:first-child {
+    text-align: left;
+}
+
+.button-container form:last-child {
+    text-align: right;
+}
+

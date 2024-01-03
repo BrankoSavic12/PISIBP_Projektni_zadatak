@@ -10,6 +10,7 @@ if (isset($_POST["submit"])) {
         $_SESSION["id_korisnika"] = $korisnik["id_korisnika"];
         $_SESSION["uloga"] = $korisnik["uloga"];
         $_SESSION["ime_prezime"] = $korisnik["ime_prezime"];
+        $_SESSION["email"] = $korisnik["email"];
         header("location:naslovna.php");
     } else {
         $greska = "Pogrešno uneti kredencijali";

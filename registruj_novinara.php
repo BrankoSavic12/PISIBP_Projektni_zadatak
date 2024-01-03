@@ -39,45 +39,51 @@ if (isset($_SESSION["id_korisnika"])) {
 
     <body>
 
-        <div class="navigacija">
-            <?php include "menu.php" ?>
-            <div class="content">
-                <div>
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <h1>Registracija novog novinara:</h1>
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                        <h3>Korisnicko ime:</h3>
-                        <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required>
-                        <h3>Lozinka:</h3>
-                        <input type="password" name="lozinka" placeholder="Lozinka" required>
-                        <h3>Ime i prezime:</h3>
-                        <input type="text" name="ime_prezime" placeholder="Ime i prezime" required>
-                        <h3>Email adresa:</h3>
-                        <input type="email" name="email" placeholder="Email" required>
-                        <h3>Rubrika kojoj novinar pripada:</h3>
-                        <select name="rubrika" class="custom-select">
-                            <?php
-                            $rubrike = $konekcija->getSveRubrike();
+    <div class="navigacija">
+    <?php include "menu.php" ?>
+    <div class="content">
+        <div>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <div><h1>Registracija novog novinara:</h1></div>
+                <h3>Korisničko ime:</h3>
+                <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" class="search-input" required>
+                <h3>Lozinka:</h3>
+                <input type="password" name="lozinka" placeholder="Lozinka" class="search-input" required>
+                <h3>Ime i prezime:</h3>
+                <input type="text" name="ime_prezime" placeholder="Ime i prezime" class="search-input" required>
+                <h3>Email adresa:</h3>
+                <input type="email" name="email" placeholder="Email" class="search-input" required>
+                <h3>Rubrika kojoj novinar pripada:</h3>
+                <select name="rubrika" class="search-input">
+                    <?php
+                    $rubrike = $konekcija->getSveRubrike();
 
-                            while ($rubrika = $rubrike->fetch_assoc()) {
-                                echo "<option value=$rubrika[id_rubrike]> $rubrika[naziv] </option>";
-                            }
-                            ?>
-                        </select>
-                        <?php if (isset($greska)) {
-                            echo $greska;
-                        } ?>
-                        <input type="submit" value="Registruj novinara" name="submit">
-                    </form>
-                    <form action="pregled_urednika.php" method="get">
-                        <input type="submit" value="Odustani od registracije" name="odustani">
-                    </form>
-                    <h3> <?php if (isset($potvrda)) {
-                                echo $potvrda;
-                            } ?></h3>
-                </div>
+                    while ($rubrika = $rubrike->fetch_assoc()) {
+                        echo "<option value=$rubrika[id_rubrike]> $rubrika[naziv] </option>";
+                    }
+                    ?>
+                </select>
+
+                <?php if (isset($greska)) {
+                    echo $greska;
+                } ?>
+             
+             <div class="button-container">
+                <form action="" method="set" >
+                    <input type="submit" value="Registracija novinara rubrike" name="submit" class='btn' />
+                </form>
+                <form action="pregled_novinara.php" method="get" >
+                    <input type="submit" value="Odustani od registracije" name="Odustani" class='btn' />
+                </form>
             </div>
+
+                <h3> <?php if (isset($potvrda)) {
+                    echo $potvrda;
+                } ?></h3>
+            </form>
         </div>
+    </div>
+</div>
 
 
     </body>

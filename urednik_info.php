@@ -21,7 +21,7 @@ if (isset($_SESSION["id_korisnika"])) {
             <?php
             $id_urednika = $_GET["id_urednika"];
             $urednik = $konekcija->getKorisnikByID($id_urednika);
-            echo "<h1>Osnovne informacije o uredniku</h1>";
+            echo "<div><h1>Osnovne informacije o uredniku</h1></div>";
             echo "<div class='info-item'>
                     <h3>Ime i prezime urednika:</h3>
                     <h4>$urednik[ime_prezime]</h4>
@@ -52,7 +52,7 @@ if (isset($_SESSION["id_korisnika"])) {
            
             ?>
             <form action="pregled_urednika.php" method="get">
-                <input type="submit" value="Povratak na prethodnu stranu" name="odustani" ;">
+                <input type="submit" value="Povratak na prethodnu stranu" name="odustani" class="btn";">
             </form>
         </div>
             

@@ -2,23 +2,14 @@
 include "klase.php";
 if (isset($_SESSION["id_korisnika"])) {
     if (isset($_POST["submit"])) {
+        $id_vesti = $_GET["id_vesti"];
         $rubrika_id = $_POST["rubrika"];
         $naslov = $_POST["title"];
         $sadrzaj = $_POST["long_desc"];
         date_default_timezone_set('Europe/Belgrade');
         $datum_vreme = date("Y-m-d H:i:s");
-        $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "draft");
-        $potvrda = "Članak je sačuvan u draftu";
-    }
-
-    if (isset($_POST["odobri"])) {
-        $rubrika_id = $_POST["rubrika"];
-        $naslov = $_POST["title"];
-        $sadrzaj = $_POST["long_desc"];
-        date_default_timezone_set('Europe/Belgrade');
-        $datum_vreme = date("Y-m-d H:i:s");
-        $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "na čekanju");
-        $potvrda = "Članak je poslat na odobrenje";
+        $konekcija->azurirajClanak($rubrika_id, $naslov, $sadrzaj, "na čekanju", $datum_vreme, $id_vesti);
+        $potvrda = "Članak je sačuvan";
     }
 
 ?>
@@ -29,7 +20,7 @@ if (isset($_SESSION["id_korisnika"])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Kreiranje članaka</title>
+        <title>Izmena draft članka</title>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
         <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -51,32 +42,40 @@ if (isset($_SESSION["id_korisnika"])) {
         ?>
 
         <div>
+            <?php
+            $id_vesti = $_GET["id_vesti"];
+            $clanak = $konekcija->getClanakByID($id_vesti);
+            ?>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method='post' action=''>
+                            <form method='post' action='<?php echo "izmeni_draft_clanak.php?id_vesti=$id_vesti"; ?>'>
                                 <select name="rubrika">
                                     <?php
+
+
                                     $rubrike_novinar = $konekcija->getRubrikeByNovinarId($_SESSION["id_korisnika"]);
                                     while ($rubrika_novinar = $rubrike_novinar->fetch_assoc()) {
                                         $rubrika = $konekcija->getRubrikaByID($rubrika_novinar["id_rubrike"]);
-                                        echo "<option value=$rubrika[id_rubrike]>$rubrika[naziv]</option>";
+                                        echo "<option value=$rubrika[id_rubrike] ";
+                                        if ($clanak["id_rubrike"] == $rubrika["id_rubrike"]) {
+                                            echo "selected";
+                                        }
+                                        echo ">$rubrika[naziv]</option>";
                                     }
                                     ?>
                                 </select>
                                 <div class="mb-3">
                                     <label><strong>Title :</strong></label>
-                                    <input type="text" name="title" class="form-control">
+                                    <input type="text" name="title" class="form-control" value="<?php echo $clanak["naslov"] ?>">
                                 </div>
                                 <div class="mb-1">
                                     <label><strong>Long Description :</strong></label>
-                                    <textarea id="mytextarea" name='long_desc' class="form-control"></textarea><br>
+                                    <textarea id="mytextarea" name='long_desc' class="form-control"><?php echo $clanak["sadrzaj"] ?></textarea><br>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <input type="submit" name="submit" value="Sačuvaj kao draft" class="btn btn-success">
-                                    <input type="submit" name="odobri" value="Pošalji članak na odobrenje" class="btn btn-success">
-
+                                    <input type="submit" name="submit" value="Sačuvaj izmene" class="btn btn-success">
                                 </div>
                             </form>
                         </div>

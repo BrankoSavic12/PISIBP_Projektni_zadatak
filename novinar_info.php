@@ -20,7 +20,7 @@ if (isset($_SESSION["id_korisnika"])) {
         <div class="info-container">
             <?php
             $id_novinara = $_GET["id_novinara"];
-            echo "<h1>Osnovne informacije o novinaru</h1>";
+            echo "<div><h1>Osnovne informacije o novinaru</h1></div>";
             $novinar = $konekcija->getKorisnikByID($id_novinara);
             echo "<div class='info-item'>
                     <h3>Ime i prezime novinara:</h3>
@@ -50,10 +50,11 @@ if (isset($_SESSION["id_korisnika"])) {
                         </div>";
                 }
             ?>
-
+            
             <form action="pregled_novinara.php" method="get">
-                <input type="submit" value="Povratak na prethodnu stranu" name="odustani" ;">
+                <input type="submit" value="Povratak na prethodnu stranu" name="odustani" class="btn";">
             </form>
+            
         </div>
     </div>
 </div>

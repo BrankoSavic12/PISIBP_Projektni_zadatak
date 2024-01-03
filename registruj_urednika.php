@@ -43,18 +43,18 @@ if (isset($_SESSION["id_korisnika"])) {
             <?php include "menu.php" ?>
             <div class="content">
                 <div>
-                    <h1>Registracija novog urednika:</h1>
+                    <div><h1>Registracija novog urednika:</h1></div>
                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                         <h3>Korisnicko ime:</h3>
-                        <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required>
+                        <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" class="search-input" required>
                         <h3>Lozinka:</h3>
-                        <input type="password" name="lozinka" placeholder="Lozinka" required>
+                        <input type="password" name="lozinka" placeholder="Lozinka" class="search-input" required>
                         <h3>Ime i prezime:</h3>
-                        <input type="text" name="ime_prezime" placeholder="Ime i prezime" required>
+                        <input type="text" name="ime_prezime" placeholder="Ime i prezime" class="search-input" required>
                         <h3>Email adresa:</h3>
-                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="email" name="email" placeholder="Email" class="search-input" required>
                         <h3>Naziv rubrike:</h3>
-                        <select name="rubrika">
+                        <select name="rubrika" class="search-input">
                             <?php
                             $rubrike = $konekcija->getSveRubrike();
 
@@ -66,12 +66,14 @@ if (isset($_SESSION["id_korisnika"])) {
                         <?php if (isset($greska)) {
                             echo $greska;
                         } ?>
-                        <input type="submit" value="Registruj urednika" name="submit">
-                    </form>
-
-                    <form action="pregled_urednika.php" method="get">
-                        <input type="submit" value="Odustani od registracije" name="odustani">
-                    </form>
+                       <div class="button-container">
+                            <form action="" method="set" >
+                                <input type="submit" value="Registracija urednika rubrike" name="submit" class='btn' />
+                            </form>
+                            <form action="pregled_urednika.php" method="get" >
+                                <input type="submit" value="Odustani od registracije" name="Odustani" class='btn' />
+                            </form>
+                        </div>
                     <h3> <?php if (isset($potvrda)) {
                                 echo $potvrda;
                             } ?></h3>

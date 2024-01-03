@@ -38,14 +38,17 @@ if (isset($_SESSION["id_korisnika"])) {
         <div class="content">
             <div>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <h1>Dodavanje nove rubrike</h1>
+                    <div><h1>Dodavanje nove rubrike</h1></div>
                     <h3>Unesi naziv nove rubrike:</h3>
-                    <input type="text" name="naziv" placeholder="Naziv rubrike" required>
-                    <input type="submit" value="Dodavanje nove rubriku" name="submit">
-                </form>
-                <form action="pregled_rubrika.php" method="get">
-                    <input type="submit" value="Odustani od dodavanja rubrike" name="odustani">
-                </form>
+                    <input type="text" name="naziv" placeholder="Naziv rubrike" class="search-input" required>
+                    <div class="button-container">
+                            <form action="" method="post">
+                                <input type="submit" value="Dodavanje nove rubrike" name="submit" class='btn' />
+                            </form>
+                            <form action="pregled_rubrika.php" method="get">
+                                <input type="submit" value="Odustani od dodavanja" name="odustani" class='btn' />
+                            </form>
+                        </div>
                 <h3> <?php if (isset($potvrda)) { echo $potvrda; } ?></h3>
             </div>
         </div>

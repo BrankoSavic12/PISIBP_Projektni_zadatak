@@ -3,47 +3,66 @@ include "klase.php";
 if (isset($_SESSION["id_korisnika"])) {
 
 ?>
-    <!DOCTYPE html>
-    <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pregled novinara</title>
-        <link rel="stylesheet" href="style.css">
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregled novinara</title>
+    <link rel="stylesheet" href="style.css">
+ 
+</head>
 
-    </head>
+<body>
 
-    <body>
-
-    <div class="navigacija">
-            <?php include "menu.php" ?>
-            <div class="content">
-                <div>
-                    <h1>Lista svih novinara rubrika</h1>
-                    <a href="registruj_novinara.php"><button>Registracija novinara</button></a>
-                    <a href="naslovna.php"><button>Napusti stranicu</button></a>
-                    <?php
-                    $novinari = $konekcija->getSviNovinari();
-                    if ($novinari != false) {
-                        while ($novinar = $novinari->fetch_assoc()) {
-                            $id_novinara = $novinar['id_korisnika'];
-                            echo "<div>
-                                    <h3> Novinar: $novinar[ime_prezime]</h3>
-                                    <a href=novinar_info.php?id_novinara=$id_novinara><button>Informacije</button></a>  
-                                    <a href=novinar_azuriranje.php?id_novinara=$id_novinara><button>Ažuriranje</button></a>
-                                    <button onclick=\"brisanjeNovinara($id_novinara)\">Brisanje</button>
-                                </div>";
-                        }
-                    } else {
-                        echo "<p>Nema novinara u bazi</p>";
-                    }
-                    ?>
-                </div>
-            </div>
+<div class="navigacija">
+    <?php include "menu.php" ?>
+    <div class="content">
+        <div>
+            <h1>Lista svih novinara rubrika</h1>
         </div>
+        <div>
+            <a href="registruj_novinara.php"><button>Registracija novinara</button></a>
+            <a href="naslovna.php"><button>Napusti stranicu</button></a>
+        </div>
+        <div>
+        <form action='pregled_novinara.php' method='get' class="search-form">
+            <input type='text' name='pretraga' placeholder='Pretraga novinara' class="search-input">
+            <input type='submit' value='Pretraži novinare' class='btn'>
+        </form>
+
         
+            <?php
+            if (isset($_GET['pretraga'])) {
+                $pretraga = $_GET['pretraga'];
+                $novinari = $konekcija->getNovinariByImePrezime($pretraga);
+            } else {
+
+                $novinari = $konekcija->getSviNovinari();
+            }
+            
+            
+            if ($novinari != false) {
+                while ($novinar = $novinari->fetch_assoc()) {
+                    $id_novinara = $novinar['id_korisnika'];
+                    echo "<div>
+                            <h3> Novinar: $novinar[ime_prezime]</h3>
+                            <a href=novinar_info.php?id_novinara=$id_novinara><button>Informacije</button></a>  
+                            <a href=novinar_azuriranje.php?id_novinara=$id_novinara><button>Ažuriranje</button></a>
+                            <button onclick=\"brisanjeNovinara($id_novinara)\">Brisanje</button>
+                        </div>";
+                }
+            } else {
+                echo "<h3>Nema dostupnih novinari za prikazivanje</h3>";
+            }
+            ?>
+
+        </div>
+    </div>
+</div>
+
         <script>
             function brisanjeNovinara(id_novinara) {
                 var customDialog = document.createElement('div');

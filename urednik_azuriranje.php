@@ -68,17 +68,17 @@ if (isset($_SESSION["id_korisnika"])) {
                     $urednik = $konekcija->getKorisnikByID($id_urednika);
                     ?>
                     <form action="<?php echo $_SERVER['PHP_SELF'] . "?id_urednika=" . $id_urednika; ?>" method="post">
-                        <h1>Azuriranje urednika rubrike:</h1>
+                        <div><h1>Azuriranje urednika rubrike:</h1></div>
                         <h3>Korisnicko ime:</h3>
-                        <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" required value="<?php echo $urednik["korisnicko_ime"]; ?>">
+                        <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" class="search-input" required value="<?php echo $urednik["korisnicko_ime"]; ?>">
                         <h3>Lozinka:</h3>
-                        <input type="password" name="lozinka" placeholder="Lozinka" required value="<?php echo $urednik["lozinka"]; ?>">
+                        <input type="password" name="lozinka" placeholder="Lozinka" class="search-input" required value="<?php echo $urednik["lozinka"]; ?>">
                         <h3>Ime i prezime:</h3>
-                        <input type="text" name="ime_prezime" placeholder="Ime i prezime" required value="<?php echo $urednik["ime_prezime"]; ?>">
+                        <input type="text" name="ime_prezime" placeholder="Ime i prezime" class="search-input" required value="<?php echo $urednik["ime_prezime"]; ?>">
                         <h3>Email adresa:</h3>
-                        <input type="email" name="email" placeholder="Email" required value="<?php echo $urednik["email"]; ?>">
+                        <input type="email" name="email" placeholder="Email" class="search-input" required value="<?php echo $urednik["email"]; ?>">
                         <h3>Dodaj rubriku uredniku:</h3>
-                        <select name="rubrika">
+                        <select name="rubrika" class="search-input">
                             <option value="0" selected>Nema dodeljivanja rubrike</option>
                             <?php
                             $rubrike = $konekcija->getSveRubrike();
@@ -90,7 +90,7 @@ if (isset($_SESSION["id_korisnika"])) {
                         
                         </select>
                         <h3>Ukloni rubriku uredniku:</h3>
-                        <select name="ukloni_rubriku">
+                        <select name="ukloni_rubriku" class="search-input">
                             <option value="0" selected>Nema uklanjanja rubrike</option>
                             <?php
                             $rubrikeUrednika = $konekcija->getRubrikeByUrednikId($id_urednika);
@@ -101,17 +101,20 @@ if (isset($_SESSION["id_korisnika"])) {
                             }
                             ?>
                         </select>
-                        <input type="submit" value="Ažuriraj urednika rubrike" name="submit">
-                        </form>
-
-                        <form action="pregled_urednika.php" method="get">
-                        <input type="submit" value="Odustani od ažuriranja" name="odustani">
-                        </form>
-                        
-
+    
                         <?php if (isset($greska)) {
                             echo $greska;
                         } ?>
+
+                        <div class="button-container">
+                            <form action="" method="post">
+                                <input type="submit" value="Ažuriranje urednika rubrike" name="submit" class='btn' />
+                            </form>
+                            <form action="pregled_urednika.php" method="get">
+                                <input type="submit" value="Odustani od ažuriranja" name="odustani" class='btn' />
+                            </form>
+                        </div>
+
                    
                     
                     <h3> <?php if (isset($potvrda)) {

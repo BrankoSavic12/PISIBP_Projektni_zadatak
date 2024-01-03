@@ -11,6 +11,11 @@ if (isset($_SESSION["id_korisnika"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pregled rubrika</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .search-input {
+    width: 125px;
+    }
+    </style>
 </head>
 
 <body>
@@ -18,13 +23,24 @@ if (isset($_SESSION["id_korisnika"])) {
     <div class="navigacija">
         <?php include "menu.php" ?>
         <div class="content">
-            <div>
-                <h1>Lista svih rubrika:</h1>
+                <div><h1>Lista dostupnih rubrika:</h1></div>
+                
+                <div >
                 <a href="dodaj_rubriku.php"><button>Dodavanje rubrike</button></a>
                 <a href="naslovna.php"><button>Napusti stranicu</button></a>
+                </div>
+                <form action='pregled_rubrika.php' method='get' class="search-form">
+                    <input type='text' name='pretraga' placeholder='Pretraga rubrika' class="search-input">
+                    <input type='submit' value='Pretraži' class='btn'>
+                </form>
 
                 <?php
-                $rubrike = $konekcija->getSveRubrike();
+                 if (isset($_GET['pretraga'])) {
+                    $pretraga = $_GET['pretraga'];
+                    $rubrike = $konekcija->getRubrikeByNaziv($pretraga);
+                } else {
+                    $rubrike = $konekcija->getSveRubrike();
+                }
                 if ($rubrike != false) {
                     while ($rubrika = $rubrike->fetch_assoc()) {
                         echo "<div><h3>Naziv rubrike:$rubrika[naziv]</h3>
