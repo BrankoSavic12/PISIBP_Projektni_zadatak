@@ -9,6 +9,7 @@ if (isset($_SESSION["id_korisnika"])) {
         $datum_vreme = date("Y-m-d H:i:s");
         $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "draft");
         $potvrda = "Članak je sačuvan u draftu";
+        echo '<script>setTimeout(function() { vratiNaPregledDraftClanaka(); }, 1000);</script>';
     }
 
     if (isset($_POST["odobri"])) {
@@ -19,6 +20,7 @@ if (isset($_SESSION["id_korisnika"])) {
         $datum_vreme = date("Y-m-d H:i:s");
         $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "na čekanju");
         $potvrda = "Članak je poslat na odobrenje";
+        echo '<script>setTimeout(function() { vratiNaPregledClanakaNaCekanju(); }, 1000);</script>';
     }
 
 ?>
@@ -35,6 +37,14 @@ if (isset($_SESSION["id_korisnika"])) {
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 
         <link rel="stylesheet" href="style.css">
+        <script>
+            function vratiNaPregledDraftClanaka() {
+                window.location.href = 'pregled_clanci_draft_stanje.php';
+            }
+            function vratiNaPregledClanakaNaCekanju() {
+                window.location.href = 'pregled_clanci_na_cekanju.php';
+            }
+        </script>
 
 
     </head>
@@ -42,16 +52,16 @@ if (isset($_SESSION["id_korisnika"])) {
     <body>
         <div class="navigacija">
             <?php include "menu.php" ?>
-        </div>
-
+        <div class="row justify-content-center">
+        <div style="text-align: center;">
         <?php
         if (isset($potvrda)) {
-            echo "<h3>$potvrda</h3>";
+            echo "<h6>$potvrda</h6>";
         }
         ?>
-
-        <div>
-            <div class="row">
+    
+        </div> 
+        <div class="col-12" style="width: 700px;">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -71,12 +81,12 @@ if (isset($_SESSION["id_korisnika"])) {
                                 </div>
                                 <div class="mb-1">
                                     <label><strong>Long Description :</strong></label>
-                                    <textarea id="mytextarea" name='long_desc' class="form-control"></textarea><br>
+                                    <textarea id="mytextarea" name='long_desc' class="form-control" style="height: 450px;"></textarea><br>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <input type="submit" name="submit" value="Sačuvaj kao draft" class="btn btn-success">
-                                    <input type="submit" name="odobri" value="Pošalji članak na odobrenje" class="btn btn-success">
-
+                                    <input type="submit" name="submit" value="Sačuvaj kao draft stanje"  style="margin-right: 10px" >
+                                    <input type="submit" name="odobri" value="Pošalji članak na odobrenje">
+                                   
                                 </div>
                             </form>
                         </div>
@@ -98,6 +108,7 @@ if (isset($_SESSION["id_korisnika"])) {
                     'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
             });
         </script>
+
 
     </body>
 

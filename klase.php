@@ -607,8 +607,72 @@ class Konekcija
             return false;
         }
     }
- 
- 
+
+    function pretraziOdobreneClankeUrednikaPoNaslovu($pretragaNaslov, $urednikId)
+    {
+        $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
+        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_urednika = ? AND naslov LIKE ?");
+        
+        $pretragaNaslov = "%" . $pretragaNaslov . "%";
+    
+        $stmt->bind_param("is", $urednikId, $pretragaNaslov);
+    
+        $stmt->execute();
+    
+        $rezultat = $stmt->get_result();
+    
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+    
+    function getOdobreneVestiUrednika($urednikId)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_urednika = ?");
+        $stmt->bind_param("i", $urednikId);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+    function pretraziClankeNaCekanjuUrednikaPoNaslovu($pretragaNaslov, $urednikId)
+    {
+        $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
+        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'na čekanju' AND id_urednika = ? AND naslov LIKE ?");
+        
+        $pretragaNaslov = "%" . $pretragaNaslov . "%";
+    
+        $stmt->bind_param("is", $urednikId, $pretragaNaslov);
+    
+        $stmt->execute();
+    
+        $rezultat = $stmt->get_result();
+    
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function getVestiNaCekanjuUrednika($urednikId)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'na čekanju' AND id_urednika = ?");
+        $stmt->bind_param("i", $urednikId);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+    
     
         
 }

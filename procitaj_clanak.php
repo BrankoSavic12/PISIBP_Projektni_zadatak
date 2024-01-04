@@ -47,8 +47,12 @@ if (isset($_SESSION["id_korisnika"])) {
                 $zavrsiCitanjeHref = "pregled_clanci_na_cekanju.php";
             } elseif (strpos($prethodnaStranica, "pregled_clanci_draft_stanje.php") !== false) {
                 $zavrsiCitanjeHref = "pregled_clanci_draft_stanje.php";
+            }elseif (strpos($prethodnaStranica, "pregled_odobreni_clanci_urednik.php") !== false) {
+                $zavrsiCitanjeHref = "pregled_odobreni_clanci_urednik.php";
+            }elseif (strpos($prethodnaStranica, "pregled_clanci_na_cekanju_urednik.php") !== false) {
+                $zavrsiCitanjeHref = "pregled_clanci_na_cekanju_urednik.php";
             }
-         
+           
             ?>
             
             <a href="<?php echo $zavrsiCitanjeHref; ?>" style="display: inline-block; margin: 10px;">

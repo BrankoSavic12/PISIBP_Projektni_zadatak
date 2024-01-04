@@ -60,7 +60,7 @@ if (isset($_SESSION["id_korisnika"])) {
            
         
         ?>
-        </div>
+     
     </body>
 
     </html>

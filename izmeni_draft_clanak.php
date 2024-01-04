@@ -1,7 +1,7 @@
 <?php
 include "klase.php";
 if (isset($_SESSION["id_korisnika"])) {
-    if (isset($_POST["submit"])) {
+    if (isset($_POST["na_čekanju"])) {
         $id_vesti = $_GET["id_vesti"];
         $rubrika_id = $_POST["rubrika"];
         $naslov = $_POST["title"];
@@ -9,8 +9,22 @@ if (isset($_SESSION["id_korisnika"])) {
         date_default_timezone_set('Europe/Belgrade');
         $datum_vreme = date("Y-m-d H:i:s");
         $konekcija->azurirajClanak($rubrika_id, $naslov, $sadrzaj, "na čekanju", $datum_vreme, $id_vesti);
-        $potvrda = "Članak je sačuvan";
+        $potvrda = "Članak je poslat na odobrenje";
+        echo '<script>setTimeout(function() { vratiNaPregledClanakaNaCekanju(); }, 1000);</script>';
     }
+
+    if (isset($_POST["draft"])) {
+        $id_vesti = $_GET["id_vesti"];
+        $rubrika_id = $_POST["rubrika"];
+        $naslov = $_POST["title"];
+        $sadrzaj = $_POST["long_desc"];
+        date_default_timezone_set('Europe/Belgrade');
+        $datum_vreme = date("Y-m-d H:i:s");
+        $konekcija->azurirajClanak($rubrika_id, $naslov, $sadrzaj, "draft", $datum_vreme, $id_vesti);
+        $potvrda = "Članak je sačuvan u draft";
+        echo '<script>setTimeout(function() { vratiNaPregledDraftClanaka(); }, 1000);</script>';
+    }
+    
 
 ?>
     <!DOCTYPE html>
@@ -26,18 +40,26 @@ if (isset($_SESSION["id_korisnika"])) {
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 
         <link rel="stylesheet" href="style.css">
+        <script>
+            function vratiNaPregledDraftClanaka() {
+                window.location.href = 'pregled_clanci_draft_stanje.php';
+            }
+            function vratiNaPregledClanakaNaCekanju() {
+                window.location.href = 'pregled_clanci_na_cekanju.php';
+            }
+        </script>
 
 
     </head>
 
     <body>
-        <div class="navigacija">
+    <div class="navigacija">
             <?php include "menu.php" ?>
-        </div>
-
+        <div class="row justify-content-center">
+        <div style="text-align: center;">
         <?php
         if (isset($potvrda)) {
-            echo "<h3>$potvrda</h3>";
+            echo "<h6>$potvrda</h6>";
         }
         ?>
 
@@ -46,7 +68,7 @@ if (isset($_SESSION["id_korisnika"])) {
             $id_vesti = $_GET["id_vesti"];
             $clanak = $konekcija->getClanakByID($id_vesti);
             ?>
-            <div class="row">
+            <div class="row" style="width: 700px;">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -72,10 +94,11 @@ if (isset($_SESSION["id_korisnika"])) {
                                 </div>
                                 <div class="mb-1">
                                     <label><strong>Long Description :</strong></label>
-                                    <textarea id="mytextarea" name='long_desc' class="form-control"><?php echo $clanak["sadrzaj"] ?></textarea><br>
+                                    <textarea id="mytextarea" name='long_desc' class="form-control" style="height: 450px;"><?php echo $clanak["sadrzaj"] ?></textarea><br>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <input type="submit" name="submit" value="Sačuvaj izmene" class="btn btn-success">
+                                    <input type="submit" name="draft" value="Sačuvaj kao draft stanje"  style="margin-right: 10px" >
+                                    <input type="submit" name="na_čekanju" value="Pošalji članak na odobrenje">
                                 </div>
                             </form>
                         </div>

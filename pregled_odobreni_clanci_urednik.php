@@ -9,7 +9,7 @@ if (isset($_SESSION["id_korisnika"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pregled clanaka na cekanju</title>
+    <title>Pregled odobrenih clanaka</title>
     <link rel="stylesheet" href="style.css">
     <style>
     .clanak-container {
@@ -31,7 +31,7 @@ if (isset($_SESSION["id_korisnika"])) {
         align-items: center; 
     }
     .search-input {
-        width: 160px;
+        width: 110px;
     }
     </style>
 
@@ -43,45 +43,43 @@ if (isset($_SESSION["id_korisnika"])) {
     <?php include "menu.php" ?>
     <div class="content">
         <div>
-            <h1>Lista clanaka na cekanju</h1>
+            <h1>Lista odobrenih clanaka</h1>
         </div>
-        <div class="flex-container" >
-      
+        <div class="flex-container">
             
-       
-        <form action='pregled_clanci_na_cekanju.php' method='get' class="search-form">
-            <input type='text' name='pretraga' placeholder='Pretraga po naslovu' class="search-input">
-            <input type='submit' value='Pretraži' class='btn'>
+        <form action='pregled_odobreni_clanci_urednik.php' method='get' class="search-form">
+            <input type='text' name='pretragaNaslov' placeholder='Pretraga' class="search-input">
+            <input type='submit' value='Pretraži clanke' class='btn'>
         </form>
         <input type="button" value="Napusti" onclick="window.location.href='naslovna.php'" class="btn">
 
         </div>
+        
         <div>
            
             <?php
                 
-                if (isset($_GET['pretraga'])) {
-                    $pretragaNaslov = $_GET['pretraga'];
-                    $novinarId = isset($_SESSION['id_korisnika']) ? $_SESSION['id_korisnika'] : 0;
-                    $clanci = $konekcija->pretraziClankeNaCekanjuPoNaslovu($pretragaNaslov, $novinarId);
+                if (isset($_GET['pretragaNaslov'])) {
+                    $pretragaNaslov = $_GET['pretragaNaslov'];
+                    $urednikId = isset($_SESSION['id_korisnika']) ? $_SESSION['id_korisnika'] : 0; 
+                    $clanci = $konekcija->pretraziOdobreneClankeUrednikaPoNaslovu($pretragaNaslov, $urednikId);
                 } else {
-                    $novinarId = isset($_SESSION['id_korisnika']) ? $_SESSION['id_korisnika'] : 0;
-                    $clanci = $konekcija->getVestiNaCekanju($novinarId);
+                    $urednikId = isset($_SESSION['id_korisnika']) ? $_SESSION['id_korisnika'] : 0; 
+                    $clanci = $konekcija->getOdobreneVestiUrednika($urednikId);
                 }
-                
+              
                 if ($clanci != false) {
                     while ($clanak = $clanci->fetch_assoc()) {
                         echo "<div class='clanak-container'>
-                                <h3 class='naslov'>Naslov: $clanak[naslov]</h3> 
-                                <h3>Datum: $clanak[datum_vreme_objave]</h3>
-                                <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj</button></a>
-                                <a href='izmeni_draft_clanak?id_vesti=$clanak[id_vesti]'><button>Izmeni</button></a>
-                                <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Obrši</button>
-                            </div>";
+                        <h3 class='naslov'>Naslov: $clanak[naslov]</h3> 
+                        <h3>Datum odobrenja: $clanak[datum_vreme_objave]</h3>
+                        <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj članak</button></a>
+                        <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Brisanje članaka</button>
+                    </div>";
                     }
                 }
-            
             ?>
+
     <script>
         function brisanjeClanaka(id_vesti) {
             var customDialog = document.createElement('div');
@@ -95,7 +93,7 @@ if (isset($_SESSION["id_korisnika"])) {
         }
 
         function potvrdiBrisanje(id_vesti) {
-            window.location.href = "brisanje_clanaka_na_cekanju.php?id_vesti=" + id_vesti;
+            window.location.href = "brisanje_odobreni_clanci_urednik.php?id_vesti=" + id_vesti;
             ukloniCustomDialog();
         }
 
@@ -110,8 +108,6 @@ if (isset($_SESSION["id_korisnika"])) {
             }
         }
     </script>
-    
-
         </div>
     </div>
 </div>

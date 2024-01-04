@@ -5,9 +5,16 @@
         <h1>Stranica glavnog urednika</h1>
         <div class="sidebar">
             <img src="slike/urednik1.jpg" alt="Zanimljiva slika" class="sidebar-image">
-            <h3>Glavni urednik:</h3>
-            <h3>Petar Petrović</h3>
-            <h3>petar.petrovic@novine.rs</h3>
+            <?php
+            $glavniUrednici = $konekcija->getGlavniUrednik();
+            while($glavniUrednik = $glavniUrednici->fetch_assoc()) {
+                echo "<div class='urednik-info'>";
+                echo "<h3>Glavni urednik redakcije:</h3>";
+                echo "<h3>$glavniUrednik[ime_prezime]</h3>";
+                echo "<h3>$glavniUrednik[email]</h3>";
+                echo "</div>";
+            }
+            ?>
 
         </div>
 
@@ -50,6 +57,7 @@
 
 
     <?php  } ?>
+
     <?php
     if (($_SESSION["uloga"]) == 'novinar') {
     ?>
@@ -94,7 +102,6 @@
             </p>
         </div>
 
-
         <div>
             <p>
                 <img src="slike/novinar_odobreni.jpg" alt="Urednici" class="menu-icon">
@@ -122,16 +129,20 @@
                
         </div>
         
-
         <p class="logout"><a href="logout.php">Logout</a></p>
+
+
 
     <?php  }
     if (($_SESSION["uloga"]) == 'urednik') {
 
     ?>
-        <h1>Stranica urednika rubrike</h1>
+      <h1>Stranica novinara rubrike</h1>
         <div class="sidebar">
-        <img src="slike/Novinar.jpg" alt="Zanimljiva slika" class="sidebar-image">
+        <div style="display: flex; align-items: center;">
+            <img src="slike/Stranica_urednik1.jpg" alt="Slika 1" class="sidebar-image" style="width: 200px; height: 180px;">
+            <img src="slike/Stranica_urednik.jpg" alt="Slika 2" class="sidebar-image" style="width: 200px; height: 180px;">
+        </div>
         
         <?php
         $rubrike_urednik = $konekcija->getRubrikeByUrednikId($_SESSION["id_korisnika"]);
@@ -153,48 +164,27 @@
 
         <div>
             <p>
-                <img src="slike/urednici.jpg" alt="Urednici" class="menu-icon">
-                "Svi moji odobreni članci"
+                <img src="slike/novinar_odobreni.jpg" alt="Urednici" class="menu-icon">
+                " Pregled odobrenih/objavljenih članaka "
                 <a href="pregled_odobreni_clanci_urednik.php"><button>Pregled</button></a>
-                <?php
-                $vesti = $konekcija->getOdovreneVestiByUrednik($_SESSION["id_korisnika"]);
-                if ($vesti != false) {
-                    while ($vest = $vesti->fetch_assoc()) {
-                        echo "<p>$vest[naslov] $vest[datum_vreme_objave] <a href=procitaj_clanak.php?id_vesti=$vest[id_vesti]><button>Pročitaj članak</button></a></p>";
-                    }
-                } else {
-                    echo "<p>Nemate nijednu odobrenu vest</p>";
-                }
-                ?>
-
             </p>
         </div>
 
         <div>
             <p>
-                <img src="slike/urednici.jpg" alt="Urednici" class="menu-icon">
-                Članci koji čekaju odobrenje
-                <?php
-                $rubrike_urednik = $konekcija->getRubrikeByUrednikId($_SESSION["id_korisnika"]);
-                if ($rubrike_urednik != false) {
-
-                    while ($rubrika_urednik = $rubrike_urednik->fetch_assoc()) {
-                        $vesti_po_rubrici = $konekcija->getVestiByRubrika($rubrika_urednik["id_rubrike"]);
-                        while ($vest_po_rubrici = $vesti_po_rubrici->fetch_assoc()) {
-                            if ($vest_po_rubrici["status"] == "na čekanju") {
-                                echo "<p>$vest_po_rubrici[naslov] $vest_po_rubrici[datum_vreme_objave] <a href=procitaj_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Pročitaj članak</button></a> 
-                                <a href=odobri_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Odobri članak</button></a>
-                                
-                                </p>";
-                            }
-                        }
-                    }
-                } else {
-                    echo "<p>Nemate nijednu rubriku</p>";
-                }
-                ?>
-
+                <img src="slike/novinar_na_cekanju.jpg" alt="Urednici" class="menu-icon">
+                "Članci koji čekaju odobrenje od urednika"
+                <a href="pregled_clanci_na_cekanju_urednik.php"><button>Pregled</button></a>
             </p>
+        </div>
+
+        <div>
+            <p>
+                <img src="slike/novinar_info.jpg" alt="Urednici" class="menu-icon">
+                "Podaci i kontakt email radnika redakcije "
+                <a href="informacije_urednici.php"><button>Pregled</button></a>
+            </p>
+               
         </div>
 
         <p class="logout"><a href="logout.php">Logout</a></p>
