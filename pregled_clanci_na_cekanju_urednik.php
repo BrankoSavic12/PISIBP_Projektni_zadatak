@@ -54,29 +54,34 @@ if (isset($_SESSION["id_korisnika"])) {
             <input type="button" value="Napusti" onclick="window.location.href='naslovna.php'" class="btn">
 
             </div>
-
             <?php
+        $pretragaNaslov = isset($_GET['pretragaNaslov']) ? $_GET['pretragaNaslov'] : '';
+        $pronadjeniClanci = false;
 
-                $rubrike_urednik = $konekcija->getRubrikeByUrednikId($_SESSION["id_korisnika"]);
-                if ($rubrike_urednik != false) {
-                    while ($rubrika_urednik = $rubrike_urednik->fetch_assoc()) {
-                        $vesti_po_rubrici = $konekcija->getVestiByRubrika($rubrika_urednik["id_rubrike"]);
-                        while ($vest_po_rubrici = $vesti_po_rubrici->fetch_assoc()) {
-                            if ($vest_po_rubrici["status"] == "na čekanju") {
-                                echo "<div class='clanak-container'>
-                                <h3 class='naslov'>Naslov: $vest_po_rubrici[naslov]</h3> 
-                                <h3>Datum odobrenja: $vest_po_rubrici[datum_vreme_objave]</h3>
-                                <a href=procitaj_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Pročitaj članak</button></a> 
-                                <a href=odobri_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Odobri članak</button></a>
-                                <button onclick=\"brisanjeClanaka($vest_po_rubrici[id_vesti])\">Brisanje članaka</button>
-                                </div>";
-
-                            }
-                        }
+        $rubrike_urednik = $konekcija->getRubrikeByUrednikId($_SESSION["id_korisnika"]);
+        if ($rubrike_urednik != false) {
+            while ($rubrika_urednik = $rubrike_urednik->fetch_assoc()) {
+                $vesti_po_rubrici = $konekcija->getVestiByRubrika($rubrika_urednik["id_rubrike"]);
+                while ($vest_po_rubrici = $vesti_po_rubrici->fetch_assoc()) {
+                    if ($vest_po_rubrici["status"] == "na čekanju" && (empty($pretragaNaslov) || stripos($vest_po_rubrici['naslov'], $pretragaNaslov) !== false)) {
+                        $pronadjeniClanci = true;
+                        echo "<div class='clanak-container'>
+                            <h3 class='naslov'>Naslov: $vest_po_rubrici[naslov]</h3> 
+                            <h3>Datum odobrenja: $vest_po_rubrici[datum_vreme_objave]</h3>
+                            <a href=procitaj_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Pročitaj članak</button></a> 
+                            <a href=odobri_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Odobri članak</button></a>
+                            <button onclick=\"brisanjeClanaka($vest_po_rubrici[id_vesti])\">Brisanje članaka</button>
+                            </div>";
                     }
                 }
+            }
+        }
 
-            ?>
+        if (!$pronadjeniClanci) {
+            echo "<p>Nema dostupnih članaka za prikaz.</p>";
+        }
+        ?>
+            
 
     <script>
         function brisanjeClanaka(id_vesti) {
