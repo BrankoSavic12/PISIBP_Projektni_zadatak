@@ -339,10 +339,10 @@ class Konekcija
     }
 
 
-    function unesiClanak($id_novinara, $id_rubrike, $naslov, $sadrzaj, $datum_vreme, $status)
+    function unesiClanak($id_novinara, $id_rubrike, $naslov, $sadrzaj, $datum_vreme, $status, $slika_url)
     {
-        $stmt = $this->conn->prepare("INSERT INTO vest (naslov, sadrzaj, id_rubrike, status, datum_vreme_objave, id_novinara) values (?,?,?,?,?,?)");
-        $stmt->bind_param("ssissi", $naslov, $sadrzaj, $id_rubrike, $status, $datum_vreme, $id_novinara);
+        $stmt = $this->conn->prepare("INSERT INTO vest (naslov, sadrzaj, id_rubrike, status, datum_vreme_objave, id_novinara, lead_slika_url) values (?,?,?,?,?,?,?)");
+        $stmt->bind_param("ssissis", $naslov, $sadrzaj, $id_rubrike, $status, $datum_vreme, $id_novinara, $slika_url);
         $stmt->execute();
     }
 
@@ -506,30 +506,35 @@ class Konekcija
     }
     function obrisiVest($id_vesti)
     {
-        $stm = $this->conn->prepare("DELETE FROM vest WHERE id_vesti = ?");
-        $stm->bind_param("i", $id_vesti);
-        $stm->execute();
+        $stmTagovi = $this->conn->prepare("DELETE FROM tagovi WHERE id_vesti = ?");
+        $stmTagovi->bind_param("i", $id_vesti);
+        $stmTagovi->execute();
+    
+        $stmVest = $this->conn->prepare("DELETE FROM vest WHERE id_vesti = ?");
+        $stmVest->bind_param("i", $id_vesti);
+        $stmVest->execute();
     }
+
     function pretraziClankeNaCekanjuPoNaslovu($pretragaNaslov, $novinarId)
     {
         $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'na čekanju' AND id_novinara = ? AND naslov LIKE ?");
-        
+
         $pretragaNaslov = "%" . $pretragaNaslov . "%";
-    
+
         $stmt->bind_param("is", $novinarId, $pretragaNaslov);
-    
+
         $stmt->execute();
-    
+
         $rezultat = $stmt->get_result();
-    
+
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
             return false;
         }
     }
-    
+
     function getVestiNaCekanju($novinarId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'na čekanju' AND id_novinara = ?");
@@ -546,22 +551,22 @@ class Konekcija
     {
         $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_novinara = ? AND naslov LIKE ?");
-        
+
         $pretragaNaslov = "%" . $pretragaNaslov . "%";
-    
+
         $stmt->bind_param("is", $novinarId, $pretragaNaslov);
-    
+
         $stmt->execute();
-    
+
         $rezultat = $stmt->get_result();
-    
+
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
             return false;
         }
     }
-    
+
     function getOdobreneVesti($novinarId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_novinara = ?");
@@ -579,22 +584,22 @@ class Konekcija
     {
         $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'draft' AND id_novinara = ? AND naslov LIKE ?");
-        
+
         $pretragaNaslov = "%" . $pretragaNaslov . "%";
-    
+
         $stmt->bind_param("is", $novinarId, $pretragaNaslov);
-    
+
         $stmt->execute();
-    
+
         $rezultat = $stmt->get_result();
-    
+
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
             return false;
         }
     }
-    
+
     function getDraftVesti($novinarId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'draft' AND id_novinara = ?");
@@ -612,22 +617,22 @@ class Konekcija
     {
         $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_urednika = ? AND naslov LIKE ?");
-        
+
         $pretragaNaslov = "%" . $pretragaNaslov . "%";
-    
+
         $stmt->bind_param("is", $urednikId, $pretragaNaslov);
-    
+
         $stmt->execute();
-    
+
         $rezultat = $stmt->get_result();
-    
+
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
             return false;
         }
     }
-    
+
     function getOdobreneVestiUrednika($urednikId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_urednika = ?");
@@ -644,15 +649,15 @@ class Konekcija
     {
         $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'na čekanju' AND id_urednika = ? AND naslov LIKE ?");
-        
+
         $pretragaNaslov = "%" . $pretragaNaslov . "%";
-    
+
         $stmt->bind_param("is", $urednikId, $pretragaNaslov);
-    
+
         $stmt->execute();
-    
+
         $rezultat = $stmt->get_result();
-    
+
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
@@ -672,9 +677,83 @@ class Konekcija
             return false;
         }
     }
-    
-    
-        
+
+    function getZahteviByRubrika($id_rubrike)
+    {
+        $stmt = $this->conn->prepare("select * from zahtevi where id_rubrike = ?");
+        $stmt->bind_param("i", $id_rubrike);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function obrisiZahtevByIDZahteva($id_zahteva)
+    {
+        $stmt = $this->conn->prepare("delete from zahtevi where id_zahteva = ?");
+        $stmt->bind_param("i", $id_zahteva);
+        $stmt->execute();
+    }
+
+    function getVestByStatus($status)
+    {
+        $stmt = $this->conn->prepare("select * from vest where status = ?");
+        $stmt->bind_param("s", $status);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function getSviZahtevi()
+    {
+        $stmt = $this->conn->prepare("select * from zahtevi");
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function getPoslednjiUnetClanak()
+    {
+        $stmt = $this->conn->prepare("select * from vest order by datum_vreme_objave desc limit 1");
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat->fetch_assoc();
+        } else {
+            return false;
+        }
+    }
+
+    function ubaciTag($id_vesti, $sadrzaj)
+    {
+        $stmt = $this->conn->prepare("insert into tagovi (id_vesti, sadrzaj) values (?, ?)");
+        $stmt->bind_param("is", $id_vesti, $sadrzaj);
+        $stmt->execute();
+    }
+
+    function getTagoviByVest($id_vesti)
+    {
+        $stmt = $this->conn->prepare("select * from tagovi where id_vesti = ?");
+        $stmt->bind_param("i", $id_vesti);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
 }
 
 $konekcija = new Konekcija("localhost", "root", "", "branko_novine");

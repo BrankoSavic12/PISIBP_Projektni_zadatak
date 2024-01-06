@@ -7,7 +7,7 @@
             <img src="slike/urednik1.jpg" alt="Zanimljiva slika" class="sidebar-image">
             <?php
             $glavniUrednici = $konekcija->getGlavniUrednik();
-            while($glavniUrednik = $glavniUrednici->fetch_assoc()) {
+            while ($glavniUrednik = $glavniUrednici->fetch_assoc()) {
                 echo "<div class='urednik-info'>";
                 echo "<h3>Glavni urednik redakcije:</h3>";
                 echo "<h3>$glavniUrednik[ime_prezime]</h3>";
@@ -48,9 +48,16 @@
         <div class="menu-section">
             <p>
                 <img src="slike/zahtevi.jpg" alt="Rubrike" class="menu-icon">
-                "Naša bogata lepeza članaka pruža raznovrsne teme.Pronađite intrigantne
-                i zanimljive priče koje će zadobiti pažnju svakog čitaoca."
-                <a href="pregled_zahteva.php"><button>Pregled</button></a>
+                "Obrada zahteva koji cekaju odobrenje"
+                <a href="pregled_clanci_na_cekanju_glavni_urednik.php"><button>Pregled</button></a>
+            </p>
+        </div>
+
+        <div class="menu-section">
+            <p>
+                <img src="slike/zahtevi.jpg" alt="Rubrike" class="menu-icon">
+                "Obrada zahteva za izmenu i brisanje"
+                <a href="pregled_clanci_zahtevi_glavni_urednik.php"><button>Pregled</button></a>
             </p>
         </div>
         <p class="logout"><a href="logout.php">Logout</a></p>
@@ -63,12 +70,12 @@
     ?>
         <h1>Stranica novinara rubrike</h1>
         <div class="sidebar">
-        <div style="display: flex; align-items: center;">
-            <img src="slike/Stranica_novinar.jpg" alt="Slika 1" class="sidebar-image" style="width: 200px; height: 180px;">
-            <img src="slike/Stranica_novinar1.jpg" alt="Slika 2" class="sidebar-image" style="width: 200px; height: 180px;">
-        </div>
-    
-        <?php
+            <div style="display: flex; align-items: center;">
+                <img src="slike/Stranica_novinar.jpg" alt="Slika 1" class="sidebar-image" style="width: 200px; height: 180px;">
+                <img src="slike/Stranica_novinar1.jpg" alt="Slika 2" class="sidebar-image" style="width: 200px; height: 180px;">
+            </div>
+
+            <?php
             $rubrike_novinar = $konekcija->getRubrikeByNovinarId($_SESSION["id_korisnika"]);
             $rubrike_nazivi = array();
             while ($rubrika_novinar = $rubrike_novinar->fetch_assoc()) {
@@ -79,14 +86,14 @@
                 echo "<h3>Novinar rubrike " . implode(" i ", $rubrike_nazivi) . "</h3>";
             } else {
                 echo "<h2>Nemate dodeljenih rubrika</h2>";
-            }      
-                echo "<h3>$_SESSION[ime_prezime]</h3>";
-                echo "<h3>$_SESSION[email]</h3>";
-      
-        ?>
+            }
+            echo "<h3>$_SESSION[ime_prezime]</h3>";
+            echo "<h3>$_SESSION[email]</h3>";
+
+            ?>
         </div>
         <div class="menu-section">
-   
+
             <p>
                 <img src="slike/novinar_napisi.jpg" alt="Urednici" class="menu-icon">
                 " Pisanje novog članka za online novine"
@@ -107,8 +114,8 @@
                 <img src="slike/novinar_odobreni.jpg" alt="Urednici" class="menu-icon">
                 " Pregled odobrenih/objavljenih članaka "
                 <a href="pregled_odobreni_clanci.php"><button>Pregled</button></a>
-                </p>
-               
+            </p>
+
         </div>
 
         <div>
@@ -117,7 +124,7 @@
                 " Pregled clanaka u radnom/draft stanju "
                 <a href="pregled_clanci_draft_stanje.php"><button>Pregled</button></a>
             </p>
-               
+
         </div>
 
         <div>
@@ -126,9 +133,9 @@
                 "Podaci i kontakt email radnika redakcije"
                 <a href="informacije_urednici.php"><button>Pregled</button></a>
             </p>
-               
+
         </div>
-        
+
         <p class="logout"><a href="logout.php">Logout</a></p>
 
 
@@ -137,30 +144,30 @@
     if (($_SESSION["uloga"]) == 'urednik') {
 
     ?>
-      <h1>Stranica novinara rubrike</h1>
+        <h1>Stranica urednika rubrike</h1>
         <div class="sidebar">
-        <div style="display: flex; align-items: center;">
-            <img src="slike/Stranica_urednik1.jpg" alt="Slika 1" class="sidebar-image" style="width: 200px; height: 180px;">
-            <img src="slike/Stranica_urednik.jpg" alt="Slika 2" class="sidebar-image" style="width: 200px; height: 180px;">
-        </div>
-        
-        <?php
-        $rubrike_urednik = $konekcija->getRubrikeByUrednikId($_SESSION["id_korisnika"]);
-        $rubrike_nazivi = array();
-        while ($rubrika_urednik = $rubrike_urednik->fetch_assoc()) {
-            $rubrika = $konekcija->getRubrikaByID($rubrika_urednik["id_rubrike"]);
-            $rubrike_nazivi[] = $rubrika['naziv'];
-        }
-        if (count($rubrike_nazivi) > 0) {
-            echo "<h3>Urednik rubrike " . implode(" i ", $rubrike_nazivi) . "</h3>";
-        } else {
-            echo "<h2>Nemate dodeljenih rubrika</h2>";
-        }      
+            <div style="display: flex; align-items: center;">
+                <img src="slike/Stranica_urednik1.jpg" alt="Slika 1" class="sidebar-image" style="width: 200px; height: 180px;">
+                <img src="slike/Stranica_urednik.jpg" alt="Slika 2" class="sidebar-image" style="width: 200px; height: 180px;">
+            </div>
+
+            <?php
+            $rubrike_urednik = $konekcija->getRubrikeByUrednikId($_SESSION["id_korisnika"]);
+            $rubrike_nazivi = array();
+            while ($rubrika_urednik = $rubrike_urednik->fetch_assoc()) {
+                $rubrika = $konekcija->getRubrikaByID($rubrika_urednik["id_rubrike"]);
+                $rubrike_nazivi[] = $rubrika['naziv'];
+            }
+            if (count($rubrike_nazivi) > 0) {
+                echo "<h3>Urednik rubrike " . implode(" i ", $rubrike_nazivi) . "</h3>";
+            } else {
+                echo "<h2>Nemate dodeljenih rubrika</h2>";
+            }
             echo "<h3>$_SESSION[ime_prezime]</h3>";
             echo "<h3>$_SESSION[email]</h3>";
-  
-    ?>
-    </div>
+
+            ?>
+        </div>
 
         <div>
             <p>
@@ -173,8 +180,16 @@
         <div>
             <p>
                 <img src="slike/novinar_na_cekanju.jpg" alt="Urednici" class="menu-icon">
-                "Članci koji čekaju odobrenje od urednika"
+                " Pregled članaka koji čekaju odobrenje "
                 <a href="pregled_clanci_na_cekanju_urednik.php"><button>Pregled</button></a>
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <img src="slike/izmene.jpg" alt="Urednici" class="menu-icon">
+                " Pregled zahteva za menjanje i brisanje "
+                <a href="pregled_clanci_zahtevi.php"><button>Pregled</button></a>
             </p>
         </div>
 
@@ -184,7 +199,7 @@
                 "Podaci i kontakt email radnika redakcije "
                 <a href="informacije_urednici.php"><button>Pregled</button></a>
             </p>
-               
+
         </div>
 
         <p class="logout"><a href="logout.php">Logout</a></p>

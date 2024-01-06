@@ -7,8 +7,22 @@ if (isset($_SESSION["id_korisnika"])) {
         $sadrzaj = $_POST["long_desc"];
         date_default_timezone_set('Europe/Belgrade');
         $datum_vreme = date("Y-m-d H:i:s");
-        $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "draft");
-        $potvrda = "Članak je sačuvan u draftu";
+        include "upload_slika.php";
+        if ($uploadOk == 1) {
+            $slika_url = "images/" . htmlspecialchars(basename($_FILES["slika"]["name"]));
+            $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "draft", $slika_url);
+            $potvrda = "Članak je sačuvan u draftu";
+            $uneta_vest = $konekcija->getPoslednjiUnetClanak();
+            $tagovi = $_POST["tagovi"];
+            $tagovi_niz = explode(",", $tagovi);
+            foreach ($tagovi_niz as $tag) {
+                $konekcija->ubaciTag($uneta_vest["id_vesti"], $tag);
+            }
+        } else {
+            $greska = "Vest nije moguće sačuvati zbog pogrešne slike";
+        }
+
+
         echo '<script>setTimeout(function() { vratiNaPregledDraftClanaka(); }, 1000);</script>';
     }
 
@@ -18,9 +32,20 @@ if (isset($_SESSION["id_korisnika"])) {
         $sadrzaj = $_POST["long_desc"];
         date_default_timezone_set('Europe/Belgrade');
         $datum_vreme = date("Y-m-d H:i:s");
-        $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "na čekanju");
-        $potvrda = "Članak je poslat na odobrenje";
-        echo '<script>setTimeout(function() { vratiNaPregledClanakaNaCekanju(); }, 1000);</script>';
+        include "upload_slika.php";
+        if ($uploadOk == 1) {
+            $slika_url = "images/" . htmlspecialchars(basename($_FILES["slika"]["name"]));
+            $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "na čekanju", $slika_url);
+            $potvrda = "Članak je poslat na odobrenje";
+            $uneta_vest = $konekcija->getPoslednjiUnetClanak();
+            $tagovi = $_POST["tagovi"];
+            $tagovi_niz = explode(",", $tagovi);
+            foreach ($tagovi_niz as $tag) {
+                $konekcija->ubaciTag($uneta_vest["id_vesti"], $tag);
+            }
+        } else {
+            $greska = "Vest nije moguće sačuvati zbog pogrešne slike";
+        }
     }
 
 ?>
@@ -33,7 +58,8 @@ if (isset($_SESSION["id_korisnika"])) {
 
         <title>Kreiranje članaka</title>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
-        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://cdn.tiny.cloud/1/3wrh81rf47kz5uhx860nh15rygis6s6puk10pm3qr4nuspua/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 
         <link rel="stylesheet" href="style.css">
@@ -41,6 +67,7 @@ if (isset($_SESSION["id_korisnika"])) {
             function vratiNaPregledDraftClanaka() {
                 window.location.href = 'pregled_clanci_draft_stanje.php';
             }
+
             function vratiNaPregledClanakaNaCekanju() {
                 window.location.href = 'pregled_clanci_na_cekanju.php';
             }
@@ -50,64 +77,125 @@ if (isset($_SESSION["id_korisnika"])) {
     </head>
 
     <body>
-        <div class="navigacija">
+        <div class="navigacija" >
             <?php include "menu.php" ?>
-        <div class="row justify-content-center">
-        <div style="text-align: center;">
-        <?php
-        if (isset($potvrda)) {
-            echo "<h6>$potvrda</h6>";
-        }
-        ?>
-    
-        </div> 
-        <div class="col-12" style="width: 700px;">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form method='post' action=''>
-                                <select name="rubrika">
-                                    <?php
-                                    $rubrike_novinar = $konekcija->getRubrikeByNovinarId($_SESSION["id_korisnika"]);
-                                    while ($rubrika_novinar = $rubrike_novinar->fetch_assoc()) {
-                                        $rubrika = $konekcija->getRubrikaByID($rubrika_novinar["id_rubrike"]);
-                                        echo "<option value=$rubrika[id_rubrike]>$rubrika[naziv]</option>";
-                                    }
-                                    ?>
-                                </select>
-                                <div class="mb-3">
-                                    <label><strong>Title :</strong></label>
-                                    <input type="text" name="title" class="form-control">
-                                </div>
-                                <div class="mb-1">
-                                    <label><strong>Long Description :</strong></label>
-                                    <textarea id="mytextarea" name='long_desc' class="form-control" style="height: 450px;"></textarea><br>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <input type="submit" name="submit" value="Sačuvaj kao draft stanje"  style="margin-right: 10px" >
-                                    <input type="submit" name="odobri" value="Pošalji članak na odobrenje">
-                                   
-                                </div>
-                            </form>
+            <div class="row justify-content-center" style="overflow: auto;height: 100vh;width: 1300px;">
+                <div style="text-align: center;" >
+                    <?php
+                    if (isset($potvrda)) {
+                        echo "<h6>$potvrda</h6>";
+                    }
+                    if (isset($greska)) {
+                        echo "<h6>$greska</h6>";
+                    }
+                    ?>
+
+                </div >
+                <div class="col-12" style="width: 700px;">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form method='post' action='' enctype="multipart/form-data">
+                                    <select name="rubrika">
+                                        <?php
+                                        $rubrike_novinar = $konekcija->getRubrikeByNovinarId($_SESSION["id_korisnika"]);
+                                        while ($rubrika_novinar = $rubrike_novinar->fetch_assoc()) {
+                                            $rubrika = $konekcija->getRubrikaByID($rubrika_novinar["id_rubrike"]);
+                                            echo "<option value=$rubrika[id_rubrike]>$rubrika[naziv]</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="mb-3">
+                                        <label><strong>Title :</strong></label>
+                                        <input type="text" name="title" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label><strong>Glavna slika :</strong></label>
+                                        <input type="file" name="slika" class="form-control">
+                                    </div>
+                                    <div class="mb-1">
+                                        <label><strong>Long Description :</strong></label>
+                                        <textarea id="mytextarea" name='long_desc' class="form-control" style="height: 450px;"></textarea><br>
+                                    </div>
+                                    <div class="mb-1">
+                                        <label><strong>Tagovi :</strong></label>
+                                        <input type="text" name="tagovi" class="form-control" required>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <input type="submit" name="submit" value="Sačuvaj kao draft stanje" style="margin-right: 10px">
+                                        <input type="submit" name="odobri" value="Pošalji članak na odobrenje">
+
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <script>
-            tinymce.init({
-                selector: '#mytextarea',
-                plugins: [
-                    'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
-                    'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
-                    'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
-                ],
-                toolbar: 'undo redo | formatpainter casechange styleselect | bold italic backcolor | ' +
-                    'alignleft aligncenter alignright alignjustify | ' +
-                    'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
-            });
-        </script>
+            <script>
+                const image_upload_handler_callback = (blobInfo, progress) => new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', 'upload.php');
+
+                    xhr.upload.onprogress = (e) => {
+                        progress(e.loaded / e.total * 100);
+                    };
+
+                    xhr.onload = () => {
+                        if (xhr.status === 403) {
+                            reject({
+                                message: 'HTTP Error: ' + xhr.status,
+                                remove: true
+                            });
+                            return;
+                        }
+
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            reject('HTTP Error: ' + xhr.status);
+                            return;
+                        }
+
+                        const json = JSON.parse(xhr.responseText);
+
+                        if (!json || typeof json.location != 'string') {
+                            reject('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+
+                        resolve(json.location);
+                    };
+
+                    xhr.onerror = () => {
+                        reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                    };
+
+                    const formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                    xhr.send(formData);
+                });
+
+                tinymce.init({
+                    selector: '#mytextarea',
+                    plugins: [
+                        'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                        'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                        'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                    ],
+                    toolbar: 'undo redo | formatpainter casechange styleselect | bold italic backcolor | ' +
+                        'alignleft aligncenter alignright alignjustify | ' +
+                        'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
+                    // without images_upload_url set, Upload tab won't show up
+                    images_upload_url: 'upload.php',
+
+                    // override default upload handler to simulate successful upload
+                    images_upload_handler: image_upload_handler_callback
+
+
+                });
+            </script>
 
 
     </body>

@@ -76,10 +76,6 @@ if (isset($_SESSION["id_korisnika"])) {
                 }
             }
         }
-
-        if (!$pronadjeniClanci) {
-            echo "<p>Nema dostupnih članaka za prikaz.</p>";
-        }
         ?>
             
 

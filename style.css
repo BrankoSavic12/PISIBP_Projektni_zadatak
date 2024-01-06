@@ -391,3 +391,8 @@ h1 {
     text-align: right;
 }
 
+.lead_slika {
+    width: 40%;
+    display: block;
+    margin: auto;
+}
