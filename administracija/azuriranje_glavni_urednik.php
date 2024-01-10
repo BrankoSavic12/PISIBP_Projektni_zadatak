@@ -1,0 +1,97 @@
+<?php
+include "klase.php";
+
+
+if (isset($_SESSION["id_korisnika"]) && $_SESSION["uloga"] == "glavni urednik") {
+    $id_glavnog_urednika = $_SESSION["id_korisnika"];
+    
+    $glavni_urednik = $konekcija->getKorisnikByID($id_glavnog_urednika);
+
+    if ($glavni_urednik) {
+        if (isset($_POST["submit"])) {
+            $korisnicko_ime = $_POST["korisnicko_ime"];
+            $lozinka = md5($_POST["lozinka"]);
+            $ime_prezime = $_POST["ime_prezime"];
+            $email = $_POST["email"];
+            $staro_ime = $glavni_urednik["korisnicko_ime"];
+
+            if ($konekcija->proveriPostojanjeKorisnickogImena($korisnicko_ime) == false || $staro_ime == $korisnicko_ime) {
+                $konekcija->azurirajKorisnika($id_glavnog_urednika, $korisnicko_ime, $lozinka, $ime_prezime, "glavni urednik", $email);
+                
+                if ($_FILES["nova_slika"]["error"] == UPLOAD_ERR_OK) {
+                    $putanja_do_foldera = "slike/";
+                    $naziv_slike = "urednik1.jpg";
+                    move_uploaded_file($_FILES["nova_slika"]["tmp_name"], $putanja_do_foldera . $naziv_slike);
+                }
+                
+                $potvrda = "Podaci su uspešno sačuvani.";
+                echo '<script>setTimeout(function() { vratiNaPregledUrednika(); }, 1000);</script>';
+            } else {
+                $greska = "Korisnik sa istim imenom već postoji";
+            }
+        }
+    } else {
+        header("Location: index.php");
+        exit();
+    }
+} else {
+    header("Location: index.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ažuriranje profila glavnog urednika</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function vratiNaPregledUrednika() {
+            window.location.href = 'naslovna.php';
+        }
+   
+    </script>
+</head>
+<body>
+
+<div class="navigacija">
+    <?php include "menu.php" ?>
+    <div class="content">
+        <div>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                <div><h1>Ažuriranje ličnih podataka:</h1></div>
+                <h3>Korisničko ime:</h3>
+                <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" class="search-input" required value="<?php echo $glavni_urednik["korisnicko_ime"]; ?>">
+                <h3>Lozinka:</h3>
+                <input type="password" name="lozinka" placeholder="Lozinka" class="search-input" required value="<?php echo $glavni_urednik["lozinka"]; ?>">
+                <h3>Ime i prezime:</h3>
+                <input type="text" name="ime_prezime" placeholder="Ime i prezime" class="search-input" required value="<?php echo $glavni_urednik["ime_prezime"]; ?>">
+                <h3>Email adresa:</h3>
+                <input type="email" name="email" placeholder="Email" class="search-input" required value="<?php echo $glavni_urednik["email"]; ?>">
+                <h3>Promeni sliku:</h3>
+                <input type="file" name="nova_slika" accept="image/*" class="search-input" style="background-color: white">
+                <?php if (isset($greska)) {
+                    echo $greska;
+                } ?>
+
+                        <div class="button-container">
+                            <form action="" method="post">
+                                <input type="submit" value="Sačuvaj sve unete izmene" name="submit" class='btn' />
+                            </form>
+                            <form action="naslovna.php" method="get">
+                                <input type="submit" value="Vrati se na početak" name="odustani" class='btn' />
+                            </form>
+                        </div>
+            </form>
+            
+            <h3> <?php if (isset($potvrda)) {
+                    echo $potvrda;
+                } ?></h3>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
