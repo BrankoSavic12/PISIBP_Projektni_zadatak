@@ -2,8 +2,9 @@
     <?php
     if (($_SESSION["uloga"]) == 'glavni urednik') {
     ?>
-        <h1>Stranica glavnog urednika</h1>
-        <div class="sidebar">
+    <h1>Stranica glavnog urednika</h1>
+        <footer>
+        <div class="sidebar" style=" margin-left: auto;margin-right: auto;">
             <img src="slike/urednik1.jpg" alt="Zanimljiva slika" class="sidebar-image">
             <?php
             $glavniUrednici = $konekcija->getGlavniUrednik();
@@ -14,55 +15,59 @@
                 echo "<h3>$glavniUrednik[email]</h3>";
                 echo "</div>";
             }
-            ?>
-
+    ?>
+            <a href="azuriranje_glavni_urednik.php"><button style="margin-top: 10px;">Uredi profil</button></a>
+            <a href="logout.php"><button style="margin-top: 10px;">Logout</button></a>
+            
         </div>
 
+    
         <div class="menu-section">
             <p>
-                <img src="slike/novinari.jpg" alt="Novinari" class="menu-icon">
-                "Jedinstvena ekipa, bogata talentima i raznolikošću!
-                Upoznajte naš tim novinara i otkrijte širinu njihovih interesovanja i stručnosti."
-                <a href="pregled_novinara.php"><button>Pregled</button></a>
+                <img src="slike/novinari1.jpg" alt="Novinari" class="menu-icon" >
+                
+                "Upoznajte našu izuzetnu ekipu, spoj različitih talenata i bogatstva raznolikosti!
+                Dobrodošli u fascinantan svet novinarstva koji gradimo zajedno!"
+                <a href="pregled_novinara.php"><button>Pregled novinara</button></a>
             </p>
         </div>
 
         <div class="menu-section">
             <p>
-                <img src="slike/urednici.jpg" alt="Urednici" class="menu-icon">
-                "Naši urednici - vođe tima, kreativni vizionari i stručnjaci u svojim oblastima.
-                Upoznajte ljude koji oblikuju i usmeravaju naš rad."
-                <a href="pregled_urednika.php"><button>Pregled</button></a>
+                <img src="slike/stranica_urednik1.jpg" alt="Urednici" class="menu-icon">
+                "Upoznajte vođe tima - izuzetne vizionare i stručnjake.
+                Otkrijte osobe koje kreativno oblikuju, inspirišu i usmjeravaju naš rad ka izvanrednosti!"
+                <a href="pregled_urednika.php"><button>Pregled urednika</button></a>
             </p>
         </div>
 
         <div class="menu-section">
             <p>
-                <img src="slike/rubrike.jpg" alt="Rubrike" class="menu-icon">
-                "Raznolika paleta rubrika - istražujemo, informišemo, inspirišemo.
-                Otkrijte razne teme i uživajte u šarolikosti našeg novinarskog rada."
-                <a href="pregled_rubrika.php"><button>Pregled</button></a>
+                <img src="slike/rubrike1.jpg" alt="Rubrike" class="menu-icon">
+                "Uplovljavamo u raznovrsni svet rubrika - istražujemo, pružamo informacije, i inspirišemo.
+                Informišite se i uživajte u raznolikosti našeg novinarskog rada."
+                <a href="pregled_rubrika.php"><button>Pregled rubrika</button></a>
             </p>
         </div>
 
         <div class="menu-section">
             <p>
-                <img src="slike/zahtevi.jpg" alt="Rubrike" class="menu-icon">
-                "Obrada zahteva koji cekaju odobrenje"
-                <a href="pregled_clanci_na_cekanju_glavni_urednik.php"><button>Pregled</button></a>
+                <img src="slike/zahtevi1.jpg" alt="Zahtevi" class="menu-icon">
+                "Studiozno pristupamo obradi zahteva, pružajući temeljnu analizu
+                kako bismo osigurali da svaki odobreni zahtev odražava našu profesionalnost."
+                <a href="pregled_clanci_na_cekanju_glavni_urednik.php"><button>Zahtevi za odobrenje</button></a>
             </p>
         </div>
 
         <div class="menu-section">
             <p>
-                <img src="slike/zahtevi.jpg" alt="Rubrike" class="menu-icon">
-                "Obrada zahteva za izmenu i brisanje"
-                <a href="pregled_clanci_zahtevi_glavni_urednik.php"><button>Pregled</button></a>
+                <img src="slike/izmene1.jpg" alt="Rubrike" class="menu-icon">
+                
+                "Sa pažnjom i efikasnošću rukujemo zahtevima za izmenu i brisanje
+                kako bismo osigurali da svaka promena odražava posvećenost kvalitetu."
+                <a href="pregled_clanci_zahtevi_glavni_urednik.php"><button>Zahtevi za izmene</button></a>
             </p>
         </div>
-        <p class="logout"><a href="logout.php">Logout</a></p>
-
-
     <?php  } ?>
 
     <?php
