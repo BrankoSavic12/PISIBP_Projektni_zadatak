@@ -11,11 +11,6 @@ if (isset($_SESSION["id_korisnika"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pregled rubrika</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .search-input {
-    width: 125px;
-    }
-    </style>
 </head>
 
 <body>
@@ -29,21 +24,13 @@ if (isset($_SESSION["id_korisnika"])) {
                 <a href="dodaj_rubriku.php"><button>Dodavanje rubrike</button></a>
                 <a href="naslovna.php"><button>Napusti stranicu</button></a>
                 </div>
-                <form action='pregled_rubrika.php' method='get' class="search-form">
-                    <input type='text' name='pretraga' placeholder='Pretraga rubrika' class="search-input">
-                    <input type='submit' value='Pretraži' class='btn'>
-                </form>
+              
 
                 <?php
-                 if (isset($_GET['pretraga'])) {
-                    $pretraga = $_GET['pretraga'];
-                    $rubrike = $konekcija->getRubrikeByNaziv($pretraga);
-                } else {
-                    $rubrike = $konekcija->getSveRubrike();
-                }
+                $rubrike = $konekcija->getSveRubrike();
                 if ($rubrike != false) {
                     while ($rubrika = $rubrike->fetch_assoc()) {
-                        echo "<div><h3>Naziv rubrike:$rubrika[naziv]</h3>
+                        echo "<div class='novinar-container' style='width: 250px;'><h2>Naziv rubrike:$rubrika[naziv]</h2>
                         <a href=rubrika_info.php?id_rubrike=$rubrika[id_rubrike]><button>Informacije</button></a>
                         <button onclick=\"brisanjeRubrike({$rubrika['id_rubrike']})\">Brisanje</button></div>";
                     }
@@ -51,8 +38,6 @@ if (isset($_SESSION["id_korisnika"])) {
                     echo "<p>Nema rubrika u bazi</p>";
                 }
                 ?>
-
-                <!-- Prikazivanje poruke obrisane rubrike (ako postoji) -->
                 <?php
                 if (isset($_SESSION['obrisi_rubriku_poruka'])) {
                     echo "<p>{$_SESSION['obrisi_rubriku_poruka']}</p>";
@@ -68,7 +53,7 @@ if (isset($_SESSION["id_korisnika"])) {
             var customDialog = document.createElement('div');
             customDialog.className = 'custom-dialog';
             customDialog.innerHTML = `
-                <p>Da li ste sigurni da želite da obrišete rubriku?</p>
+                <h3>Da li ste sigurni da želite da obrišete rubriku?</h3>
                 <button class="confirm-button" onclick="potvrdiBrisanje(${id_rubrike})">Potvrdi</button>
                 <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>`;
             document.body.appendChild(customDialog);

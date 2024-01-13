@@ -75,8 +75,13 @@ if (isset($_SESSION["id_korisnika"])) {
                                 <div class="card">
                                     <div class="card-body">
                                         <form method='post' action='<?php echo "izmeni_draft_clanak.php?id_vesti=$id_vesti"; ?>'>
-
-                                            <select name="rubrika">
+                                        <h3 style="text-align: center;"><strong>Izmena postojećeg clanka:</strong></h3>
+                                            <div class="mb-3" style="text-align: left;">
+                                                <h6><strong>Naslov članka :</strong></h6>
+                                                <input type="text" name="title" class="form-control" style="height: 30px;" value="<?php echo $clanak["naslov"] ?>">
+                                            </div>
+                                            <h6 style="text-align: left;"><strong>Naziv rubrike:</strong></h6>
+                                            <select name="rubrika"  class="form-control" style="height: 35px;">
                                                 <?php
 
 
@@ -92,20 +97,17 @@ if (isset($_SESSION["id_korisnika"])) {
                                                 ?>
                                             </select>
                                             <?php
-                                            echo "<h6>Glavna slika</h6>";
+                                            
+                                            echo "<h6><strong>Glavna slika</strong></h6>";
                                             echo "<div><img src=../$clanak[lead_slika_url] class=lead_slika></div>";
                                             ?>
-                                            <div class="mb-3">
-                                                <label><strong>Title :</strong></label>
-                                                <input type="text" name="title" class="form-control" value="<?php echo $clanak["naslov"] ?>">
-                                            </div>
-                                            <div class="mb-1">
-                                                <label><strong>Long Description :</strong></label>
+                                            <div class="mb-1" style="text-align: left;">
+                                                <h5><strong>Promeni tekst :</strong></h5>
                                                 <textarea id="mytextarea" name='long_desc' class="form-control" style="height: 450px;"><?php echo $clanak["sadrzaj"] ?></textarea><br>
                                             </div>
-                                            <div class="d-flex justify-content-center">
-                                                <input type="submit" name="draft" value="Sačuvaj kao draft stanje" style="margin-right: 10px">
-                                                <input type="submit" name="na_čekanju" value="Pošalji članak na odobrenje">
+                                            <div class="button-container">
+                                                <input type="submit" name="draft" value="Sačuvaj kao draft stanje" class="btn">
+                                                <input type="submit" name="na_čekanju" value="Pošalji članak na odobrenje" class="btn">
                                             </div>
                                         </form>
                                     </div>

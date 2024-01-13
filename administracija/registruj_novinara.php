@@ -44,16 +44,16 @@ if (isset($_SESSION["id_korisnika"])) {
     <div class="content">
         <div>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                <div><h1>Registracija novog novinara:</h1></div>
-                <h3>Korisničko ime:</h3>
+                <div><h1>Registracija novinara:</h1></div>
+                <h2>Korisničko ime:</h2>
                 <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" class="search-input" required>
-                <h3>Lozinka:</h3>
+                <h2>Lozinka:</h2>
                 <input type="password" name="lozinka" placeholder="Lozinka" class="search-input" required>
-                <h3>Ime i prezime:</h3>
+                <h2>Ime i prezime:</h2>
                 <input type="text" name="ime_prezime" placeholder="Ime i prezime" class="search-input" required>
-                <h3>Email adresa:</h3>
+                <h2>Email adresa:</h2>
                 <input type="email" name="email" placeholder="Email" class="search-input" required>
-                <h3>Rubrika kojoj novinar pripada:</h3>
+                <h2>Rubrika kojoj novinar pripada:</h2>
                 <select name="rubrika" class="search-input">
                     <?php
                     $rubrike = $konekcija->getSveRubrike();
@@ -67,15 +67,13 @@ if (isset($_SESSION["id_korisnika"])) {
                 <?php if (isset($greska)) {
                     echo $greska;
                 } ?>
+                <div class="button-container">
+                    <input type="submit" value="Sačuvaj izmene" name="submit" class="btn"/>
+                    <input type="button" value="Vrati na početak" class="btn" onclick="vratiNaPregledUrednika()" />
+                 </div>
+            </form>
              
-             <div class="button-container">
-                <form action="" method="set" >
-                    <input type="submit" value="Registracija novinara rubrike" name="submit" class='btn' />
-                </form>
-                <form action="pregled_novinara.php" method="get" >
-                    <input type="submit" value="Odustani od registracije" name="Odustani" class='btn' />
-                </form>
-            </div>
+        
 
                 <h3> <?php if (isset($potvrda)) {
                     echo $potvrda;

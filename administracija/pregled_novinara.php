@@ -12,7 +12,6 @@ if (isset($_SESSION["id_korisnika"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pregled novinara</title>
     <link rel="stylesheet" href="style.css">
- 
 </head>
 
 <body>
@@ -23,14 +22,10 @@ if (isset($_SESSION["id_korisnika"])) {
         <div>
             <h1>Lista svih novinara rubrika</h1>
         </div>
-        <div>
+    <div >
             <a href="registruj_novinara.php"><button>Registracija novinara</button></a>
             <a href="naslovna.php"><button>Napusti stranicu</button></a>
         </div>
-        <div>
-        <form action='pregled_novinara.php' method='get' class="search-form">
-            <input type='text' name='pretraga' placeholder='Pretraga novinara' class="search-input">
-            <input type='submit' value='Pretraži novinare' class='btn'>
         </form>
 
         
@@ -44,18 +39,19 @@ if (isset($_SESSION["id_korisnika"])) {
             }
             
             
+            
             if ($novinari != false) {
                 while ($novinar = $novinari->fetch_assoc()) {
                     $id_novinara = $novinar['id_korisnika'];
-                    echo "<div>
-                            <h3> Novinar: $novinar[ime_prezime]</h3>
-                            <a href=novinar_info.php?id_novinara=$id_novinara><button>Informacije</button></a>  
-                            <a href=novinar_azuriranje.php?id_novinara=$id_novinara><button>Ažuriranje</button></a>
+                    echo "<div class='novinar-container'>
+                            <h2> Novinar: $novinar[ime_prezime]</h2>
+                            <a href='novinar_info.php?id_novinara=$id_novinara'><button>Informacije</button></a>  
+                            <a href='novinar_azuriranje.php?id_novinara=$id_novinara'><button>Ažuriranje</button></a>
                             <button onclick=\"brisanjeNovinara($id_novinara)\">Brisanje</button>
                         </div>";
                 }
             } else {
-                echo "<h3>Nema dostupnih novinari za prikazivanje</h3>";
+                echo "<h3>Nema dostupnih novinara za prikazivanje</h3>";
             }
             ?>
 
@@ -68,7 +64,7 @@ if (isset($_SESSION["id_korisnika"])) {
                 var customDialog = document.createElement('div');
                 customDialog.className = 'custom-dialog';
                 customDialog.innerHTML = `
-                    <p>Da li ste sigurni da želite da obrišete novinara?</p>
+                    <h3 style="font-size:16px">Da li ste sigurni da želite da obrišete novinara?</h3>
                     <button class="confirm-button" onclick="potvrdiBrisanje(${id_novinara})">Potvrdi</button>
                     <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>
                 `;

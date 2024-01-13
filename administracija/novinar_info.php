@@ -17,31 +17,31 @@ if (isset($_SESSION["id_korisnika"])) {
     <div class="navigacija">
     <?php include "menu.php" ?>
     <div class="content">
-        <div class="info-container">
+        <div class="info-container"  style="max-width:450px;">
+        <div><h1>Informacije o novinaru:</h1></div>
             <?php
             $id_novinara = $_GET["id_novinara"];
-            echo "<div><h1>Osnovne informacije o novinaru</h1></div>";
             $novinar = $konekcija->getKorisnikByID($id_novinara);
             echo "<div class='info-item'>
-                    <h3>Ime i prezime novinara:</h3>
-                    <h4>$novinar[ime_prezime]</h4>
+                    <h2>Ime i prezime novinara:</h2>
+                    <h3>$novinar[ime_prezime]</h3>
                 </div>";
             echo "<div class='info-item'>
-                    <h3>Korisnicko ime novinara:</h3>
-                    <h4>$novinar[korisnicko_ime]</h4>
+                    <h2>Korisnicko ime novinara:</h2>
+                    <h3>$novinar[korisnicko_ime]</h3>
             </div>";
             echo "<div class='info-item'>
-                    <h3>Email adresa novinara:</h3>
-                    <h4>$novinar[email]</h4>
+                    <h2>Email adresa novinara:</h2>
+                    <h3>$novinar[email]</h3>
                 </div>";
 
                 $rubrike = $konekcija->getRubrikeByNovinarId($id_novinara);
                 if ($rubrike != false) {
                     echo "<div class='info-item'>
-                            <h3>Rubrike kojima pripada:</h3>";
+                            <h2>Rubrike kojima pripada:</h2>";
                     while ($rubrika = $rubrike->fetch_assoc()) {
                         $rubrika_info = $konekcija->getRubrikaByID($rubrika["id_rubrike"]);
-                        echo "<h4>$rubrika_info[naziv]</h4>";
+                        echo "<h3>$rubrika_info[naziv]</h3>";
                     }
                     echo "</div>";
                 } else {
@@ -50,11 +50,8 @@ if (isset($_SESSION["id_korisnika"])) {
                         </div>";
                 }
             ?>
-            
-            <form action="pregled_novinara.php" method="get">
-                <input type="submit" value="Povratak na prethodnu stranu" name="odustani" class="btn";">
-            </form>
-            
+            <a href="pregled_novinara.php" class="back-link" style="padding-left: 10px">Napusti stranicu</a>
+
         </div>
     </div>
 </div>

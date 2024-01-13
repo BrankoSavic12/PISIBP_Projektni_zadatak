@@ -14,7 +14,6 @@ if (isset($_SESSION["id_korisnika"])) {
         $id_rubrike_ukloni = $_POST["ukloni_rubriku"];
         $email = $_POST["email"];
         
-        
 
         if ($id_rubrike != 0 && $konekcija->proveriDodeluRubrikeUredniku($id_urednika, $id_rubrike)) {
             $greska = "Urednik već pripada izabranoj rubrici.";
@@ -69,15 +68,15 @@ if (isset($_SESSION["id_korisnika"])) {
                     ?>
                     <form action="<?php echo $_SERVER['PHP_SELF'] . "?id_urednika=" . $id_urednika; ?>" method="post">
                         <div><h1>Azuriranje urednika rubrike:</h1></div>
-                        <h3>Korisnicko ime:</h3>
+                        <h2>Korisnicko ime:</h2>
                         <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" class="search-input" required value="<?php echo $urednik["korisnicko_ime"]; ?>">
-                        <h3>Lozinka:</h3>
+                        <h2>Lozinka:</h2>
                         <input type="password" name="lozinka" placeholder="Lozinka" class="search-input" required value="<?php echo $urednik["lozinka"]; ?>">
-                        <h3>Ime i prezime:</h3>
+                        <h2>Ime i prezime:</h2>
                         <input type="text" name="ime_prezime" placeholder="Ime i prezime" class="search-input" required value="<?php echo $urednik["ime_prezime"]; ?>">
-                        <h3>Email adresa:</h3>
+                        <h2>Email adresa:</h2>
                         <input type="email" name="email" placeholder="Email" class="search-input" required value="<?php echo $urednik["email"]; ?>">
-                        <h3>Dodaj rubriku uredniku:</h3>
+                        <h2>Dodaj rubriku uredniku:</h2>
                         <select name="rubrika" class="search-input">
                             <option value="0" selected>Nema dodeljivanja rubrike</option>
                             <?php
@@ -89,7 +88,7 @@ if (isset($_SESSION["id_korisnika"])) {
                             ?>
                         
                         </select>
-                        <h3>Ukloni rubriku uredniku:</h3>
+                        <h2>Ukloni rubriku uredniku:</h2>
                         <select name="ukloni_rubriku" class="search-input">
                             <option value="0" selected>Nema uklanjanja rubrike</option>
                             <?php
@@ -107,13 +106,10 @@ if (isset($_SESSION["id_korisnika"])) {
                         } ?>
 
                         <div class="button-container">
-                            <form action="" method="post">
-                                <input type="submit" value="Ažuriranje urednika rubrike" name="submit" class='btn' />
-                            </form>
-                            <form action="pregled_urednika.php" method="get">
-                                <input type="submit" value="Odustani od ažuriranja" name="odustani" class='btn' />
-                            </form>
+                            <input type="submit" value="Sačuvaj izmene" name="submit" class="btn"/>
+                            <input type="button" value="Vrati na početak" class="btn" onclick="vratiNaPregledUrednika()" />
                         </div>
+                    </form>
 
                    
                     

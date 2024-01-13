@@ -9,7 +9,7 @@ if (isset($_SESSION["id_korisnika"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pregled clanaka u draft stanju</title>
+    <title>Informacije o radnicima</title>
     <link rel="stylesheet" href="style.css">
     <style>
      
@@ -28,32 +28,33 @@ if (isset($_SESSION["id_korisnika"])) {
 <div class="navigacija">
     <?php include "menu.php" ?>
     <div class="content">
-    <div class="info-container">
-        
-            <h1>Informacije o svim radnicima</h1>
-    
+    <div>
+    <h1>Informacije o radnicima</h1>
+    </div>
+    <h2><a href="naslovna.php" class="back-link">Napusti stranicu</a></h2>
+    <div class="info-container" style="max-width: 400px;">
         <?php   
 
             $glavniUrednici = $konekcija->getGlavniUrednik();
             while($glavniUrednik = $glavniUrednici->fetch_assoc()) {
                 echo "<div class='urednik-info'>";
-                echo "<h3>Glavni urednik: $glavniUrednik[ime_prezime]</h3>";
-                echo "<h3>$glavniUrednik[email]</h3>";
+                echo "<h2>Glavni urednik: $glavniUrednik[ime_prezime]</h2>";
+                echo "<h2>$glavniUrednik[email]</h2>";
                 echo "</div>";
 }
            $urednici = $konekcija->getSviUrednici();
            while($urednik = $urednici->fetch_assoc()) {
                echo "<div class='urednik-info'>";
-               echo "<h3>Urednik: $urednik[ime_prezime]</h3>";
-               echo "<h3>$urednik[email]</h3>";
+               echo "<h2>Urednik: $urednik[ime_prezime]</h2>";
+               echo "<h2>$urednik[email]</h2>";
                echo "</div>";
            }
            
            $novinari = $konekcija->getSviNovinari();
            while($novinar = $novinari->fetch_assoc()) {
                echo "<div class='urednik-info'>";
-               echo "<h3>Novinar: $novinar[ime_prezime]</h3>";
-               echo "<h3>$novinar[email]</h3>";
+               echo "<h2>Novinar: $novinar[ime_prezime]</h2>";
+               echo "<h2>$novinar[email]</h2>";
                echo "</div>";
            }
           

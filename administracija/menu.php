@@ -9,7 +9,7 @@
             <?php
             $glavniUrednici = $konekcija->getGlavniUrednik();
             while ($glavniUrednik = $glavniUrednici->fetch_assoc()) {
-                echo "<div class='urednik-info'>";
+                echo "<div>";
                 echo "<h3>Glavni urednik redakcije:</h3>";
                 echo "<h3>$glavniUrednik[ime_prezime]</h3>";
                 echo "<h3>$glavniUrednik[email]</h3>";
@@ -62,7 +62,6 @@
         <div class="menu-section">
             <p>
                 <img src="slike/izmene1.jpg" alt="Rubrike" class="menu-icon">
-                
                 "Sa pažnjom i efikasnošću rukujemo zahtevima za izmenu i brisanje
                 kako bismo osigurali da svaka promena odražava posvećenost kvalitetu."
                 <a href="pregled_clanci_zahtevi_glavni_urednik.php"><button>Zahtevi za izmene</button></a>
@@ -73,13 +72,12 @@
     <?php
     if (($_SESSION["uloga"]) == 'novinar') {
     ?>
-        <h1>Stranica novinara rubrike</h1>
+        <div style="font-weight: bold;";><h1>Stranica novinara rubrike</h1></div>
         <div class="sidebar">
-            <div style="display: flex; align-items: center;">
-                <img src="slike/Stranica_novinar.jpg" alt="Slika 1" class="sidebar-image" style="width: 200px; height: 180px;">
-                <img src="slike/Stranica_novinar1.jpg" alt="Slika 2" class="sidebar-image" style="width: 200px; height: 180px;">
+            <div style="display: flex; justify-content: center;">
+                <img src="slike/novinar_stranica1.jpg" alt="Slika 2" class="sidebar-image1">
             </div>
-
+            <div>
             <?php
             $rubrike_novinar = $konekcija->getRubrikeByNovinarId($_SESSION["id_korisnika"]);
             $rubrike_nazivi = array();
@@ -87,61 +85,65 @@
                 $rubrika = $konekcija->getRubrikaByID($rubrika_novinar["id_rubrike"]);
                 $rubrike_nazivi[] = $rubrika['naziv'];
             }
+            
             if (count($rubrike_nazivi) > 0) {
-                echo "<h3>Novinar rubrike " . implode(" i ", $rubrike_nazivi) . "</h3>";
+                echo "<h3> Novinar rubrike " . implode(" i ", $rubrike_nazivi) . "</h3>";
             } else {
-                echo "<h2>Nemate dodeljenih rubrika</h2>";
+                echo "<h3>Nemate dodeljenih rubrika</h3>";
             }
             echo "<h3>$_SESSION[ime_prezime]</h3>";
             echo "<h3>$_SESSION[email]</h3>";
-
+            
+            
             ?>
+            </div>
         </div>
-        <div class="menu-section">
+    
+        <div class="novinar-container">
 
             <p>
-                <img src="slike/novinar_napisi.jpg" alt="Urednici" class="menu-icon">
-                " Pisanje novog članka za online novine"
+                <img src="slike/novinar_napisi.jpg" alt="Urednici" class="menu-icon" style="text-align: center;">
+                "Rečima stvaramo most između nas autora i vas čitalaca."
                 <a href="napisi_clanak.php"><button>Napiši</button></a>
             </p>
         </div>
+        <div class="novinar-container">
 
-        <div>
             <p>
-                <img src="slike/novinar_na_cekanju.jpg" alt="Urednici" class="menu-icon">
-                "Pregled članaka upućenih na odobrenje"
-                <a href="pregled_clanci_na_cekanju.php"><button>Pregled</button></a>
+                <img src="slike/na_cekanju.jpg" alt="Urednici" class="menu-icon">
+                " Donosimo priče koje čekaju da obogate umove čitalaca."
+                <a href="pregled_clanci_na_cekanju.php"><button>Poslano</button></a>
             </p>
         </div>
 
-        <div>
+        <div class="novinar-container">
             <p>
                 <img src="slike/novinar_odobreni.jpg" alt="Urednici" class="menu-icon">
-                " Pregled odobrenih/objavljenih članaka "
-                <a href="pregled_odobreni_clanci.php"><button>Pregled</button></a>
+                " Pregled članaka koji su ipisivali priče i očaravali čitaoce."
+                <a href="pregled_odobreni_clanci.php"><button>Odobreno</button></a>
             </p>
 
         </div>
 
-        <div>
+        <div class="novinar-container">
             <p>
                 <img src="slike/novinar_draft.jpg" alt="Urednici" class="menu-icon">
-                " Pregled clanaka u radnom/draft stanju "
-                <a href="pregled_clanci_draft_stanje.php"><button>Pregled</button></a>
+                "Spisak draft stanja, pregled reči dok još oblikuju svoj put."
+                <a href="pregled_clanci_draft_stanje.php"><button>Draft</button></a>
             </p>
 
         </div>
 
-        <div>
+        <div class="novinar-container">
             <p>
-                <img src="slike/novinar_info.jpg" alt="Urednici" class="menu-icon">
-                "Podaci i kontakt email radnika redakcije"
-                <a href="informacije_urednici.php"><button>Pregled</button></a>
+                <img src="slike/novinar_info1.jpg" alt="Urednici" class="menu-icon">
+                "Pregled umetnika koji kreiraju svet svojim toplim izrazom"
+                <a href="informacije_urednici.php"><button>Informacije</button></a>
             </p>
 
         </div>
 
-        <p class="logout"><a href="logout.php">Logout</a></p>
+        <h2 style="font-size: 25px;"><a href="logout.php" class="back-link" style="padding-left: 10px">Logout</a></h2>
 
 
 
@@ -151,9 +153,8 @@
     ?>
         <h1>Stranica urednika rubrike</h1>
         <div class="sidebar">
-            <div style="display: flex; align-items: center;">
-                <img src="slike/Stranica_urednik1.jpg" alt="Slika 1" class="sidebar-image" style="width: 200px; height: 180px;">
-                <img src="slike/Stranica_urednik.jpg" alt="Slika 2" class="sidebar-image" style="width: 200px; height: 180px;">
+            <div style="display: flex; justify-content: center;">
+                <img src="slike/stranica_urednik4.jpg" alt="Slika 2" class="sidebar-image1">
             </div>
 
             <?php
@@ -174,40 +175,39 @@
             ?>
         </div>
 
-        <div>
+        <div class="novinar-container">
             <p>
                 <img src="slike/novinar_odobreni.jpg" alt="Urednici" class="menu-icon">
-                " Pregled odobrenih/objavljenih članaka "
-                <a href="pregled_odobreni_clanci_urednik.php"><button>Pregled</button></a>
+                " Pregled članaka koji su ipisivali priče i očaravali čitaoce."
+                <a href="pregled_odobreni_clanci_urednik.php"><button>Odobreni</button></a>
             </p>
         </div>
 
-        <div>
+        <div class="novinar-container">
             <p>
-                <img src="slike/novinar_na_cekanju.jpg" alt="Urednici" class="menu-icon">
-                " Pregled članaka koji čekaju odobrenje "
-                <a href="pregled_clanci_na_cekanju_urednik.php"><button>Pregled</button></a>
+                <img src="slike/na_cekanju.jpg" alt="Urednici" class="menu-icon">
+                "Članci na čekanju, pregled reči dok još oblikuju svoj put."
+                <a href="pregled_clanci_na_cekanju_urednik.php"><button>Na čekanju</button></a>
             </p>
         </div>
 
-        <div>
+        <div class="novinar-container">
             <p>
-                <img src="slike/izmene.jpg" alt="Urednici" class="menu-icon">
-                " Pregled zahteva za menjanje i brisanje "
-                <a href="pregled_clanci_zahtevi.php"><button>Pregled</button></a>
+                <img src="slike/izmene2.jpg" alt="Urednici" class="menu-icon">
+                " Pazljivo biramo, jer rečima stvaramo vezu sa čitaocima."
+                <a href="pregled_clanci_zahtevi.php"><button>Zahtevi</button></a>
             </p>
         </div>
 
-        <div>
+        <div class="novinar-container">
             <p>
-                <img src="slike/novinar_info.jpg" alt="Urednici" class="menu-icon">
-                "Podaci i kontakt email radnika redakcije "
-                <a href="informacije_urednici.php"><button>Pregled</button></a>
+                <img src="slike/novinar_info1.jpg" alt="Urednici" class="menu-icon">
+                "Pregled umetnika koji kreiraju svet svojim toplim izrazom"
+                <a href="informacije_urednici.php"><button>Informacije</button></a>
             </p>
-
         </div>
+        <h2 style="font-size: 25px;"><a href="logout.php" class="back-link" style="padding-left: 10px">Logout</a></h2>
 
-        <p class="logout"><a href="logout.php">Logout</a></p>
     <?php
     }
 

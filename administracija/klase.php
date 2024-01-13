@@ -38,20 +38,15 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
-
             return $rezultat;
         } else {
             return false;
         }
     }
 
-    // dodat deo koda zbog vracanja errora
     function obrisiNovinara($id_novinara)
     {
-        // Obrisi povezane redove u novinar_rubrika
         $this->obrisiPovezaneRedoveNovinara($id_novinara);
-
-        // Sada obrisi novinara
         $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
         $stm->bind_param("i", $id_novinara);
         $stm->execute();
@@ -70,7 +65,6 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
-
             return $rezultat;
         } else {
             return false;
@@ -84,7 +78,6 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
-
             return $rezultat->fetch_assoc();
         } else {
             return false;
@@ -112,7 +105,6 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
-
             return $rezultat->fetch_assoc();
         } else {
             return false;
@@ -127,7 +119,6 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
-
             return $rezultat;
         } else {
             return false;
@@ -143,7 +134,6 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
-
             return $rezultat->fetch_assoc();
         } else {
             return false;
@@ -216,7 +206,6 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
-
             return $rezultat;
         } else {
             return false;
@@ -240,10 +229,7 @@ class Konekcija
 
     function obrisiRubriku($id_rubrike)
     {
-        // Prvo obrisi povezane redove u novinar_rubrika
         $this->obrisiPovezaneRedoveRubrike($id_rubrike);
-
-        // Zatim obrisi rubriku
         $stmt = $this->conn->prepare("DELETE FROM rubrika WHERE id_rubrike = ?");
         $stmt->bind_param("i", $id_rubrike);
         $stmt->execute();
@@ -281,10 +267,8 @@ class Konekcija
     function getRubrikaInfo($id_rubrike)
     {
         $rubrika = $this->getRubrikaByID($id_rubrike);
-
         if ($rubrika) {
             $urednici = $this->getUredniciByRubrikaId($id_rubrike);
-
             return [
                 'ime_rubrike' => $rubrika['naziv'],
                 'urednici' => $urednici
@@ -299,9 +283,7 @@ class Konekcija
         $stmt = $this->conn->prepare($upit);
         $stmt->bind_param("ii", $id_urednika, $id_rubrike);
         $stmt->execute();
-
         $rezultat = $stmt->get_result();
-
         if ($rezultat && $rezultat->num_rows > 0) {
             return true; // Rubrika je već dodeljena uredniku
         } else {
@@ -315,9 +297,7 @@ class Konekcija
         $stmt = $this->conn->prepare($upit);
         $stmt->bind_param("ii", $id_novinara, $id_rubrike);
         $stmt->execute();
-
         $rezultat = $stmt->get_result();
-
         if ($rezultat && $rezultat->num_rows > 0) {
             return true;
         } else {
@@ -352,7 +332,6 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
-
             return $rezultat;
         } else {
             return false;
@@ -362,16 +341,10 @@ class Konekcija
     {
         $pretraga = $this->conn->real_escape_string($pretraga);
         $stmt = $this->conn->prepare("SELECT * FROM korisnici WHERE uloga = 'novinar' AND ime_prezime LIKE ?");
-
-        // Dodajemo % na početak i kraj pretrage kako bismo pronašli delimične podudarnosti
         $pretraga = "%" . $pretraga . "%";
-
         $stmt->bind_param("s", $pretraga);
-
         $stmt->execute();
-
         $rezultat = $stmt->get_result();
-
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
@@ -382,16 +355,10 @@ class Konekcija
     {
         $pretraga = $this->conn->real_escape_string($pretraga);
         $stmt = $this->conn->prepare("SELECT * FROM korisnici WHERE uloga = 'urednik' AND ime_prezime LIKE ?");
-
-        // Dodajemo % na početak i kraj pretrage kako bismo pronašli delimične podudarnosti
         $pretraga = "%" . $pretraga . "%";
-
         $stmt->bind_param("s", $pretraga);
-
         $stmt->execute();
-
         $rezultat = $stmt->get_result();
-
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
@@ -402,16 +369,10 @@ class Konekcija
     {
         $naziv = $this->conn->real_escape_string($naziv);
         $stmt = $this->conn->prepare("SELECT * FROM rubrika WHERE naziv LIKE ?");
-
-        // Dodajemo % na početak i kraj pretrage kako bismo pronašli delimične podudarnosti
         $naziv = "%" . $naziv . "%";
-
         $stmt->bind_param("s", $naziv);
-
         $stmt->execute();
-
         $rezultat = $stmt->get_result();
-
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
@@ -424,9 +385,7 @@ class Konekcija
         $stmt = $this->conn->prepare("SELECT * from vest where id_novinara = ? and status = ?  order by datum_vreme_objave desc");
         $stmt->bind_param("is", $id_novinara, $status);
         $stmt->execute();
-
         $rezultat = $stmt->get_result();
-
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
@@ -475,7 +434,6 @@ class Konekcija
         $stmt = $this->conn->prepare("select * from vest where id_urednika = ? order by datum_vreme_objave desc");
         $stmt->bind_param("i", $id_urednika);
         $stmt->execute();
-
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
             return $rezultat;
@@ -489,7 +447,6 @@ class Konekcija
         $stmt = $this->conn->prepare("select * from vest where id_rubrike = ? order by datum_vreme_objave desc");
         $stmt->bind_param("i", $id_rubrike);
         $stmt->execute();
-
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
             return $rezultat;
@@ -509,30 +466,9 @@ class Konekcija
         $stmTagovi = $this->conn->prepare("DELETE FROM tagovi WHERE id_vesti = ?");
         $stmTagovi->bind_param("i", $id_vesti);
         $stmTagovi->execute();
-    
         $stmVest = $this->conn->prepare("DELETE FROM vest WHERE id_vesti = ?");
         $stmVest->bind_param("i", $id_vesti);
         $stmVest->execute();
-    }
-
-    function pretraziClankeNaCekanjuPoNaslovu($pretragaNaslov, $novinarId)
-    {
-        $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
-        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'na čekanju' AND id_novinara = ? AND naslov LIKE ?");
-
-        $pretragaNaslov = "%" . $pretragaNaslov . "%";
-
-        $stmt->bind_param("is", $novinarId, $pretragaNaslov);
-
-        $stmt->execute();
-
-        $rezultat = $stmt->get_result();
-
-        if ($rezultat->num_rows > 0) {
-            return $rezultat;
-        } else {
-            return false;
-        }
     }
 
     function getVestiNaCekanju($novinarId)
@@ -547,52 +483,13 @@ class Konekcija
             return false;
         }
     }
-    function pretraziOdobreneClankePoNaslovu($pretragaNaslov, $novinarId)
-    {
-        $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
-        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_novinara = ? AND naslov LIKE ?");
-
-        $pretragaNaslov = "%" . $pretragaNaslov . "%";
-
-        $stmt->bind_param("is", $novinarId, $pretragaNaslov);
-
-        $stmt->execute();
-
-        $rezultat = $stmt->get_result();
-
-        if ($rezultat->num_rows > 0) {
-            return $rezultat;
-        } else {
-            return false;
-        }
-    }
-
+   
     function getOdobreneVesti($novinarId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_novinara = ?");
         $stmt->bind_param("i", $novinarId);
         $stmt->execute();
         $rezultat = $stmt->get_result();
-        if ($rezultat->num_rows > 0) {
-            return $rezultat;
-        } else {
-            return false;
-        }
-    }
-
-    function pretraziDraftClankePoNaslovu($pretragaNaslov, $novinarId)
-    {
-        $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
-        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'draft' AND id_novinara = ? AND naslov LIKE ?");
-
-        $pretragaNaslov = "%" . $pretragaNaslov . "%";
-
-        $stmt->bind_param("is", $novinarId, $pretragaNaslov);
-
-        $stmt->execute();
-
-        $rezultat = $stmt->get_result();
-
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
@@ -613,25 +510,6 @@ class Konekcija
         }
     }
 
-    function pretraziOdobreneClankeUrednikaPoNaslovu($pretragaNaslov, $urednikId)
-    {
-        $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
-        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_urednika = ? AND naslov LIKE ?");
-
-        $pretragaNaslov = "%" . $pretragaNaslov . "%";
-
-        $stmt->bind_param("is", $urednikId, $pretragaNaslov);
-
-        $stmt->execute();
-
-        $rezultat = $stmt->get_result();
-
-        if ($rezultat->num_rows > 0) {
-            return $rezultat;
-        } else {
-            return false;
-        }
-    }
 
     function getOdobreneVestiUrednika($urednikId)
     {
@@ -645,25 +523,7 @@ class Konekcija
             return false;
         }
     }
-    function pretraziClankeNaCekanjuUrednikaPoNaslovu($pretragaNaslov, $urednikId)
-    {
-        $pretragaNaslov = $this->conn->real_escape_string($pretragaNaslov);
-        $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'na čekanju' AND id_urednika = ? AND naslov LIKE ?");
 
-        $pretragaNaslov = "%" . $pretragaNaslov . "%";
-
-        $stmt->bind_param("is", $urednikId, $pretragaNaslov);
-
-        $stmt->execute();
-
-        $rezultat = $stmt->get_result();
-
-        if ($rezultat->num_rows > 0) {
-            return $rezultat;
-        } else {
-            return false;
-        }
-    }
 
     function getVestiNaCekanjuUrednika($urednikId)
     {
@@ -746,6 +606,18 @@ class Konekcija
     {
         $stmt = $this->conn->prepare("select * from tagovi where id_vesti = ?");
         $stmt->bind_param("i", $id_vesti);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function getSveOdobreneVesti()
+    {
+        $stmt = $this->conn->prepare("select * from vest where status = 'odobrena' order by datum_vreme_objave desc limit 10");
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {

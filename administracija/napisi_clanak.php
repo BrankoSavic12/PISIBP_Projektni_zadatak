@@ -11,7 +11,7 @@ if (isset($_SESSION["id_korisnika"])) {
         if ($uploadOk == 1) {
             $slika_url = "images/" . htmlspecialchars(basename($_FILES["slika"]["name"]));
             $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "draft", $slika_url);
-            $potvrda = "Članak je sačuvan u draftu";
+            $potvrda = "<h6>Članak je sačuvan u draftu</h6>";
             $uneta_vest = $konekcija->getPoslednjiUnetClanak();
             $tagovi = $_POST["tagovi"];
             $tagovi_niz = explode(",", $tagovi);
@@ -19,10 +19,8 @@ if (isset($_SESSION["id_korisnika"])) {
                 $konekcija->ubaciTag($uneta_vest["id_vesti"], $tag);
             }
         } else {
-            $greska = "Vest nije moguće sačuvati zbog pogrešne slike";
+            $greska = "<h6>Vest nije moguće sačuvati zbog pogrešne slike</h6>";
         }
-
-
         echo '<script>setTimeout(function() { vratiNaPregledDraftClanaka(); }, 1000);</script>';
     }
 
@@ -36,7 +34,8 @@ if (isset($_SESSION["id_korisnika"])) {
         if ($uploadOk == 1) {
             $slika_url = "images/" . htmlspecialchars(basename($_FILES["slika"]["name"]));
             $konekcija->unesiClanak($_SESSION["id_korisnika"], $rubrika_id, $naslov, $sadrzaj, $datum_vreme, "na čekanju", $slika_url);
-            $potvrda = "Članak je poslat na odobrenje";
+            $potvrda = "<h6>Članak je poslat na odobrenje</h6>";
+
             $uneta_vest = $konekcija->getPoslednjiUnetClanak();
             $tagovi = $_POST["tagovi"];
             $tagovi_niz = explode(",", $tagovi);
@@ -44,8 +43,9 @@ if (isset($_SESSION["id_korisnika"])) {
                 $konekcija->ubaciTag($uneta_vest["id_vesti"], $tag);
             }
         } else {
-            $greska = "Vest nije moguće sačuvati zbog pogrešne slike";
+            $greska = "<h6>Vest nije moguće proslediti</h6>";
         }
+        echo '<script>setTimeout(function() { vratiNaPregledClanakaNaCekanju(); }, 1000);</script>';
     }
 
 ?>
@@ -90,13 +90,16 @@ if (isset($_SESSION["id_korisnika"])) {
                     }
                     ?>
 
-                </div >
-                <div class="col-12" style="width: 700px;">
+                </div class="form">
+                <div class="col-12" >
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <form method='post' action='' enctype="multipart/form-data">
-                                    <select name="rubrika">
+                                <h3 style="text-align: center;"><strong>Pisanje novog clanka:</strong></h3>
+                                    <h6><strong>Naziv rubrike:</strong></h6>
+                                    
+                                    <select name="rubrika" class="form-control" style="height: 35px;">
                                         <?php
                                         $rubrike_novinar = $konekcija->getRubrikeByNovinarId($_SESSION["id_korisnika"]);
                                         while ($rubrika_novinar = $rubrike_novinar->fetch_assoc()) {
@@ -106,24 +109,24 @@ if (isset($_SESSION["id_korisnika"])) {
                                         ?>
                                     </select>
                                     <div class="mb-3">
-                                        <label><strong>Title :</strong></label>
-                                        <input type="text" name="title" class="form-control">
+                                        <h6><strong>Naslov :</strong></h6>
+                                        <input type="text" name="title" class="form-control" style="height: 30px;" required>
+                                    </div>
+                                    <div class="mb-1">
+                                        <h6><strong>Tagovi :</strong></h6>
+                                        <input type="text" name="tagovi" class="form-control" style="height: 30px;" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label><strong>Glavna slika :</strong></label>
-                                        <input type="file" name="slika" class="form-control">
+                                        <h6><strong>Glavna slika :</strong></h6>
+                                        <input type="file" name="slika" class="form-control" style="height: 35px;" required>
                                     </div>
                                     <div class="mb-1">
-                                        <label><strong>Long Description :</strong></label>
-                                        <textarea id="mytextarea" name='long_desc' class="form-control" style="height: 450px;"></textarea><br>
+                                        <h5 style="text-align:center"><strong>Napiši clanak :</strong></h5>
+                                        <textarea id="mytextarea" name='long_desc' class="form-control" style="height: 500px;"></textarea><br>
                                     </div>
-                                    <div class="mb-1">
-                                        <label><strong>Tagovi :</strong></label>
-                                        <input type="text" name="tagovi" class="form-control" required>
-                                    </div>
-                                    <div class="d-flex justify-content-center">
-                                        <input type="submit" name="submit" value="Sačuvaj kao draft stanje" style="margin-right: 10px">
-                                        <input type="submit" name="odobri" value="Pošalji članak na odobrenje">
+                                    <div class="button-container">
+                                        <input type="submit" name="submit" value="Sačuvaj kao draft stanje" class="btn">
+                                        <input type="submit" name="odobri" value="Pošalji članak na odobrenje"  class="btn">
 
                                     </div>
                                 </form>
@@ -187,10 +190,8 @@ if (isset($_SESSION["id_korisnika"])) {
                     toolbar: 'undo redo | formatpainter casechange styleselect | bold italic backcolor | ' +
                         'alignleft aligncenter alignright alignjustify | ' +
                         'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
-                    // without images_upload_url set, Upload tab won't show up
-                    images_upload_url: 'upload.php',
 
-                    // override default upload handler to simulate successful upload
+                    images_upload_url: 'upload.php',
                     images_upload_handler: image_upload_handler_callback
 
 

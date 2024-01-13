@@ -5,11 +5,11 @@ if (isset($_SESSION["id_korisnika"])) {
         $naziv = $_POST["naziv"];
         if ($konekcija->proveriPostojanjeRubrike($naziv) == false) {
         $konekcija->ubaciRubriku($naziv);
-        $potvrda = "Rubrika " .$naziv. " uspešno dodata.";
+        $potvrda = "<h2>Rubrika " .$naziv. " uspešno dodata.</h2>";
         echo '<script>setTimeout(function() { vratiNaPregledRubrika(); }, 1000);</script>';
         }
         else{
-        $potvrda = "Rubrika sa istim nazivom već postoji";
+        $potvrda = "<h2>Rubrika sa istim nazivom već postoji</h2>";
         echo '<script>setTimeout(function() { vratiNaPregledRubrika(); }, 1000);</script>';
         }
     }
@@ -39,16 +39,13 @@ if (isset($_SESSION["id_korisnika"])) {
             <div>
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div><h1>Dodavanje nove rubrike</h1></div>
-                    <h3>Unesi naziv nove rubrike:</h3>
+                    <h2>Unesi naziv nove rubrike:</h2>
                     <input type="text" name="naziv" placeholder="Naziv rubrike" class="search-input" required>
-                    <div class="button-container">
-                            <form action="" method="post">
-                                <input type="submit" value="Dodavanje nove rubrike" name="submit" class='btn' />
-                            </form>
-                            <form action="pregled_rubrika.php" method="get">
-                                <input type="submit" value="Odustani od dodavanja" name="odustani" class='btn' />
-                            </form>
-                        </div>
+                        <div class="button-container">
+                        <input type="submit" value="Sačuvaj izmene" name="submit" class="btn"/>
+                        <input type="button" value="Vrati na početak" class="btn" onclick="vratiNaPregledRubrika()" />
+                    </div>
+                </form>
                 <h3> <?php if (isset($potvrda)) { echo $potvrda; } ?></h3>
             </div>
         </div>

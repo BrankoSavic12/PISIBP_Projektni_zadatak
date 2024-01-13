@@ -47,34 +47,20 @@ if (isset($_SESSION["id_korisnika"])) {
         <div>
             <h1>Lista clanaka u draft stanju</h1>
         </div>
-        <div class="flex-container">
-            
-        <form action='pregled_clanci_draft_stanje.php' method='get' class="search-form">
-            <input type='text' name='pretragaNaslov' placeholder='Pretraga po naslovu' class="search-input">
-            <input type='submit' value='Pretraži' class='btn'>
-        </form>
-        <input type="button" value="Napusti" onclick="window.location.href='naslovna.php'" class="btn">
-
-        </div>
-        <div>
-           
+            <h2><a href="naslovna.php" class="back-link">Napusti stranicu</a></h2>
+            <div class="info-container" style="width:auto">
+        
             <?php
-                
-                if (isset($_GET['pretragaNaslov'])) {
-                    $pretragaNaslov = $_GET['pretragaNaslov'];
-                    $novinarId = isset($_SESSION['id_korisnika']) ? $_SESSION['id_korisnika'] : 0; // Postavi default vrednost na 0 ili prilagodi prema potrebi
-                    $clanci = $konekcija->pretraziDraftClankePoNaslovu($pretragaNaslov, $novinarId);
-                } else {
-                    $novinarId = isset($_SESSION['id_korisnika']) ? $_SESSION['id_korisnika'] : 0; // Postavi default vrednost na 0 ili prilagodi prema potrebi
+                 if (isset($_SESSION['id_korisnika'])) {
+                    $novinarId = $_SESSION['id_korisnika'];
                     $clanci = $konekcija->getDraftVesti($novinarId);
-                }
-                
+                 }
                 
                 if ($clanci != false) {
                     while ($clanak = $clanci->fetch_assoc()) {
                         echo "<div class='clanak-container'>
-                                <h3 class='naslov'>Naslov: $clanak[naslov]</h3> 
-                                <h3>Datum: $clanak[datum_vreme_objave]</h3>
+                                <h2 class='naslov'>Naslov: $clanak[naslov]</h2> 
+                                <h2>Datum: $clanak[datum_vreme_objave]</h2>
                                 <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj</button></a>
                                 <a href='izmeni_draft_clanak?id_vesti=$clanak[id_vesti]'><button>Izmeni</button></a>
                                 <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Obrši</button>
@@ -88,7 +74,7 @@ if (isset($_SESSION["id_korisnika"])) {
             var customDialog = document.createElement('div');
             customDialog.className = 'custom-dialog';
             customDialog.innerHTML = `
-                <p>Da li ste sigurni da želite da obrišete clanak?</p>
+                <h2>Da li ste sigurni da želite da obrišete clanak?</h2>
                 <button class="confirm-button" onclick="potvrdiBrisanje(${id_vesti})">Potvrdi</button>
                 <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>
             `;

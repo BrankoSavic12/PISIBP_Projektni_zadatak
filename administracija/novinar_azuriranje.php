@@ -19,10 +19,7 @@ if (isset($_SESSION["id_korisnika"])) {
         } else {
             $uloga = "urednik";
         }
-
-        // Dodatne provere, ako su vrednosti dostupne
         if (isset($_POST["rubrika_dodaj"]) && $_POST["rubrika_dodaj"] != 0) {
-            // Dodaj proveru da li rubrika već postoji kod novinara
             if ($konekcija->proveriDodeluRubrikeNovinaru($id_novinara, $_POST["rubrika_dodaj"])) {
                 $greska = "Novinar već pripada izabranoj rubrici.";
             } else {
@@ -31,11 +28,9 @@ if (isset($_SESSION["id_korisnika"])) {
         }
 
         if (isset($_POST["rubrika_ukloni"]) && $_POST["rubrika_ukloni"] != 0) {
-            // Dodaj proveru ili kod za uklanjanje rubrike
             $konekcija->ukloniRubrikuNovinaru($id_novinara, $_POST["rubrika_ukloni"]);
         }
 
-        // Bez obzira na promene, izvrši ažuriranje korisnika
         if ($konekcija->proveriPostojanjeKorisnickogImena($korisnicko_ime) == false || $staro_ime == $korisnicko_ime) {
             $konekcija->azurirajKorisnika($id_novinara, $korisnicko_ime, $lozinka, $ime_prezime, $uloga, $email);
             if ($uloga == "urednik") {
@@ -57,8 +52,7 @@ if (isset($_SESSION["id_korisnika"])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pregled novinara</title>
         <link rel="stylesheet" href="style.css">
-  
-
+    
         <script>
             function vratiNaPregledNovinara() {
                 window.location.href = 'pregled_novinara.php';
@@ -71,23 +65,24 @@ if (isset($_SESSION["id_korisnika"])) {
         <div class="navigacija">
             <?php include "menu.php" ?>
             <div class="content">
-                <div>
+        
+                <div class="form" style="max-width:450px">
                     <?php
                     $id_novinara = $_GET["id_novinara"];
                     $novinar = $konekcija->getKorisnikByID($id_novinara);
                     ?>
                     <form action="<?php echo $_SERVER['PHP_SELF'] . "?id_novinara=" . $id_novinara; ?>" method="post">
-                        <div><h1>Azuriraj/unapredi novinara:</h1></div>
-                        <h3>Korisnicko ime:</h3>
+                        <div><h1>Azuriranje novinara rurbike:</h1></div>
+                        <h2>Korisnicko ime:</h2>
                         <input type="text" name="korisnicko_ime" placeholder="Korisničko ime" class="search-input" required value="<?php echo $novinar["korisnicko_ime"]; ?>">
-                        <h3>Lozinka:</h3>
+                        <h2>Lozinka:</h2>
                         <input type="password" name="lozinka" placeholder="Lozinka" class="search-input" required value="<?php echo $novinar["lozinka"]; ?>">
-                        <h3>Ime i prezime:</h3>
+                        <h2>Ime i prezime:</h2>
                         <input type="text" name="ime_prezime" placeholder="Ime i prezime" class="search-input" required value="<?php echo $novinar["ime_prezime"]; ?>">
-                        <h3>Email adresa:</h3>
+                        <h2>Email adresa:</h2>
                         <input type="email" name="email" placeholder="Email" class="search-input" required value="<?php echo $novinar["email"]; ?>">
                         
-                        <h3>Unapredi novinara u urednika rubrike:</h3>
+                        <h2>Unapredi novinara u urednika:</h2>
                         <select name="rubrika" class="search-input">
                             <option value="0" selected>Nema unapređenje</option>
                             <?php
@@ -98,7 +93,7 @@ if (isset($_SESSION["id_korisnika"])) {
                             }
                             ?>
                         </select>
-                        <h3>Dodaj rubriku novinaru:</h3>
+                        <h2>Dodaj rubriku novinaru:</h2>
                         <select name="rubrika_dodaj" class="search-input">
                             <option value="0" selected>Nema dodeljivanja rubrike</option>
                             <?php
@@ -111,7 +106,7 @@ if (isset($_SESSION["id_korisnika"])) {
                         </select>
 
                        
-                        <h3>Ukloni rubriku novinaru:</h3>
+                        <h2>Ukloni rubriku novinaru:</h2>
                             <select name="rubrika_ukloni" class="search-input">
                             <option value="0" selected>Nema uklanjanja rubrike</option>
                             <?php
@@ -121,22 +116,18 @@ if (isset($_SESSION["id_korisnika"])) {
                                 $rubrikaInfo = $konekcija->getRubrikaByID($rubrika_uklanjanje["id_rubrike"]);
                                 echo "<option value={$rubrikaInfo['id_rubrike']}>{$rubrikaInfo['naziv']}</option>";
                             }
+                            
                             ?>
                         </select>
                         <?php if (isset($greska)) {
                             echo $greska;
                         } ?>
-                        
                         <div class="button-container">
-                            <form action="" method="post">
-                                <input type="submit" value="Ažuriranje novinara rubrike" name="submit" class='btn' />
-                            </form>
-                            <form action="pregled_novinara.php" method="get">
-                                <input type="submit" value="Odustani od ažuriranja" name="odustani" class='btn' />
-                            </form>
+                            <input type="submit" value="Sačuvaj izmene" name="submit" class="btn"/>
+                            <input type="button" value="Vrati na početak" class="btn" onclick="vratiNaPregledNovinara()" />
                         </div>
+                    </form>
 
-                       
                     <h3> <?php if (isset($potvrda)) {
                                 echo $potvrda;
                             } ?></h3>

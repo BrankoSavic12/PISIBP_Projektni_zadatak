@@ -23,22 +23,13 @@ if (isset($_SESSION["id_korisnika"])) {
                     <a href="registruj_urednika.php"><button>Registracija urednika</button></a>
                     <a href="naslovna.php"><button>Napusti stranicu</button></a>
                 </div>
-                <form action='pregled_urednika.php' method='get' class="search-form">
-                    <input type='text' name='pretraga' placeholder='Pretraga urednika' class="search-input">
-                    <input type='submit' value='Pretraži urednike' class='btn'>
-                </form>
+               
 
                 <?php
-                if (isset($_GET['pretraga'])) {
-                    $pretraga = $_GET['pretraga'];
-                    $urednici = $konekcija->getUredniciByImePrezime($pretraga);
-                } else {
-                    $urednici = $konekcija->getSviUrednici();
-                }
-
+                $urednici = $konekcija->getSviUrednici();
                 if ($urednici != false) {
                     while ($urednik = $urednici->fetch_assoc()) {
-                        echo "<div><h3>Urednik: $urednik[ime_prezime]</h3>
+                        echo "<div class='novinar-container'><h2>Urednik: $urednik[ime_prezime]</h2>
                             <a href=urednik_info.php?id_urednika=$urednik[id_korisnika]><button>Informacije</button></a>  
                             <a href=urednik_azuriranje.php?id_urednika=$urednik[id_korisnika]><button>Ažuriranje</button></a>
                             <button onclick=\"brisanjeUrednika({$urednik['id_korisnika']})\">Brisanje</button>
@@ -57,7 +48,7 @@ if (isset($_SESSION["id_korisnika"])) {
                 var customDialog = document.createElement('div');
                 customDialog.className = 'custom-dialog';
                 customDialog.innerHTML = `
-                    <p>Da li ste sigurni da želite da obrišete urednika?</p>
+                    <h3>Da li ste sigurni da želite da obrišete urednika?</h3>
                     <button class="confirm-button" onclick="potvrdiBrisanje(${id_urednika})">Potvrdi</button>
                     <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>`;
                 document.body.appendChild(customDialog);

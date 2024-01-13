@@ -28,16 +28,16 @@ if (isset($_SESSION["id_korisnika"])) {
     <body>
         <div class="navigacija">
             <?php include "menu.php" ?>
-            <div class="content">
-
+            <div class="content" style="width: 70%;">
+            <div class="info-container" style="width: 550px;">
                 <?php
                 $id_vesti = $_GET["id_vesti"];
                 $vest = $konekcija->getClanakByID($id_vesti);
-                echo "<div><h2>$vest[naslov]</h2></div>";
+                echo "<div><h1>$vest[naslov]</h1></div>";
                 echo "<h6>Datum:$vest[datum_vreme_objave]</h6>";
                 $tagovi = $konekcija->getTagoviByVest($id_vesti);
                 if ($tagovi != false) {
-                    echo "<p>  Tagovi: ";
+                    echo "<h6>  Tagovi: ";
                     $brojac = 0;
                     while ($tag = $tagovi->fetch_assoc()) {
                         $brojac++;
@@ -47,11 +47,12 @@ if (isset($_SESSION["id_korisnika"])) {
                             echo "$tag[sadrzaj], ";
                         }
                     }
-                    echo "</p>";
+                    echo "</h6>";
                 }
                 echo "<h6>Glavna slika</h6>";
                 echo "<div><img src=../$vest[lead_slika_url] class=lead_slika></div>";
-                echo $vest["sadrzaj"];
+                echo '<span style="font-size: 15px;">' . $vest["sadrzaj"] . '</span>';
+
 
                 $prethodnaStranica = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
                 $zavrsiCitanjeHref = '';
@@ -72,12 +73,14 @@ if (isset($_SESSION["id_korisnika"])) {
                     $zavrsiCitanjeHref = "pregled_clanci_na_cekanju_urednik.php";
                 } elseif (strpos($prethodnaStranica, "pregled_clanci_zahtevi_glavni_urednik.php") !== false) {
                     $zavrsiCitanjeHref = "pregled_clanci_zahtevi_glavni_urednik.php";
+                } elseif (strpos($prethodnaStranica, "pregled_clanci_zahtevi.php") !== false) {
+                    $zavrsiCitanjeHref = "pregled_clanci_zahtevi.php";
                 }
 
                 ?>
 
-                <a href="<?php echo $zavrsiCitanjeHref; ?>" style="display: inline-block; margin: 10px;">
-                    <button style="padding: 5px 10px; font-size: 12px;">Završi čitanje</button>
+                <a href="<?php echo $zavrsiCitanjeHref; ?>" style="display: inline-block; margin: 10px">
+                <a  href="<?php echo $zavrsiCitanjeHref; ?>" class="back-link">Završi čitanje</a>
                 </a>
 
 

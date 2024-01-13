@@ -9,11 +9,9 @@ if (isset($_SESSION["id_korisnika"])) {
             $ime_rubrike = $rubrikaInfo['ime_rubrike'];
             $urednici = $rubrikaInfo['urednici'];
         } else {
-            // Ako rubrika nije pronađena
             header("location:pregled_rubrika.php");
         }
     } else {
-        // Ako nema ID-a rubrike u URL-u
         header("location:pregled_rubrika.php");
     }
 ?>
@@ -32,30 +30,28 @@ if (isset($_SESSION["id_korisnika"])) {
         <div class="navigacija">
             <?php include "menu.php" ?>
             <div class="content">
-            <div class="info-container">
+            <div class="info-container"  style="max-width:450px;">
                 <div>
-                    <div><h1>Osnovne informacije o rubrici</h1></div>
+                    <div><h1>Informacije o rubrici</h1></div>
                     <?php if (isset($ime_rubrike)) { ?>
                         <div class="rubrika-info-item">
-                            <h3>Ime rubrike:</h3>
-                            <h4><?php echo $ime_rubrike; ?></h4>
+                            <h2>Ime rubrike:</h2>
+                            <h3><?php echo $ime_rubrike; ?></h3>
                         </div>
                     <?php } ?>
                     <div class="rubrika-info-item">
-                        <h3>Urednici rubrike:</h3>
+                        <h2>Urednici rubrike:</h2>
                         <?php
                         if (isset($urednici) && $urednici != false) {
                             while ($urednik = $urednici->fetch_assoc()) {
-                                echo "<h4>$urednik[ime_prezime] - $urednik[email]</h4>";
+                                echo "<h3>$urednik[ime_prezime] - $urednik[email]</h3>";
                             }
                         } else {
-                            echo "<h4>Nema urednika za ovu rubriku.</h4>";
+                            echo "<h3>Nema urednika za ovu rubriku.</h3>";
                         }
                         ?>
                     </div>
-                    <form action="pregled_rubrika.php" method="get">
-                        <input type="submit" value="Povratak na prethodnu stranu" name="odustani" class="btn";">
-                    </form>
+                    <a href="pregled_rubrika.php" class="back-link" style="padding-left: 10px">Napusti stranicu</a>
                 </div>
             </div>
         </div>

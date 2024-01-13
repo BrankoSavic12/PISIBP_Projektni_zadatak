@@ -22,7 +22,7 @@
 
 .content {
     width: 50%;
-    background-color: rgba(109, 93, 93, 0.492);
+    background-color: #5c83ac;
     height: 100vh;
     overflow: auto;
 }
@@ -76,9 +76,8 @@
 
 
 .menu-icon {
-    margin-right: 10px;
-    width: 70px;
-    height: 70px;
+    width: 20px;
+    height: 20px;
 }
 
 .menu p.logout {
@@ -156,13 +155,15 @@ select {
     margin-bottom: 10px;
 }
 
-h3 {
-    color: rgb(4, 8, 4);
-}
 
 
-.content h2 {
+
+.content h1 {
     text-align: center;
+    color: #000;
+    font-size: 34px;
+    font-weight: bold;
+    padding-top: 15px;
 }
 
 .content button {
@@ -176,29 +177,25 @@ h3 {
 
 }
 
-h2,
-h3,
-h4 {
-    margin: 0;
-    color: #333;
 
-}
 
-h3 {
-    color: #555;
-}
+
 
 h1 {
     font-style: italic;
 }
 
 .info-container {
-    background-color: rgb(223, 221, 221);
+    background-color:#4d516d;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+    width: 500px;
     margin: 20px auto;
+    font-style: oblique;
+    border: 3px solid rgb(2, 2, 2);
+    margin-top: 30px;
+
 }
 
 .info-item {
@@ -283,9 +280,19 @@ h1 {
     color: #1c2121;
     margin-bottom: 10px;
 }
-
 .content h2 {
-    text-align: center;
+    font-size: 18px;
+    text-align: left;
+    padding-left: 10px; 
+    font-weight: bold;
+    font-style: oblique;
+}
+
+.content h3{
+    text-align: left;
+    padding-left: 10px; 
+    font-weight: bold;
+    font-style: oblique;
 }
 
 
@@ -297,17 +304,18 @@ h1 {
 /*stilizovanje alerta za brisanje*/
 .custom-dialog {
     position: fixed;
-    top: 35%;
-    left: 58%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(203, 199, 199, 0.9);
+    top: 50%;
+    left: 50%;
+    transform: translate(-30%, -50%);
+    background-color:#8388b2;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    max-width: 350px;
+    max-width: 400px;
     width: 100%;
     text-align: center;
+    border: 2px solid #0e0d0d;
 }
 
 .custom-dialog p {
@@ -316,62 +324,61 @@ h1 {
 }
 
 .custom-dialog button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     margin: 0 10px;
     cursor: pointer;
     font-size: 13px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+}
 
+.confirm-button,
+.cancel-button,
+.btn {
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    padding: 13px 15px;
+    margin-left: 10px;
+    background-color: #5c83ac;
+    color: #fff;
+    border: 2px solid #5c83ac;
+    border-radius: 8px;
+    cursor: pointer;
+    font-style: oblique;
+    font-size: 13px;
+    
 }
 
 .confirm-button,
 .cancel-button {
-    background-color: rgb(244, 243, 240);
-    color: rgb(15, 14, 14);
-    padding: 10px;
+    background-color: #f4f3f0;
+    color: #0f0e0e;
+    border: 3px solid #333;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-    width: 100px;
+    width: 120px;
+    height: 40px;
 }
 
 .confirm-button:hover,
-.cancel-button:hover {
-    background-color: rgb(196, 193, 185);
+.cancel-button:hover,
+.btn:hover {
+    border-radius: 5px;
     border-color: #121111;
-    color: #fff;
+    background-color: #9e9fb3;
+    color: #fff; 
 }
 
 .btn {
-    border: 3px solid rgb(82, 78, 78);
-    padding: 5px 10px;
-    border-radius: 5px;
-    background-color: rgb(244, 243, 240);
-    color: rgb(15, 14, 14);
-    height: 30px;
+    border: 3px solid #060606;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #dce0e4;
+    color: #0f0e0e;
+    height: 40px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-}
-
-.btn:hover {
-    background-color: rgb(196, 193, 185);
-    border-color: #121111;
-    color: #fff;
-}
-
-.search-input {
-    border: 3px solid rgb(81, 77, 77);
-    padding: 2px 7px;
-    border-radius: 5px;
-    height: 30px;
-    margin-right: 5px;
-}
-
-.search-form {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
+    font-weight: bold;
+    width: 50%; /* Prilagodite širinu prema potrebi */
+    box-sizing: border-box; /* Dodajte ovo kako biste obuhvatili padding u širini */
 }
 
 .button-container {
@@ -379,20 +386,208 @@ h1 {
     justify-content: space-between;
 }
 
-.button-container form {
-    width: 48%;
-}
-
-.button-container form:first-child {
-    text-align: left;
-}
 
 .button-container form:last-child {
-    text-align: right;
+    margin-right: 0; /* Uklonite margine za poslednju formu kako biste otklonili razmak */
 }
+
+
+.search-input {
+    border: 2px solid #333;
+    padding: 10px;
+    border-radius: 8px;
+    height: 40px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 40px; 
+    font-weight: bold;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 20px; 
+}
+
+
+
+.search-input:focus {
+    border-color: #5c83ac;
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(92, 131, 172, 0.5);
+}
+
+.search-button {
+    padding: 12px 15px;
+    margin-left: 10px;
+    background-color: #5c83ac;
+    color: #fff;
+    border: 2px solid #5c83ac;
+    border-radius: 8px;
+    cursor: pointer;
+    font-style: oblique;
+    font-size: 13px;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #4a6d93;
+}
+
 
 .lead_slika {
     width: 40%;
     display: block;
     margin: auto;
+}
+.info-container h6{
+    text-align: center;
+}
+
+body {
+    background-color: #f7f9f9;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar {
+    width: 50%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.sidebar-image {
+    width: 400px; 
+    height: auto; 
+    border-radius: 14px;
+    border: 2px solid rgb(0, 0, 0); 
+}
+.sidebar-image1 {
+    border-radius: 16px;
+    width: 500px;
+    height: 260px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 2px solid rgb(0, 0, 0); 
+}
+
+.menu-section {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #4d516d;
+    color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid rgb(0, 0, 0); 
+}
+
+.menu-icon {
+    width: 60px;
+    height: auto;
+    margin-right: 10px;
+    border: 2px solid rgb(0, 0, 0); 
+}
+
+.menu button{
+    padding: 12px 15px;
+    margin-left: 10px;
+    background-color: rgb(242, 234, 219);
+    color: rgb(89, 68, 41);
+    border: 3px solid rgb(0, 0, 0); 
+    border-radius: 8px;
+    cursor: pointer;
+    font-style: oblique;
+    font-size: 13px;
+    font-weight: bold;
+    width: 115px;
+}
+.content button{
+    padding: 12px 15px;
+    background-color: rgb(242, 234, 219);
+    color: rgb(89, 68, 41);
+    border: 3px solid rgb(0, 0, 0); 
+    border-radius: 8px;
+    cursor: pointer;
+    font-style: oblique;
+    font-size: 13px;
+    font-weight: bold;
+    width: 110px;
+    
+}
+.content button:hover {
+    background-color: #9e9fb3;
+    color: #fff; 
+}
+
+.menu button:hover {
+    background-color: #9e9fb3;
+    color: #fff; 
+}
+.menu{
+    background-color: #5c83ac;
+}
+
+.back-link {
+    color: #0f0e0e;
+    text-decoration: underline;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: color 0.3s; 
+}
+
+.back-link:hover {
+    color:#11559e; 
+}
+
+
+.novinar-container {
+    border: 2px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color:#4d516d;
+    font-size: 14px;
+}
+
+.novinar-container h2 {
+    margin-bottom: 8px;
+    font-weight: bold;
+    
+}
+
+.novinar-container button {
+    padding: 12px 15px;
+    background-color: rgb(242, 234, 219);
+    color: rgb(89, 68, 41);
+    border: 3px solid rgb(0, 0, 0); 
+    border-radius: 8px;
+    cursor: pointer;
+    font-style: oblique;
+    font-size: 13px;
+    font-weight: bold;
+    width: 110px;
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid black;
+    background-color: #4d516d;;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
