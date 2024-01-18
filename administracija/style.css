@@ -170,17 +170,6 @@ select {
     border: 3px solid rgb(89, 68, 41);
 }
 
-
-
-.info-item {
-    margin-bottom: 30px;
-
-}
-
-
-
-
-
 h1 {
     font-style: italic;
 }
@@ -195,7 +184,6 @@ h1 {
     font-style: oblique;
     border: 3px solid rgb(2, 2, 2);
     margin-top: 30px;
-
 }
 
 .info-item {
@@ -377,8 +365,8 @@ h1 {
     height: 40px;
     cursor: pointer;
     font-weight: bold;
-    width: 50%; /* Prilagodite širinu prema potrebi */
-    box-sizing: border-box; /* Dodajte ovo kako biste obuhvatili padding u širini */
+    width: 50%;
+    box-sizing: border-box;
 }
 
 .button-container {
@@ -388,7 +376,7 @@ h1 {
 
 
 .button-container form:last-child {
-    margin-right: 0; /* Uklonite margine za poslednju formu kako biste otklonili razmak */
+    margin-right: 0
 }
 
 
@@ -590,4 +578,15 @@ form {
     background-color: #4d516d;;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.iznad-dugmica {
+    border: 2px solid black;
+    padding: 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+}
+.iznad-dugmica h2 {
+    margin: 3px 3px;
 }

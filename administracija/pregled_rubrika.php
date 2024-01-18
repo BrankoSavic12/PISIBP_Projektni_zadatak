@@ -30,7 +30,8 @@ if (isset($_SESSION["id_korisnika"])) {
                 $rubrike = $konekcija->getSveRubrike();
                 if ($rubrike != false) {
                     while ($rubrika = $rubrike->fetch_assoc()) {
-                        echo "<div class='novinar-container' style='width: 250px;'><h2>Naziv rubrike:$rubrika[naziv]</h2>
+                        echo "<div class='novinar-container' style='width: 300px; text-align:center'>
+                        <h2 style='text-align:center'>Naziv rubrike:$rubrika[naziv]</h2>
                         <a href=rubrika_info.php?id_rubrike=$rubrika[id_rubrike]><button>Informacije</button></a>
                         <button onclick=\"brisanjeRubrike({$rubrika['id_rubrike']})\">Brisanje</button></div>";
                     }

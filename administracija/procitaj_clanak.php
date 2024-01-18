@@ -75,6 +75,8 @@ if (isset($_SESSION["id_korisnika"])) {
                     $zavrsiCitanjeHref = "pregled_clanci_zahtevi_glavni_urednik.php";
                 } elseif (strpos($prethodnaStranica, "pregled_clanci_zahtevi.php") !== false) {
                     $zavrsiCitanjeHref = "pregled_clanci_zahtevi.php";
+                }elseif (strpos($prethodnaStranica, "pregled_svi_odobreni_clanci_glavni_urednik.php") !== false) {
+                    $zavrsiCitanjeHref = "pregled_svi_odobreni_clanci_glavni_urednik.php";
                 }
 
                 ?>

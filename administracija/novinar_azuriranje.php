@@ -5,7 +5,6 @@ if (isset($_SESSION["id_korisnika"])) {
         $id_novinara = $_GET["id_novinara"];
         $novinar = $konekcija->getKorisnikByID($id_novinara);
         $staro_ime = $novinar["korisnicko_ime"];
-        echo $staro_ime;
         $korisnicko_ime = $_POST["korisnicko_ime"];
         $lozinka = md5($_POST["lozinka"]);
         $ime_prezime = $_POST["ime_prezime"];

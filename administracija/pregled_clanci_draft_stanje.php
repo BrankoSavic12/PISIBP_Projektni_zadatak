@@ -11,32 +11,6 @@ if (isset($_SESSION["id_korisnika"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pregled clanaka u draft stanju</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .clanak-container {
-            max-width: 600px;
-            margin: 0px auto;
-            padding: 5px;
-            text-align: center;
-        }
-        .naslov {
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        } 
-        .btn{
-            margin-left: 5px; 
-        }
-        .flex-container {
-            display: flex;
-            justify-content: space-between; 
-            align-items: center; 
-        }
-        .search-input {
-            width: 160px;
-        }
-
-
-    </style>
-
 </head>
 
 <body>
@@ -59,11 +33,13 @@ if (isset($_SESSION["id_korisnika"])) {
                 if ($clanci != false) {
                     while ($clanak = $clanci->fetch_assoc()) {
                         echo "<div class='clanak-container'>
+                                <div class='iznad-dugmica' style='padding: 15px; width:375px'>
                                 <h2 class='naslov'>Naslov: $clanak[naslov]</h2> 
                                 <h2>Datum: $clanak[datum_vreme_objave]</h2>
                                 <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj</button></a>
                                 <a href='izmeni_draft_clanak?id_vesti=$clanak[id_vesti]'><button>Izmeni</button></a>
                                 <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Obrši</button>
+                                </div>
                             </div>";
                     }
                 }              

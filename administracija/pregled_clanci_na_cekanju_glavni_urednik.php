@@ -11,33 +11,6 @@ if (isset($_SESSION["id_korisnika"])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pregled clanaka na cekanju - glavni urednik</title>
         <link rel="stylesheet" href="style.css">
-        <style>
-            .clanak-container {
-                max-width: 600px;
-                margin: 0px auto;
-                padding: 5px;
-                text-align: center;
-            }
-
-            .naslov {
-                word-wrap: break-word;
-                overflow-wrap: break-word;
-            }
-
-            .btn {
-                margin-left: 5px;
-            }
-
-            .flex-container {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .search-input {
-                width: 110px;
-            }
-        </style>
 
     </head>
 
@@ -56,9 +29,11 @@ if (isset($_SESSION["id_korisnika"])) {
                 $vesti = $konekcija->getVestByStatus("na čekanju");
                 if ($vesti != false) {
                     while ($vest = $vesti->fetch_assoc()) {
-                        echo "<div class='novinar-container'>
-                                <h2 class='naslov'>Naslov: $vest[naslov]</h2> 
-                                <h2>Datum odobrenja: $vest[datum_vreme_objave]</h2>
+                                echo "<div class='novinar-container'>
+                                <div class='iznad-dugmica'>
+                                <h2>Naslov: $vest[naslov]</h2> 
+                                <h2>Odobreno: $vest[datum_vreme_objave]</h2>
+                                </div>
                                 <a href=procitaj_clanak.php?id_vesti=$vest[id_vesti]><button>Pročitaj članak</button></a> 
                                 <a href=odobri_clanak.php?id_vesti=$vest[id_vesti]><button>Odobri članak</button></a>
                                 <button onclick=\"brisanjeClanaka($vest[id_vesti])\">Brisanje članaka</button>

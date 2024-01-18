@@ -58,7 +58,7 @@ if (isset($_SESSION["id_korisnika"])) {
 
         <title>Kreiranje članaka</title>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
-        <script src="https://cdn.tiny.cloud/1/3wrh81rf47kz5uhx860nh15rygis6s6puk10pm3qr4nuspua/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://cdn.tiny.cloud/1/iz2p1l82qdrmzktejgzo1i1qayr12hszcurdxccvfa5f5l7r/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 

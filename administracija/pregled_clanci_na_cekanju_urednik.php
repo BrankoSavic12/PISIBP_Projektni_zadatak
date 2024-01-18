@@ -33,11 +33,13 @@ if (isset($_SESSION["id_korisnika"])) {
                     if ($vest_po_rubrici["status"] == "na čekanju" && (empty($pretragaNaslov) || stripos($vest_po_rubrici['naslov'], $pretragaNaslov) !== false)) {
                         $pronadjeniClanci = true;
                         echo "<div class='clanak-container'>
+                            <div class='iznad-dugmica' style='padding: 15px; width:375px'>
                             <h2 class='naslov'>Naslov: $vest_po_rubrici[naslov]</h2> 
-                            <h2>Datum odobrenja: $vest_po_rubrici[datum_vreme_objave]</h2>
+                            <h2>Datum slanja: $vest_po_rubrici[datum_vreme_objave]</h2>
                             <a href=procitaj_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Pročitaj članak</button></a> 
                             <a href=odobri_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Odobri članak</button></a>
                             <button onclick=\"brisanjeClanaka($vest_po_rubrici[id_vesti])\">Brisanje članaka</button>
+                            </div>
                             </div>";
                     }
                 }

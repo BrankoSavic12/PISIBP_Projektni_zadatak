@@ -38,11 +38,13 @@ if (isset($_SESSION["id_korisnika"])) {
                                     $vest = $konekcija->getClanakByID($vest_zahtev["id_vesti"]);
 
                                     echo "<div class='clanak-container'>
+                                    <div class='iznad-dugmica' style='padding: 15px; width:375px'>
                                     <h2 class='naslov'>Naslov: $vest[naslov]</h2> 
                                     <h2>Vrsta zahteva:$vest_zahtev[vrsta]</h2>
                                     <a href=procitaj_clanak.php?id_vesti=$vest[id_vesti]><button>Pročitaj članak</button></a>
                                     <a href=prihvati_zahtev.php?id_vesti=$vest[id_vesti]&zahtev=$vest_zahtev[vrsta]&id_zahteva=$vest_zahtev[id_zahteva]><button>Prihvatanje zahteva</button></a>
                                     <a href=odbijanje_zahteva.php?id_zahteva=$vest_zahtev[id_zahteva]><button>Odbijanje zahteva</button></a>
+                                    </div>
                                     </div>";
                                  
                                 }

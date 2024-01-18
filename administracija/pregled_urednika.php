@@ -48,7 +48,7 @@ if (isset($_SESSION["id_korisnika"])) {
                 var customDialog = document.createElement('div');
                 customDialog.className = 'custom-dialog';
                 customDialog.innerHTML = `
-                    <h3>Da li ste sigurni da želite da obrišete urednika?</h3>
+                    <h3 style="font-size:16px">Da li ste sigurni da želite da obrišete urednika?</h3>
                     <button class="confirm-button" onclick="potvrdiBrisanje(${id_urednika})">Potvrdi</button>
                     <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>`;
                 document.body.appendChild(customDialog);

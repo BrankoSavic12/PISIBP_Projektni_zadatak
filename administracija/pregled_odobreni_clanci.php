@@ -31,12 +31,14 @@ if (isset($_SESSION["id_korisnika"])) {
                 }
            
                 while ($clanak = $clanci->fetch_assoc()) {
-                    echo "<div class='clanak-container'>
+                    echo "<div class='clanak-container' style='text-align:center'>
+                        <div class='iznad-dugmica' style='padding: 15px; width:400px'>
                         <h2>Naslov: $clanak[naslov]</h2> 
                         <h2>Datum odobrenja: $clanak[datum_vreme_objave]</h2>
                         <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj članak</button></a>
                         <a href='posalji_zahtev_za_izmenu?id_vesti=$clanak[id_vesti]&return_page=odobreni_clanci'><button>Zahtev za izmenu</button></a>
                         <a href='posalji_zahtev_za_brisanje?id_vesti=$clanak[id_vesti]&return_page=odobreni_clanci'><button>Zahtev za brisanje</button></a>
+                        </div>
                         </div>";
                 }
                 

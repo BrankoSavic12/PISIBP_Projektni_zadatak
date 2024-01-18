@@ -462,13 +462,21 @@ class Konekcija
         $stmt->execute();
     }
     function obrisiVest($id_vesti)
-    {
+    {   
+        $this->obrisiKomentareZaVest($id_vesti);
         $stmTagovi = $this->conn->prepare("DELETE FROM tagovi WHERE id_vesti = ?");
         $stmTagovi->bind_param("i", $id_vesti);
         $stmTagovi->execute();
         $stmVest = $this->conn->prepare("DELETE FROM vest WHERE id_vesti = ?");
         $stmVest->bind_param("i", $id_vesti);
         $stmVest->execute();
+    }
+    
+    function obrisiKomentareZaVest($id_vesti)
+    {
+        $stm = $this->conn->prepare("DELETE FROM komentari WHERE id_vesti = ?");
+        $stm->bind_param("i", $id_vesti);
+        $stm->execute();
     }
 
     function getVestiNaCekanju($novinarId)
@@ -483,7 +491,7 @@ class Konekcija
             return false;
         }
     }
-   
+
     function getOdobreneVesti($novinarId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_novinara = ?");
@@ -625,6 +633,53 @@ class Konekcija
         } else {
             return false;
         }
+    }
+
+    function getVestIdByTag($tag)
+    {
+        $stmt = $this->conn->prepare("select * from tagovi where sadrzaj = ?");
+        $stmt->bind_param("s", $tag);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function povecajPozitivne($id_vesti)
+    {
+        $stmt = $this->conn->prepare("update vest set broj_pozitivnih = broj_pozitivnih + 1 where id_vesti = ?");
+        $stmt->bind_param("i", $id_vesti);
+        $stmt->execute();
+    }
+
+    function povecajNegativne($id_vesti)
+    {
+        $stmt = $this->conn->prepare("update vest set broj_negativnih = broj_negativnih + 1 where id_vesti = ?");
+        $stmt->bind_param("i", $id_vesti);
+        $stmt->execute();
+    }
+
+    function getKomentariByVestId($id_vesti)
+    {
+        $stmt = $this->conn->prepare("select * from komentari where id_vesti = ?");
+        $stmt->bind_param("i", $id_vesti);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function unesiKomentar($id_vesti, $citalac, $sadrzaj)
+    {
+        $stmt = $this->conn->prepare("insert into komentari (id_vesti, citalac, sadrzaj) values (?, ?, ?)");
+        $stmt->bind_param("iss", $id_vesti, $citalac, $sadrzaj);
+        $stmt->execute();
     }
 }
 

@@ -31,11 +31,13 @@ if (isset($_SESSION["id_korisnika"])) {
                 if ($clanci != false) {
                     while ($clanak = $clanci->fetch_assoc()) {
                         echo "<div>
+                                <div class='iznad-dugmica' style='padding: 15px; width:375px'>
                                 <h2>Naslov: $clanak[naslov]</h2> 
                                 <h2>Datum: $clanak[datum_vreme_objave]</h2>
                                 <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj</button></a>
                                 <a href='izmeni_draft_clanak?id_vesti=$clanak[id_vesti]'><button>Izmeni</button></a>
                                 <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Obrši</button>
+                                </div>
                             </div>";
                     }
                 }

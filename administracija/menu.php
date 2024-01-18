@@ -67,6 +67,16 @@
                 <a href="pregled_clanci_zahtevi_glavni_urednik.php"><button>Zahtevi za izmene</button></a>
             </p>
         </div>
+
+        <div class="menu-section">
+            <p>
+                <img src="slike/svi.jpg" alt="Rubrike" class="menu-icon">
+                "Dobrodošli u prostor gde se naše priče stapaju s istraživanjem,
+                informacije plešu s radoznalošću, a inspiracija nikada ne miruje
+                donoseći šarm i dubinu."
+                <a href="pregled_svi_odobreni_clanci_glavni_urednik.php"><button>Objavljeni članci</button></a>
+            </p>
+        </div>
     <?php  } ?>
 
     <?php

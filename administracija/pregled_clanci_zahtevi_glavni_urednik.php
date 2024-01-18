@@ -33,9 +33,11 @@ if (isset($_SESSION["id_korisnika"])) {
                         while ($zahtev = $zahtevi->fetch_assoc()) {
                             $vest = $konekcija->getClanakByID($zahtev["id_vesti"]);
 
-                            echo "<div class='novinar-container'>
-                                <h2 class='naslov'>Naslov: $vest[naslov]</h2> 
+                            echo "<div class='novinar-container' style='text-align:center'>
+                                <div class='iznad-dugmica'>
+                                <h2>Naslov: $vest[naslov]</h2> 
                                 <h2>Vrsta zahteva:$zahtev[vrsta]</h2>
+                                </div>
                                 <a href=procitaj_clanak.php?id_vesti=$vest[id_vesti]><button>Pročitaj članak</button></a>
                                 <a href=prihvati_zahtev.php?id_vesti=$vest[id_vesti]&zahtev=$zahtev[vrsta]&id_zahteva=$zahtev[id_zahteva]><button>Prihvatanje zahtev</button></a>
                                 <a href=odbijanje_zahteva.php?id_zahteva=$zahtev[id_zahteva]><button>Odbijanje zahteva</button></a></div>";
