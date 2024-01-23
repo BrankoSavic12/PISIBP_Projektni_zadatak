@@ -32,12 +32,14 @@
 .top-header-levo {
     width: 80%;
 }
-.top-header-levo h3{
+
+.top-header-levo h3 {
     padding-top: 10px;
     padding-bottom: 0px;
     font-size: 20px;
 }
-.top-header-levo p{
+
+.top-header-levo p {
     padding-bottom: 10px;
     font-size: 3em;
 }
@@ -72,10 +74,20 @@
 
 .top-header-desno input[type="search"] {
     padding: 8px;
-    margin-right: 10px;
+    margin-right: 1px;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-top: 10px;
+    width: 150px;
+}
+
+.top-header-desno input[type="date"] {
+    padding: 8px;
+    margin-right: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 15px;
 }
 
 .top-header-desno input[type="submit"] {
@@ -142,21 +154,32 @@
     width: 75%;
     display: flex;
     flex-direction: column;
-    padding-right:  5%;
-    padding-top: 4.5%;
+    padding-right: 5%;
+    padding-top: 2%;
 
 }
-.glavne_vesti h4{
-padding-top: 10px;
-font-size: 14px;
-}
-.glavne_vesti h1{
-    text-align: center;
-    font-size: 3em;
+
+.glavne_vesti h4 {
+    padding-top: 10px;
+    font-size: 14px;
 }
 
-.glavne_vesti h2{
+
+.glavne_vesti h2 {
     padding-bottom: 10px;
+    font-size: 22px;
+}
+
+.glavne_vesti h3 {
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+
+
+.glavne_vesti h1 {
+    font-size: 1.5em;
+    text-align: center;
+
 }
 
 .glavne_vesti h2:hover {
@@ -164,13 +187,21 @@ font-size: 14px;
     color: #6b90c2;
 }
 
-.glavna_vest_sadrzaj{
+.glavna_vest_sadrzaj {
 
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
- 
+
+}
+
+.glavna_vest_sadrzaj h1 {
+    padding-bottom: 20px;
+}
+
+.glavna_vest_sadrzaj h3 {
+    font-size: 16px;
 }
 
 .aktuelne_vesti {
@@ -203,7 +234,13 @@ font-size: 14px;
     height: 300px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.vest_slika img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* ili 'contain', zavisno od vaših potreba */
 }
 
 .lead_slika {
@@ -215,12 +252,12 @@ font-size: 14px;
 }
 
 .aktuelna_vest {
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px;
     margin-bottom: 20px;
-    
+
 }
 
 .aktuelna_vest p {
@@ -228,11 +265,37 @@ font-size: 14px;
     line-height: 1.2;
 }
 
+.aktuelna_vest h3 {
+    padding-bottom: 10px;
+
+}
+
+.aktuelna_vest_slika {
+    width: 250px;
+    height: 200px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.aktuelna_vest_slika img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.aktuelne_vesti h2 {
+    padding-bottom: 10px;
+    font-size: 22px;
+}
+
 .aktuelna_vest a {
     text-decoration: none;
     color: #6b90c2;
     font-weight: bold;
+    padding-bottom: 20px;
 }
+
 
 .aktuelna_vest a:hover {
     text-decoration: underline;
@@ -271,11 +334,12 @@ font-size: 14px;
 
 .lajk {
     font-size: 2em;
-    color:grey;
-    
+    color: grey;
+
 }
+
 .lajkovi a:hover .fa-thumbs-up {
-    color: #6b90c2; 
+    color: #6b90c2;
 }
 
 .lajkovi a:hover .fa-thumbs-down {
@@ -283,8 +347,8 @@ font-size: 14px;
 }
 
 /*Stilizovanje komentara*/
-.komentari {    
-    width: 600px;
+.komentari {
+    width: 450px;
     background-color: #f2f2f2;
     padding: 15px;
     border-radius: 8px;
@@ -293,7 +357,7 @@ font-size: 14px;
 }
 
 .komentari h4 {
-    font-size: 24px;
+    font-size: 20px;
     color: #333;
     margin-bottom: 15px;
 }
@@ -306,7 +370,8 @@ font-size: 14px;
     border-radius: 6px;
 }
 
-.komentari h4, .komentari p {
+.komentari h4,
+.komentari p {
     margin: 0;
 }
 
@@ -317,7 +382,7 @@ font-size: 14px;
 }
 
 .komentar-forma {
-    width: 600px;
+    width: 450px;
     background-color: #f2f2f2;
     padding: 15px;
     border-radius: 8px;
@@ -343,7 +408,7 @@ font-size: 14px;
 }
 
 .komentar-forma input[type="submit"] {
-    background-color:#888;
+    background-color: #888;
     color: white;
     cursor: pointer;
     border: none;
@@ -355,4 +420,123 @@ font-size: 14px;
 .komentari-datum {
     font-size: 12px;
     color: #777;
+}
+
+.lajkovi_komentara {
+    display: flex;
+
+}
+
+
+.show-modal {
+
+    cursor: pointer;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1.2rem;
+    right: 2rem;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* CLASSES TO MAKE MODAL WORK */
+.hidden {
+    display: none;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    height: 50%;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 10;
+   
+}
+
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 5;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.modal-form h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+
+.form-group {
+    width: 70%;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.error-message {
+    color: #0e0d0d;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.modal-form input[type="submit"] {
+    background-color: #3ec476;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    border: 1px solid black;
+    width: 40%;
+    border: 1px solid white;
+    font-weight: bold;
+    height: 45px;
+}
+
+.modal-form input[type="submit"]:hover {
+    background-color: #209b53;
+    color: black;
 }
