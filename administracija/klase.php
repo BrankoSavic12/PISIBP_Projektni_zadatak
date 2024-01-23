@@ -462,7 +462,7 @@ class Konekcija
         $stmt->execute();
     }
     function obrisiVest($id_vesti)
-    {   
+    {
         $this->obrisiKomentareZaVest($id_vesti);
         $stmTagovi = $this->conn->prepare("DELETE FROM tagovi WHERE id_vesti = ?");
         $stmTagovi->bind_param("i", $id_vesti);
@@ -471,7 +471,7 @@ class Konekcija
         $stmVest->bind_param("i", $id_vesti);
         $stmVest->execute();
     }
-    
+
     function obrisiKomentareZaVest($id_vesti)
     {
         $stm = $this->conn->prepare("DELETE FROM komentari WHERE id_vesti = ?");
@@ -623,17 +623,28 @@ class Konekcija
         }
     }
 
-    function getSveOdobreneVesti()
+    function getSveOdobreneVestiPoRubrikama()
     {
-        $stmt = $this->conn->prepare("select * from vest where status = 'odobrena' order by datum_vreme_objave desc limit 10");
-        $stmt->execute();
-        $rezultat = $stmt->get_result();
-        if ($rezultat->num_rows > 0) {
-            return $rezultat;
+        $rubrike = $this->conn->query("SELECT * FROM rubrika");
+        if ($rubrike->num_rows > 0) {
+            $sve_vesti_po_rubrikama = [];
+            while ($rubrika = $rubrike->fetch_assoc()) {
+                $id_rubrike = $rubrika['id_rubrike'];
+                $stmt = $this->conn->prepare("SELECT * FROM vest WHERE id_rubrike = ? AND status = 'odobrena' ORDER BY datum_vreme_objave DESC LIMIT 2");
+                $stmt->bind_param("i", $id_rubrike);
+                $stmt->execute();
+                $rezultat = $stmt->get_result();
+                if ($rezultat->num_rows > 0) {
+                    $sve_vesti_po_rubrikama[$rubrika['naziv']] = $rezultat->fetch_all(MYSQLI_ASSOC);
+                }
+            }
+
+            return $sve_vesti_po_rubrikama;
         } else {
             return false;
         }
     }
+
 
     function getVestIdByTag($tag)
     {
@@ -680,6 +691,72 @@ class Konekcija
         $stmt = $this->conn->prepare("insert into komentari (id_vesti, citalac, sadrzaj) values (?, ?, ?)");
         $stmt->bind_param("iss", $id_vesti, $citalac, $sadrzaj);
         $stmt->execute();
+    }
+
+    function povecajPozitivneKomentare($id_vesti, $id_komentara)
+    {
+        $stmt = $this->conn->prepare("update komentari set broj_pozitivnih = broj_pozitivnih + 1 where id_vesti=? and id_komentara = ?");
+        $stmt->bind_param("ii", $id_vesti, $id_komentara);
+        $stmt->execute();
+    }
+
+    function povecajNegativneKomentare($id_vesti, $id_komentara)
+    {
+        $stmt = $this->conn->prepare("update komentari set broj_negativnih = broj_negativnih + 1 where id_vesti=? and id_komentara = ?");
+        $stmt->bind_param("ii", $id_vesti, $id_komentara);
+        $stmt->execute();
+    }
+
+    function getNajnovijeVesti()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM vest
+        where datediff(current_date(), datum_vreme_objave) <=3 ");
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function pretragaVestiNaslov($naslov)
+    {
+        $stmt = $this->conn->prepare("select * from vest where naslov like '%$naslov%' ");
+        // $stmt->bind_param("s", $naslov);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function pretragaVestiDatum($datum)
+    {
+        $stmt = $this->conn->prepare("select * from vest where date(datum_vreme_objave) = ?");
+        $stmt->bind_param("s", $datum);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
+    }
+
+    function getTagoviBySadrzaj($sadrzaj)
+    {
+        $stmt = $this->conn->prepare("select * from tagovi where sadrzaj = ?");
+        $stmt->bind_param("s", $sadrzaj);
+        $stmt->execute();
+        $rezultat = $stmt->get_result();
+        if ($rezultat->num_rows > 0) {
+            return $rezultat;
+        } else {
+            return false;
+        }
     }
 }
 

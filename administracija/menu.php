@@ -17,7 +17,7 @@
             }
     ?>
             <a href="azuriranje_glavni_urednik.php"><button style="margin-top: 10px;">Uredi profil</button></a>
-            <a href="logout.php"><button style="margin-top: 10px;">Logout</button></a>
+            <a href="../naslovna"><button style="margin-top: 10px;">Logout</button></a>
             
         </div>
 
@@ -153,7 +153,7 @@
 
         </div>
 
-        <h2 style="font-size: 25px;"><a href="logout.php" class="back-link" style="padding-left: 10px">Logout</a></h2>
+        <h2 style="font-size: 25px;"><a href="../naslovna" class="back-link" style="padding-left: 10px">Logout</a></h2>
 
 
 
@@ -216,7 +216,7 @@
                 <a href="informacije_urednici.php"><button>Informacije</button></a>
             </p>
         </div>
-        <h2 style="font-size: 25px;"><a href="logout.php" class="back-link" style="padding-left: 10px">Logout</a></h2>
+        <h2 style="font-size: 25px;"><a href="../naslovna" class="back-link" style="padding-left: 10px">Logout</a></h2>
 
     <?php
     }

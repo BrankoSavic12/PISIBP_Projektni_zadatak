@@ -13,7 +13,7 @@ if (isset($_POST["submit"])) {
         $_SESSION["email"] = $korisnik["email"];
         header("location:naslovna.php");
     } else {
-        $greska = "Pogrešno uneti kredencijali";
+        $greska = "Pogrešno uneto korisničko ime ili lozinka!";
     }
 }
 

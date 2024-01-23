@@ -37,7 +37,7 @@ if (isset($_SESSION["id_korisnika"])) {
                             <h2 class='naslov'>Naslov: $vest_po_rubrici[naslov]</h2> 
                             <h2>Datum slanja: $vest_po_rubrici[datum_vreme_objave]</h2>
                             <a href=procitaj_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Pročitaj članak</button></a> 
-                            <a href=odobri_clanak.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Odobri članak</button></a>
+                            <a href=odobri_clanak_urednik.php?id_vesti=$vest_po_rubrici[id_vesti]><button>Odobri članak</button></a>
                             <button onclick=\"brisanjeClanaka($vest_po_rubrici[id_vesti])\">Brisanje članaka</button>
                             </div>
                             </div>";
