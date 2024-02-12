@@ -122,7 +122,6 @@
     font-size: 2em;
 }
 
-.navigacija {}
 
 .navigacija ul {
     list-style: none;
@@ -198,10 +197,12 @@
 
 .glavna_vest_sadrzaj h1 {
     padding-bottom: 20px;
+    font-size: 35px;
+    font-weight: bold;
 }
 
 .glavna_vest_sadrzaj h3 {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .aktuelne_vesti {
@@ -230,7 +231,7 @@
 }
 
 .vest_slika {
-    width: 300px;
+    width: 350px;
     height: 300px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -245,6 +246,42 @@
 
 .lead_slika {
     width: 100%;
+}
+
+.naslov_bloka {
+    position: absolute;
+    bottom: 20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px; 
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1; 
+    pointer-events: none;
+    width: 800px;
+    text-align: center;
+}
+
+.naslov_slike {
+    margin: 0; 
+    font-size: 24px; 
+    color: white;
+}
+
+.pise_datum {
+    position: absolute; 
+    top: 20px; 
+    left: 30px; 
+    font-weight: bold;
+    color: white; 
+    pointer-events: none;
+}
+
+.datum_blok {
+    position: absolute; 
+    top: 20px; 
+    right: 30px; 
+    color: white; 
+    pointer-events: none;
 }
 
 .aktuelne_vesti {
@@ -271,7 +308,7 @@
 }
 
 .aktuelna_vest_slika {
-    width: 250px;
+    width: 285px;
     height: 200px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -348,13 +385,24 @@
 
 /*Stilizovanje komentara*/
 .komentari {
-    width: 450px;
+    width: 700px;
     background-color: #f2f2f2;
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
     margin: 0 auto;
+    border: 1px solid #0e0d0d;
 }
+.komentar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
 
 .komentari h4 {
     font-size: 20px;
@@ -382,14 +430,19 @@
 }
 
 .komentar-forma {
-    width: 450px;
+    width: 700px;
     background-color: #f2f2f2;
     padding: 15px;
     border-radius: 8px;
     text-align: center;
     margin-bottom: 20px;
     margin: 0 auto;
+    border: 1px solid #0e0d0d; 
+    margin-top: 10px;
+
 }
+
+
 
 .komentar-forma label {
     display: block;
@@ -422,10 +475,53 @@
     color: #777;
 }
 
+.komentari-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-button {
+    padding: 8px 16px;
+    background-color: #7d8c8f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.comment-button:hover {
+background-color: #5a5d5a;
+}
+
 .lajkovi_komentara {
     display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
+
+.levo {
+    width: 50%;
+}
+
+.desno {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.lajkovi_komentara a:hover .fa-thumbs-up {
+    color: #6b90c2;
+}
+
+.lajkovi_komentara a:hover .fa-thumbs-down {
+    color: #6b90c2;
+}
+
 
 
 .show-modal {

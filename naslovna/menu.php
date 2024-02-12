@@ -1,7 +1,7 @@
 <?php
 
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["logovanje"])) {
     $username = $_POST["username"];
     $password = md5($_POST["password"]);
     $korisnik = $konekcija->getKorisnik($username, $password);
@@ -13,7 +13,7 @@ if (isset($_POST["submit"])) {
         $_SESSION["email"] = $korisnik["email"];
         header("location:../administracija/naslovna.php");
     } else {
-        $greska = "Pogrešno uneto korisničko ime ili lozinka!";
+        $greska = "Pogrešno uneto korisničko ime ili lozinka";
     }
 }
 ?>
@@ -54,12 +54,12 @@ if (isset($_POST["submit"])) {
     </div>
 </section>
 
-
 <div class="modal hidden">
 
 <button class="close-modal">&times;</button>
 <form action="" method="post" class="modal-form">
-    <h1>Prijavite se:</h1>
+    <h3>Dobrodošli nazad!</h3>
+    <h1>Zdravo, prijavite se:</h1>
     <div class="form-group">
         <h2><label for="username">Korisničko ime:</label></h2>
         <input type="text" name="username" id="username" placeholder="Unesi korisničko ime" required>
@@ -69,8 +69,7 @@ if (isset($_POST["submit"])) {
         <input type="password" name="password" id="password" placeholder="Unesi lozinku" required>
     </div>
     <label class="error-message"><?php if (isset($greska)) echo $greska; ?></label>
-    <input type="submit" value="Ulogujte se" name="submit">
-</form>
+    <input type="submit" value="Ulogujte se" name="logovanje">
 
 
     </form>
@@ -103,6 +102,7 @@ if (isset($_POST["submit"])) {
     overlay.addEventListener('click', closeModal);
 
     document.addEventListener('keydown', function(e) {
+        // console.log(e.key);
 
         if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
             closeModal();

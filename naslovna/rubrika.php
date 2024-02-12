@@ -34,21 +34,24 @@ $rubrika_info = $konekcija->getRubrikaByID($rubrika_id_ulaz);
                 $sve_vesti = $konekcija->getVestiByRubrika($rubrika_id_ulaz);
                 if ($sve_vesti != false) {
                     while ($vest = $sve_vesti->fetch_assoc()) {
-                        date_default_timezone_set('Europe/Belgrade');
-                        $datum_vreme = date("d.M Y. H:i", strtotime($vest["datum_vreme_objave"]));
-                        $sadrzaj = $vest["sadrzaj"];
-                        $sadrzaj_ispis = string_between_two_string($sadrzaj, "<p>", "</p>");
-                        $rubrika_vest = $konekcija->getRubrikaByID($vest["id_rubrike"]);
-                        $rubrika = "$rubrika_vest[naziv]";
-                        echo "<div class=vest>";
-                        echo "<div class=vest_opis>
-                <a href=vest.php?id_vesti=$vest[id_vesti]><h2>$vest[naslov]</h2></a>
-                <p>$sadrzaj_ispis</p>
-                <h4>$rubrika - $datum_vreme</h4>
-                </div>";
-                        echo "<div class=vest_slika><a href=vest.php?id_vesti=$vest[id_vesti]><img src=../$vest[lead_slika_url] class=lead_slika></a></div>";
+                        // Dodajemo proveru statusa vesti
+                        if ($vest['status'] == 'odobrena') {
+                            date_default_timezone_set('Europe/Belgrade');
+                            $datum_vreme = date("d.M Y. H:i", strtotime($vest["datum_vreme_objave"]));
+                            $sadrzaj = $vest["sadrzaj"];
+                            $sadrzaj_ispis = string_between_two_string($sadrzaj, "<p>", "</p>");
+                            $rubrika_vest = $konekcija->getRubrikaByID($vest["id_rubrike"]);
+                            $rubrika = "$rubrika_vest[naziv]";
+                            echo "<div class=vest>";
+                            echo "<div class=vest_opis>
+                                    <a href=vest.php?id_vesti=$vest[id_vesti]><h2>$vest[naslov]</h2></a>
+                                    <p>$sadrzaj_ispis</p>
+                                    <h4>$rubrika - $datum_vreme</h4>
+                                  </div>";
+                            echo "<div class=vest_slika><a href=vest.php?id_vesti=$vest[id_vesti]><img src=../$vest[lead_slika_url] class=lead_slika></a></div>";
 
-                        echo "</div>";
+                            echo "</div>";
+                        }
                     }
                 } else {
                     echo "<h3>Nema vesti iz ove rubrike</h3>";
