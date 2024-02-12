@@ -27,10 +27,10 @@ if (isset($_SESSION["id_korisnika"])) {
                 if (isset($_SESSION['id_korisnika'])) {
                     $novinarId = $_SESSION['id_korisnika'];
                     $clanci = $konekcija->getVestiNaCekanju($novinarId);
-                }
-                if ($clanci != false) {
-                    while ($clanak = $clanci->fetch_assoc()) {
-                        echo "<div>
+                    
+                    if ($clanci !== false && $clanci->num_rows > 0) {
+                        while ($clanak = $clanci->fetch_assoc()) {
+                            echo "<div>
                                 <div class='iznad-dugmica' style='padding: 15px; width:375px'>
                                 <h2>Naslov: $clanak[naslov]</h2> 
                                 <h2>Datum: $clanak[datum_vreme_objave]</h2>
@@ -39,6 +39,9 @@ if (isset($_SESSION["id_korisnika"])) {
                                 <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Obrši</button>
                                 </div>
                             </div>";
+                        }
+                    } else {
+                        echo "<h3>Nema članaka na čekanju.</h3>";
                     }
                 }
             
@@ -48,7 +51,7 @@ if (isset($_SESSION["id_korisnika"])) {
             var customDialog = document.createElement('div');
             customDialog.className = 'custom-dialog';
             customDialog.innerHTML = `
-                <h2>Da li ste sigurni da želite da obrišete clanak?</h2>
+                <h2>Da li ste sigurni da želite da obrišete članak?</h2>
                 <button class="confirm-button" onclick="potvrdiBrisanje(${id_vesti})">Potvrdi</button>
                 <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>
             `;

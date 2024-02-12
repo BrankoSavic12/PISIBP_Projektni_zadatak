@@ -25,7 +25,6 @@ if (isset($_SESSION["id_korisnika"])) {
         echo '<script>setTimeout(function() { vratiNaPregledDraftClanaka(); }, 1000);</script>';
     }
 
-
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -36,7 +35,7 @@ if (isset($_SESSION["id_korisnika"])) {
 
         <title>Izmena draft članka</title>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
-        <script src="https://cdn.tiny.cloud/1/iz2p1l82qdrmzktejgzo1i1qayr12hszcurdxccvfa5f5l7r/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://cdn.tiny.cloud/1/1e17cgct9au8md1fr5fhk27em4uwpxqgwuwxjha5z4x2v1gy/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 
@@ -50,8 +49,6 @@ if (isset($_SESSION["id_korisnika"])) {
                 window.location.href = 'pregled_clanci_na_cekanju.php';
             }
         </script>
-       
-
 
     </head>
 
@@ -171,13 +168,9 @@ if (isset($_SESSION["id_korisnika"])) {
                             toolbar: 'undo redo | formatpainter casechange styleselect | bold italic backcolor | ' +
                                 'alignleft aligncenter alignright alignjustify | ' +
                                 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
-                            // without images_upload_url set, Upload tab won't show up
+                        
                             images_upload_url: 'upload.php',
-
-                            // override default upload handler to simulate successful upload
                             images_upload_handler: image_upload_handler_callback
-
-
                         });
                     </script>
 

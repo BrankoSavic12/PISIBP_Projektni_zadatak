@@ -29,7 +29,7 @@ if (isset($_SESSION["id_korisnika"])) {
                 $vesti = $konekcija->getVestByStatus("na čekanju");
                 if ($vesti != false) {
                     while ($vest = $vesti->fetch_assoc()) {
-                                echo "<div class='novinar-container'>
+                                echo "<div class='novinar-container' style='width: 500px;'>
                                 <div class='iznad-dugmica'>
                                 <h2>Naslov: $vest[naslov]</h2> 
                                 <h2>Odobreno: $vest[datum_vreme_objave]</h2>

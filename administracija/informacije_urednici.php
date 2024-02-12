@@ -11,16 +11,7 @@ if (isset($_SESSION["id_korisnika"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informacije o radnicima</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-     
-        .urednik-info {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-    </style>
-
+   
 </head>
 
 <body>

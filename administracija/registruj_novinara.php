@@ -8,38 +8,38 @@ if (isset($_SESSION["id_korisnika"])) {
         $id_rubrike = $_POST["rubrika"];
         $email = $_POST["email"];
         $uloga = "novinar";
+        $status = $_POST["status"]; // Dodato polje za status
 
         if ($konekcija->proveriPostojanjeKorisnickogImena($korisnicko_ime) == false) {
-            $konekcija->ubaciKorisnika($korisnicko_ime, $lozinka, $ime_prezime, $uloga, $email);
+            $konekcija->ubaciKorisnika($korisnicko_ime, $lozinka, $ime_prezime, $uloga, $email, $status); // Dodato polje za status
             $novi_korisnik = $konekcija->proveriPostojanjeKorisnickogImena($korisnicko_ime);
             $id_novog_novinara = $novi_korisnik["id_korisnika"];
             $konekcija->ubaciRubrikuZaNovinara($id_novog_novinara, $id_rubrike);
             $potvrda = "Uspešno ste uneli novinara " . $ime_prezime;
-                echo '<script>setTimeout(function() { vratiNaPregledUrednika(); }, 1000);</script>';
+            echo '<script>setTimeout(function() { vratiNaPregledUrednika(); }, 1000);</script>';
         } else {
-            $greska = "Korisnik sa istim imenov već postoji";
+            $greska = "Korisnik sa istim imenom već postoji";
         }
     }
-
 ?>
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pregled novinara</title>
-        <link rel="stylesheet" href="style.css">
-        <script>
-            function vratiNaPregledUrednika() {
-                window.location.href = 'pregled_novinara.php';
-            }
-        </script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregled novinara</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function vratiNaPregledUrednika() {
+            window.location.href = 'pregled_novinara.php';
+        }
+    </script>
+</head>
 
-    <body>
+<body>
 
-    <div class="navigacija">
+<div class="navigacija">
     <?php include "menu.php" ?>
     <div class="content">
         <div>
@@ -63,6 +63,11 @@ if (isset($_SESSION["id_korisnika"])) {
                     }
                     ?>
                 </select>
+                <h2>Status:</h2>
+                <select name="status" class="search-input">
+                    <option value="aktivan">Aktivan</option>
+                    <option value="neaktivan">Neaktivan</option>
+                </select>
 
                 <?php if (isset($greska)) {
                     echo $greska;
@@ -70,24 +75,21 @@ if (isset($_SESSION["id_korisnika"])) {
                 <div class="button-container">
                     <input type="submit" value="Sačuvaj izmene" name="submit" class="btn"/>
                     <input type="button" value="Vrati na početak" class="btn" onclick="vratiNaPregledUrednika()" />
-                 </div>
+                </div>
             </form>
-             
-        
-
-                <h3> <?php if (isset($potvrda)) {
+            <h3> <?php if (isset($potvrda)) {
                     echo $potvrda;
                 } ?></h3>
-            </form>
         </div>
     </div>
 </div>
 
 
-    </body>
+</body>
 
-    </html>
+</html>
 <?php
 } else {
     header("location:index.php");
 }
+?>

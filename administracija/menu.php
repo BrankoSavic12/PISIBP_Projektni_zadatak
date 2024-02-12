@@ -79,6 +79,8 @@
         </div>
     <?php  } ?>
 
+
+
     <?php
     if (($_SESSION["uloga"]) == 'novinar') {
     ?>
@@ -156,6 +158,7 @@
         <h2 style="font-size: 25px;"><a href="../naslovna" class="back-link" style="padding-left: 10px">Logout</a></h2>
 
 
+        
 
     <?php  }
     if (($_SESSION["uloga"]) == 'urednik') {

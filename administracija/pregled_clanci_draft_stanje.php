@@ -9,7 +9,7 @@ if (isset($_SESSION["id_korisnika"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pregled clanaka u draft stanju</title>
+    <title>Pregled članaka u draft stanju</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -19,7 +19,7 @@ if (isset($_SESSION["id_korisnika"])) {
     <?php include "menu.php" ?>
     <div class="content">
         <div>
-            <h1>Lista clanaka u draft stanju</h1>
+            <h1>Lista članaka u draft stanju</h1>
         </div>
             <h2><a href="naslovna.php" class="back-link">Napusti stranicu</a></h2>
             <div class="info-container" style="width:auto">
@@ -38,10 +38,12 @@ if (isset($_SESSION["id_korisnika"])) {
                                 <h2>Datum: $clanak[datum_vreme_objave]</h2>
                                 <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj</button></a>
                                 <a href='izmeni_draft_clanak?id_vesti=$clanak[id_vesti]'><button>Izmeni</button></a>
-                                <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Obrši</button>
+                                <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Obriši</button>
                                 </div>
                             </div>";
                     }
+                } else {
+                    echo "<h3>Nema članaka u draft stanju.</h3>";
                 }              
             
             ?>
@@ -50,7 +52,7 @@ if (isset($_SESSION["id_korisnika"])) {
             var customDialog = document.createElement('div');
             customDialog.className = 'custom-dialog';
             customDialog.innerHTML = `
-                <h2>Da li ste sigurni da želite da obrišete clanak?</h2>
+                <h2>Da li ste sigurni da želite da obrišete članak?</h2>
                 <button class="confirm-button" onclick="potvrdiBrisanje(${id_vesti})">Potvrdi</button>
                 <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>
             `;

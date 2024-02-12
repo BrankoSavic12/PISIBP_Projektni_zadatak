@@ -31,10 +31,9 @@ class Konekcija
             return false;
         }
     }
-
     function getSviNovinari()
     {
-        $stmt = $this->conn->prepare("select * from korisnici where uloga = 'novinar'");
+        $stmt = $this->conn->prepare("SELECT * FROM korisnici WHERE uloga = 'novinar' AND status = 'aktivan'");
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
@@ -43,21 +42,19 @@ class Konekcija
             return false;
         }
     }
-
+    
     function obrisiNovinara($id_novinara)
     {
-        $this->obrisiPovezaneRedoveNovinara($id_novinara);
-        $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
-        $stm->bind_param("i", $id_novinara);
-        $stm->execute();
+        $this->promeniStatusNovinara($id_novinara, 'neaktivan');
     }
-
-    function obrisiPovezaneRedoveNovinara($id_novinara)
+    
+    function promeniStatusNovinara($id_novinara, $status)
     {
-        $stm = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_novinara = ?");
-        $stm->bind_param("i", $id_novinara);
+        $stm = $this->conn->prepare("UPDATE korisnici SET status = ? WHERE id_korisnika = ?");
+        $stm->bind_param("si", $status, $id_novinara);
         $stm->execute();
     }
+    
 
     function getSveRubrike()
     {
@@ -84,10 +81,10 @@ class Konekcija
         }
     }
 
-    function ubaciKorisnika($korisnicko_ime, $lozinka, $ime_prezime, $uloga, $email)
+    function ubaciKorisnika($korisnicko_ime, $lozinka, $ime_prezime, $uloga, $email, $status)
     {
-        $stmt = $this->conn->prepare("insert into korisnici (korisnicko_ime, lozinka, ime_prezime, uloga, email) values(?,?,?,?,?)");
-        $stmt->bind_param("sssss", $korisnicko_ime, $lozinka, $ime_prezime, $uloga, $email);
+        $stmt = $this->conn->prepare("insert into korisnici (korisnicko_ime, lozinka, ime_prezime, uloga, email, status) values(?,?,?,?,?, ?)");
+        $stmt->bind_param("ssssss", $korisnicko_ime, $lozinka, $ime_prezime, $uloga, $email, $status);
         $stmt->execute();
     }
 
@@ -111,7 +108,6 @@ class Konekcija
         }
     }
 
-
     function getRubrikeByNovinarId($id_novinara)
     {
         $stmt = $this->conn->prepare("select * from novinar_rubrika where id_novinara=?");
@@ -124,8 +120,6 @@ class Konekcija
             return false;
         }
     }
-
-
 
     function getRubrikaByID($id_rubrike)
     {
@@ -153,6 +147,7 @@ class Konekcija
         $stmt->bind_param("ii", $id_urednika, $id_rubrike);
         $stmt->execute();
     }
+
     function getRubrikeByUrednikId($id_urednika)
     {
         $stmt = $this->conn->prepare("select * from urednik_rubrika where id_urednika=?");
@@ -168,22 +163,13 @@ class Konekcija
 
     function obrisiUrednika($id_urednika)
     {
-        $this->obrisiVezuUrednikRubrika($id_urednika);
-        $this->obrisiVezuNovinarRubrika($id_urednika);
-        $stm = $this->conn->prepare("DELETE FROM korisnici WHERE id_korisnika = ?");
-        $stm->bind_param("i", $id_urednika);
-        $stm->execute();
+        $this->promeniStatusUrednika($id_urednika, 'neaktivan');
     }
-    function obrisiVezuUrednikRubrika($id_urednika)
+
+    function promeniStatusUrednika($id_urednika, $novi_status)
     {
-        $stm = $this->conn->prepare("DELETE FROM urednik_rubrika WHERE id_urednika = ?");
-        $stm->bind_param("i", $id_urednika);
-        $stm->execute();
-    }
-    function obrisiVezuNovinarRubrika($id_urednika)
-    {
-        $stm = $this->conn->prepare("DELETE FROM novinar_rubrika WHERE id_novinara = ?");
-        $stm->bind_param("i", $id_urednika);
+        $stm = $this->conn->prepare("UPDATE korisnici SET status = ? WHERE id_korisnika = ?");
+        $stm->bind_param("si", $novi_status, $id_urednika);
         $stm->execute();
     }
 
@@ -191,7 +177,7 @@ class Konekcija
 
     function getSviUrednici()
     {
-        $stmt = $this->conn->prepare("SELECT * FROM korisnici WHERE uloga = 'urednik'");
+        $stmt = $this->conn->prepare("SELECT * FROM korisnici WHERE uloga = 'urednik' AND status = 'aktivan'");
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat->num_rows > 0) {
@@ -200,6 +186,7 @@ class Konekcija
             return false;
         }
     }
+    
     function getGlavniUrednik()
     {
         $stmt = $this->conn->prepare("SELECT * FROM korisnici WHERE uloga = 'glavni urednik'");
@@ -285,9 +272,9 @@ class Konekcija
         $stmt->execute();
         $rezultat = $stmt->get_result();
         if ($rezultat && $rezultat->num_rows > 0) {
-            return true; // Rubrika je već dodeljena uredniku
+            return true;
         } else {
-            return false; // Rubrika nije dodeljena uredniku
+            return false; 
         }
     }
 
@@ -337,6 +324,7 @@ class Konekcija
             return false;
         }
     }
+
     function getNovinariByImePrezime($pretraga)
     {
         $pretraga = $this->conn->real_escape_string($pretraga);
@@ -365,6 +353,7 @@ class Konekcija
             return false;
         }
     }
+
     function getRubrikeByNaziv($naziv)
     {
         $naziv = $this->conn->real_escape_string($naziv);
@@ -495,16 +484,22 @@ class Konekcija
     function getOdobreneVesti($novinarId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_novinara = ?");
+        if (!$stmt) {
+            die('Greška pri pripremi upita: ' . $this->conn->error);
+        }
         $stmt->bind_param("i", $novinarId);
         $stmt->execute();
         $rezultat = $stmt->get_result();
+        if (!$rezultat) {
+            die('Greška pri izvršenju upita: ' . $this->conn->error);
+        }
         if ($rezultat->num_rows > 0) {
             return $rezultat;
         } else {
             return false;
         }
     }
-
+    
     function getDraftVesti($novinarId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'draft' AND id_novinara = ?");
@@ -518,7 +513,6 @@ class Konekcija
         }
     }
 
-
     function getOdobreneVestiUrednika($urednikId)
     {
         $stmt = $this->conn->prepare("SELECT * FROM vest WHERE status = 'odobrena' AND id_urednika = ?");
@@ -531,7 +525,6 @@ class Konekcija
             return false;
         }
     }
-
 
     function getVestiNaCekanjuUrednika($urednikId)
     {
@@ -622,7 +615,6 @@ class Konekcija
             return false;
         }
     }
-
     function getSveOdobreneVestiPoRubrikama()
     {
         $rubrike = $this->conn->query("SELECT * FROM rubrika");
@@ -644,7 +636,6 @@ class Konekcija
             return false;
         }
     }
-
 
     function getVestIdByTag($tag)
     {
@@ -719,7 +710,7 @@ class Konekcija
             return false;
         }
     }
-
+    
     function pretragaVestiNaslov($naslov)
     {
         $stmt = $this->conn->prepare("select * from vest where naslov like '%$naslov%' ");

@@ -28,20 +28,29 @@ if (isset($_SESSION["id_korisnika"])) {
                 if (isset($_SESSION['id_korisnika'])) {
                     $novinarId = $_SESSION['id_korisnika'];
                     $clanci = $konekcija->getOdobreneVesti($novinarId);
+                    
+                    // Provjera da li je $clanci boolean (tj. false)
+                    if ($clanci === false) {
+                        echo "<h3>Nema odobrenih članaka.</h3>";
+                    } else {
+                        // Ako $clanci nije boolean, provjeravamo num_rows
+                        if ($clanci->num_rows > 0) {
+                            while ($clanak = $clanci->fetch_assoc()) {
+                                echo "<div class='clanak-container' style='text-align:center'>
+                                    <div class='iznad-dugmica' style='padding: 15px; width:400px'>
+                                    <h2>Naslov: $clanak[naslov]</h2> 
+                                    <h2>Datum odobrenja: $clanak[datum_vreme_objave]</h2>
+                                    <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj članak</button></a>
+                                    <a href='posalji_zahtev_za_izmenu?id_vesti=$clanak[id_vesti]&return_page=odobreni_clanci'><button>Zahtev za izmenu</button></a>
+                                    <a href='posalji_zahtev_za_brisanje?id_vesti=$clanak[id_vesti]&return_page=odobreni_clanci'><button>Zahtev za brisanje</button></a>
+                                    </div>
+                                    </div>";
+                            }
+                        } else {
+                            echo "<p>Nema odobrenih članaka.</p>";
+                        }
+                    }
                 }
-           
-                while ($clanak = $clanci->fetch_assoc()) {
-                    echo "<div class='clanak-container' style='text-align:center'>
-                        <div class='iznad-dugmica' style='padding: 15px; width:400px'>
-                        <h2>Naslov: $clanak[naslov]</h2> 
-                        <h2>Datum odobrenja: $clanak[datum_vreme_objave]</h2>
-                        <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj članak</button></a>
-                        <a href='posalji_zahtev_za_izmenu?id_vesti=$clanak[id_vesti]&return_page=odobreni_clanci'><button>Zahtev za izmenu</button></a>
-                        <a href='posalji_zahtev_za_brisanje?id_vesti=$clanak[id_vesti]&return_page=odobreni_clanci'><button>Zahtev za brisanje</button></a>
-                        </div>
-                        </div>";
-                }
-                
             ?>
 
         </div>

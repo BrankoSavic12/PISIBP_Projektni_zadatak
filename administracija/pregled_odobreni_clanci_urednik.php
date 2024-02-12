@@ -25,20 +25,22 @@ if (isset($_SESSION["id_korisnika"])) {
         <h2><a href="naslovna.php" class="back-link">Napusti stranicu</a></h2>
         <div class="info-container" style="width:auto">
             <?php
-                 if (isset($_SESSION['id_korisnika'])) {
+                if (isset($_SESSION['id_korisnika'])) {
                     $urednikId = $_SESSION['id_korisnika'];
                     $clanci = $konekcija->getOdobreneVestiUrednika($urednikId);
-                 }
-                if ($clanci != false) {
-                    while ($clanak = $clanci->fetch_assoc()) {
-                        echo "<div class='clanak-container'>
-                        <div class='iznad-dugmica' style='padding: 15px; width:400px; text-align:center'>
-                        <h2 class='naslov'>Naslov: $clanak[naslov]</h2> 
-                        <h2>Datum odobrenja: $clanak[datum_vreme_objave]</h2>
-                        <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj članak</button></a>
-                        <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Brisanje članaka</button>
-                        </div>
-                    </div>";
+                    if ($clanci != false && $clanci->num_rows > 0) {
+                        while ($clanak = $clanci->fetch_assoc()) {
+                            echo "<div class='clanak-container'>
+                            <div class='iznad-dugmica' style='padding: 15px; width:400px; text-align:center'>
+                            <h2 class='naslov'>Naslov: $clanak[naslov]</h2> 
+                            <h2>Datum odobrenja: $clanak[datum_vreme_objave]</h2>
+                            <a href='procitaj_clanak?id_vesti=$clanak[id_vesti]'><button>Pročitaj članak</button></a>
+                            <button onclick=\"brisanjeClanaka($clanak[id_vesti])\">Brisanje članaka</button>
+                            </div>
+                            </div>";
+                        }
+                    } else {
+                        echo "<h3>Nema odobrenih članaka</h3>";
                     }
                 }
             ?>
@@ -48,7 +50,7 @@ if (isset($_SESSION["id_korisnika"])) {
             var customDialog = document.createElement('div');
             customDialog.className = 'custom-dialog';
             customDialog.innerHTML = `
-                <h2>Da li ste sigurni da želite da obrišete clanak?</h2>
+                <h2>Da li ste sigurni da želite da obrišete članak?</h2>
                 <button class="confirm-button" onclick="potvrdiBrisanje(${id_vesti})">Potvrdi</button>
                 <button class="cancel-button" onclick="ponistiBrisanje()">Poništi</button>
             `;

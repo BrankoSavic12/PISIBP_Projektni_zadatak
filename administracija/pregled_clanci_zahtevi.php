@@ -3,41 +3,43 @@ include "klase.php";
 if (isset($_SESSION["id_korisnika"])) {
 ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pregled odobrenih clanaka</title>
-        <link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregled odobrenih clanaka</title>
+    <link rel="stylesheet" href="style.css">
 
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <div class="navigacija">
-            <?php include "menu.php" ?>
-            <div class="content">
-                <div>
-                    <h1>Lista zahteva za izmenu</h1>
-                </div>
-                <h2><a href="naslovna.php" class="back-link">Napusti stranicu</a></h2>
-                <div class="info-container" style="width:auto">
+<div class="navigacija">
+    <?php include "menu.php" ?>
+    <div class="content">
+        <div>
+            <h1>Lista zahteva za izmenu</h1>
+        </div>
+        <h2><a href="naslovna.php" class="back-link">Napusti stranicu</a></h2>
+        <div class="info-container" style="width:auto">
 
-                <div>
+            <div>
 
-                    <?php
-                    $rubrike = $konekcija->getRubrikeByUrednikId($_SESSION["id_korisnika"]);
-                    if ($rubrike != false) {
-                        while ($rubrika = $rubrike->fetch_assoc()) {
-                            $vesti_zahtevi = $konekcija->getZahteviByRubrika($rubrika["id_rubrike"]);
-                            if ($vesti_zahtevi != false) {
-                                while ($vest_zahtev = $vesti_zahtevi->fetch_assoc()) {
+                <?php
+                $rubrike = $konekcija->getRubrikeByUrednikId($_SESSION["id_korisnika"]);
+                $zahteviPronadjeni = false; // Inicijalno nema zahteva
 
-                                    $vest = $konekcija->getClanakByID($vest_zahtev["id_vesti"]);
+                if ($rubrike != false) {
+                    while ($rubrika = $rubrike->fetch_assoc()) {
+                        $vesti_zahtevi = $konekcija->getZahteviByRubrika($rubrika["id_rubrike"]);
+                        if ($vesti_zahtevi != false) {
+                            while ($vest_zahtev = $vesti_zahtevi->fetch_assoc()) {
+                                $zahteviPronadjeni = true; // Pronađeni su zahtevi
+                                $vest = $konekcija->getClanakByID($vest_zahtev["id_vesti"]);
 
-                                    echo "<div class='clanak-container'>
+                                echo "<div class='clanak-container'>
                                     <div class='iznad-dugmica' style='padding: 15px; width:375px'>
                                     <h2 class='naslov'>Naslov: $vest[naslov]</h2> 
                                     <h2>Vrsta zahteva:$vest_zahtev[vrsta]</h2>
@@ -46,21 +48,22 @@ if (isset($_SESSION["id_korisnika"])) {
                                     <a href=odbijanje_zahteva.php?id_zahteva=$vest_zahtev[id_zahteva]><button>Odbijanje zahteva</button></a>
                                     </div>
                                     </div>";
-                                 
-                                }
                             }
                         }
                     }
-
-                    ?>
-                </div>
+                }
+                if (!$zahteviPronadjeni) {
+                    echo "<h3>Nema zahteva za izmene</h3>";
+                }
+                ?>
             </div>
         </div>
+    </div>
 
 
-    </body>
+</body>
 
-    </html>
+</html>
 <?php
 } else {
     header("location:index.php");

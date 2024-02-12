@@ -21,7 +21,7 @@ if (isset($_SESSION["id_korisnika"])) {
         } else {
             $greska = "<h6>Vest nije moguće sačuvati zbog pogrešne slike</h6>";
         }
-        echo '<script>setTimeout(function() { vratiNaPregledDraftClanaka(); }, 1000);</script>';
+        echo '<script>setTimeout(function() { vratiNaPregledDraftClanaka(); }, 1500);</script>';
     }
 
     if (isset($_POST["odobri"])) {
@@ -58,8 +58,7 @@ if (isset($_SESSION["id_korisnika"])) {
 
         <title>Kreiranje članaka</title>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
-        <script src="https://cdn.tiny.cloud/1/iz2p1l82qdrmzktejgzo1i1qayr12hszcurdxccvfa5f5l7r/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
+        <script src="https://cdn.tiny.cloud/1/1e17cgct9au8md1fr5fhk27em4uwpxqgwuwxjha5z4x2v1gy/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 
         <link rel="stylesheet" href="style.css">

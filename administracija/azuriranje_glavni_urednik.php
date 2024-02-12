@@ -46,25 +46,6 @@ if (isset($_SESSION["id_korisnika"]) && $_SESSION["uloga"] == "glavni urednik") 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ažuriranje profila glavnog urednika</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        #file-input {
-            border: 2px solid #333;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-            background-color: #f9f9f9;
-            color: #333;
-            width: 100%;
-            height: 45px;
-            line-height: 20px;
-        }
-
-        #file-input::placeholder {
-            line-height: 45px; 
-        }
-    </style>
     <script>
         function vratiNaPregledUrednika() {
             window.location.href = 'naslovna.php';

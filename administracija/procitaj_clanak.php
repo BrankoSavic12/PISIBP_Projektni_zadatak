@@ -28,7 +28,7 @@ if (isset($_SESSION["id_korisnika"])) {
     <body>
         <div class="navigacija">
             <?php include "menu.php" ?>
-            <div class="content" style="width: 70%;">
+            <div class="content" style="width: 60%;">
             <div class="info-container" style="width: 550px;">
                 <?php
                 $id_vesti = $_GET["id_vesti"];
