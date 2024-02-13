@@ -32,7 +32,7 @@ if (isset($_SESSION["id_korisnika"])) {
                                 echo "<div class='novinar-container' style='width: 500px;'>
                                 <div class='iznad-dugmica'>
                                 <h2>Naslov: $vest[naslov]</h2> 
-                                <h2>Odobreno: $vest[datum_vreme_objave]</h2>
+                                <h2>Datum: $vest[datum_vreme_objave]</h2>
                                 </div>
                                 <a href=procitaj_clanak.php?id_vesti=$vest[id_vesti]><button>Pročitaj članak</button></a> 
                                 <a href=odobri_clanak.php?id_vesti=$vest[id_vesti]><button>Odobri članak</button></a>

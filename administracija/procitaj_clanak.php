@@ -21,6 +21,12 @@ if (isset($_SESSION["id_korisnika"])) {
             .content {
                 padding: 20px;
             }
+            .lead_slika{
+                width: 400px;
+                height: 200px;
+    
+            }
+         
         </style>
 
     </head>
