@@ -2,7 +2,8 @@
 
 1. Uvod
 
-Projekat "Online novine" je web aplikacija koja služi kao portal elektronskih novina, omogućavajući korisnicima čitanje, pretragu i interakciju sa vestima. Aplikacija je izrađena koristeći PHP programski jezik za backend logiku, MySQL bazu podataka za skladištenje informacija, HTML, CSS i JavaScript za frontend korisnički interfejs. Za stilizovanje i brži razvoj korisničkog interfejsa korišćen je Bootstrap, popularni CSS framework koji omogućava brzo i jednostavno kreiranje responzivnih web stranica. Za lokalni razvoj korišćen je WAMP server, dok je Visual Studio Code korišćen kao glavni alat za uređivanje koda. Iako je većina funkcionalnosti implementirana korišćenjem PHP-a, Bootstrap i JavaScript su korišćeni za dodatnu funkcionalnost i poboljšanje korisničkog iskustva.
+   Projekat "Online novine" je web aplikacija koja služi kao portal elektronskih novina, omogućavajući korisnicima čitanje, pretragu i interakciju sa vestima. Aplikacija je       izrađena koristeći PHP programski jezik za backend logiku, MySQL bazu podataka za skladištenje informacija, HTML, CSS i JavaScript za frontend korisnički interfejs. Za         stilizovanje i brži razvoj korisničkog interfejsa korišćen je Bootstrap, popularni CSS framework koji omogućava brzo i jednostavno kreiranje responzivnih web stranica. Za      lokalni razvoj korišćen je WAMP server, dok je Visual Studio Code korišćen kao glavni alat za uređivanje koda. Iako je većina funkcionalnosti implementirana korišćenjem 
+   PHP-   a, Bootstrap i JavaScript su korišćeni za dodatnu funkcionalnost i poboljšanje korisničkog iskustva.
 
 3. Funkcionalni zahtevi
 
