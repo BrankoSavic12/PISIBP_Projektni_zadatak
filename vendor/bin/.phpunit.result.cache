@@ -1,1 +1,1 @@
-{"version":1,"defects":{"VestTest::testLajkovanjeVesti":8},"times":{"ExampleTest::testAddition":0.004,"SimpleTest::testSum":0.003,"SimpleTest::testStringLength":0,"SimpleTest::testArrayHasKey":0}}
+{"version":1,"defects":{"VestTest::testLajkovanjeVesti":8},"times":{"ExampleTest::testAddition":0.004,"SimpleTest::testSum":0.004,"SimpleTest::testStringLength":0,"SimpleTest::testArrayHasKey":0}}
