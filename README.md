@@ -60,5 +60,6 @@
    Otvorite web pregledač i unesite sledeću putanju: http://localhost/PISIBP_Projektni_zadatak/naslovna.
 
 5. Autor
-Ime Prezime: Branko Savić 609/2020
+   
+   Ime Prezime: Branko Savić 609/2020
 
