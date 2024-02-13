@@ -27,29 +27,22 @@ Projekat "Online novine" je web aplikacija koja služi kao portal elektronskih n
    Postoji razlika između novinara i urednika. Novinari mogu dodavati članke samo u svoje rubrike, dok urednici imaju dodatne privilegije nad više rubrika ili kao glavni 
    urednici. Samo glavni urednik može registrovati nove novinare i dodeljivati im rubrike.
 
-3. Tehnologije i alati
-   Programski kod treba biti pohranjen u privatnom repozitorijumu na GitHub-u.
-   Aplikacija je razvijena korišćenjem PHP programskog jezika za backend, MySQL baze podataka, HTML, CSS i JavaScript za frontend, sa WAMP serverom za lokalni razvoj i Visual 
-   Studio Code-om kao uređivačem koda.
-   Novinske članke treba trajno čuvati u bazi podataka.
-   Potrebno je pokriti bar deo koda testovima, uključujući unit testove za različite scenarije.
+3. Instalacija i pokretanje
 
-4. Instalacija i pokretanje
-
-   4.1. Kloniranje repozitorijuma sa GitHub-a:
+   3.1. Kloniranje repozitorijuma sa GitHub-a:
    
    Posetite GitHub repozitorijum koji želite da klonirate.
    Kliknite na dugme "Code" i kopirajte URL repozitorijuma.
    Otvorite terminal na svom računaru i navigirajte do direktorijuma u koji želite da klonirate repozitorijum.
    Izvršite sledeću komandu: git clone https://github.com/BrankoSavic12/PISIBP_Projektni_zadatak.git
    
-   4.2. Podešavanje WAMP servera i MySQL baze podataka:
+   3.2. Podešavanje WAMP servera i MySQL baze podataka:
    
    Preuzmite WAMP server sa zvanične web stranice: https://www.wampserver.com/en/download-wampserver-64bits.
    Pratite uputstva za instalaciju WAMP servera na vašem računaru.
    Nakon instalacije, pokrenite WAMP server.
    
-   4.3. Importovanje SQL dump-a u MySQL bazu podataka:
+   3.3. Importovanje SQL dump-a u MySQL bazu podataka:
    
    Otvorite MySQL Workbench, koji možete preuzeti sa zvanične web stranice: https://www.mysql.com/products/workbench.
    Povežite se na lokalni MySQL server koji pokreće WAMP.
@@ -62,5 +55,5 @@ Projekat "Online novine" je web aplikacija koja služi kao portal elektronskih n
    
    Otvorite web pregledač i unesite sledeću putanju: http://localhost/PISIBP_Projektni_zadatak/naslovna.
 
-5. Autor
+4. Autor
 Ime Prezime: Branko Savić 609/2020
